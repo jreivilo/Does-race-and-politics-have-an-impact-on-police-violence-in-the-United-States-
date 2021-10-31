@@ -1,0 +1,13 @@
+ID Gender,Gender,ID Year,Year,Total Population,Total Population MOE Appx,Record Count,PUMS Occupation,ID PUMS Occupation,Slug PUMS Occupation,share
+1,"Male",2019,"2019",775916,21600.7184671869,7827,"Police officers","333050","police-officers",0.8489856477444189
+2,"Female",2019,"2019",138017,9119.052703271238,1349,"Police officers","333050","police-officers",0.1510143522555811
+1,"Male",2018,"2018",749099,21224.946586772887,7377,"Police officers","333050","police-officers",0.8511211954570451
+2,"Female",2018,"2018",131033,8885.42313501113,1255,"Police officers","333050","police-officers",0.1488788045429549
+1,"Male",2017,"2017",749119,21225.12098058301,7228,"Police officers","333050","police-officers",0.859442151178132
+2,"Female",2017,"2017",122515,8591.870021581342,1128,"Police officers","333050","police-officers",0.1405578488218679
+1,"Male",2016,"2016",709839,20662.22746447002,6900,"Police officers","333050","police-officers",0.8614958717706299
+2,"Female",2016,"2016",114122,8292.447682327414,1097,"Police officers","333050","police-officers",0.13850412822937008
+1,"Male",2015,"2015",697207,20477.83741542677,6717,"Police officers","333050","police-officers",0.857950979644173
+2,"Female",2015,"2015",115435,8339.989648122912,1062,"Police officers","333050","police-officers",0.14204902035582703
+1,"Male",2014,"2014",710252,20667.919328837816,6768,"Police officers","333050","police-officers",0.856452770124021
+2,"Female",2014,"2014",119043,8469.262711401212,1104,"Police officers","333050","police-officers",0.14354722987597898

@@ -1,0 +1,190 @@
+ID Race,Race,ID PUMS Ethnicity Parent,PUMS Ethnicity Parent,ID Year,Year,ID Workforce Status,Workforce Status,Total Population,Total Population MOE Appx,Record Count,Geography,ID Geography,Slug Geography,title,share
+1,"White","Hispanic","Hispanic",2019,"2019","true","true",17509916,60388.67171235543,133417,"United States","01000US","united-states","United States",0.11541048995955888
+1,"White","Not Hispanic","Not Hispanic",2019,"2019","true","true",93078298,119648.4562866558,998691,"United States","01000US","united-states","United States",0.6134930616904061
+2,"Black","Hispanic","Hispanic",2019,"2019","true","true",588829,18631.02697385887,4443,"United States","01000US","united-states","United States",0.003881060502654444
+2,"Black","Not Hispanic","Not Hispanic",2019,"2019","true","true",18041929,96462.3005189653,120542,"United States","01000US","united-states","United States",0.11891706766072288
+3,"American Indian","Hispanic","Hispanic",2019,"2019","true","true",182084,10440.65461948575,1614,"United States","01000US","united-states","United States",0.0012001430306002791
+3,"American Indian","Not Hispanic","Not Hispanic",2019,"2019","true","true",702642,20521.89235736246,7929,"United States","01000US","united-states","United States",0.004631219103858886
+4,"Alaska Native","Hispanic","Hispanic",2019,"2019","true","true",1932,1079.1023496914027,21,"United States","01000US","united-states","United States",0.000012734102585179035
+4,"Alaska Native","Not Hispanic","Not Hispanic",2019,"2019","true","true",36749,4705.802048290262,619,"United States","01000US","united-states","United States",0.00024221818628506438
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2019,"2019","true","true",98990,7710.197209458954,801,"United States","01000US","united-states","United States",0.0006524579787302654
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2019,"2019","true","true",98102,7686.757023944552,843,"United States","01000US","united-states","United States",0.0006466050371693756
+6,"Asian","Hispanic","Hispanic",2019,"2019","true","true",101204,7795.619370773059,1005,"United States","01000US","united-states","United States",0.0006670507857300513
+6,"Asian","Not Hispanic","Not Hispanic",2019,"2019","true","true",9351092,72213.21802402059,88859,"United States","01000US","united-states","United States",0.06163445383615269
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2019,"2019","true","true",26665,4007.089294643998,239,"United States","01000US","united-states","United States",0.00017575302558685247
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2019,"2019","true","true",265356,12633.614560998134,2208,"United States","01000US","united-states","United States",0.0017490013072426335
+8,"Other","Hispanic","Hispanic",2019,"2019","true","true",7173946,56255.70940261516,50623,"United States","01000US","united-states","United States",0.047284557093444514
+8,"Other","Not Hispanic","Not Hispanic",2019,"2019","true","true",342309,14344.594662914937,2615,"United States","01000US","united-states","United States",0.0022562101044669
+9,"Two or More Races","Hispanic","Hispanic",2019,"2019","true","true",1070506,24888.68935161861,9377,"United States","01000US","united-states","United States",0.007055866056961526
+9,"Two or More Races","Not Hispanic","Not Hispanic",2019,"2019","true","true",3048034,42337.23754318778,26544,"United States","01000US","united-states","United States",0.020090050537843476
+1,"White","Hispanic","Hispanic",2018,"2018","true","true",16881566,59416.39263420698,132041,"United States","01000US","united-states","United States",0.11291501607595462
+1,"White","Not Hispanic","Not Hispanic",2018,"2018","true","true",92619676,118374.79145903104,978457,"United States","01000US","united-states","United States",0.6195013071944694
+2,"Black","Hispanic","Hispanic",2018,"2018","true","true",535204,17774.25243628733,4304,"United States","01000US","united-states","United States",0.0035797963449549185
+2,"Black","Not Hispanic","Not Hispanic",2018,"2018","true","true",17564158,95306.41159198503,122044,"United States","01000US","united-states","United States",0.11748064029904613
+3,"American Indian","Hispanic","Hispanic",2018,"2018","true","true",177944,10320.873961239071,1560,"United States","01000US","united-states","United States",0.0011902065022059963
+3,"American Indian","Not Hispanic","Not Hispanic",2018,"2018","true","true",678120,20162.015726406036,8259,"United States","01000US","united-states","United States",0.004535712545946647
+4,"Alaska Native","Hispanic","Hispanic",2018,"2018","true","true",948,755.9115193988796,10,"United States","01000US","united-states","United States",0.000006340847480619096
+4,"Alaska Native","Not Hispanic","Not Hispanic",2018,"2018","true","true",38558,4820.191449691279,613,"United States","01000US","united-states","United States",0.0002579012628245898
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2018,"2018","true","true",108532,8071.235826970609,913,"United States","01000US","united-states","United States",0.0007259333953233668
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2018,"2018","true","true",89526,7343.313685338995,815,"United States","01000US","united-states","United States",0.0005988087674577059
+6,"Asian","Hispanic","Hispanic",2018,"2018","true","true",101538,7807.903332434235,951,"United States","01000US","united-states","United States",0.0006791529235096011
+6,"Asian","Not Hispanic","Not Hispanic",2018,"2018","true","true",9131947,71399.85815893202,84597,"United States","01000US","united-states","United States",0.061080467434701594
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2018,"2018","true","true",30916,4314.262316740287,253,"United States","01000US","united-states","United States",0.0002067865408341983
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2018,"2018","true","true",252175,12316.363291804884,2220,"United States","01000US","united-states","United States",0.0016867122504484395
+8,"Other","Hispanic","Hispanic",2018,"2018","true","true",6993056,55451.47166078806,50561,"United States","01000US","united-states","United States",0.04677415772091588
+8,"Other","Not Hispanic","Not Hispanic",2018,"2018","true","true",336845,14229.757180490047,2641,"United States","01000US","united-states","United States",0.002253040896212172
+9,"Two or More Races","Hispanic","Hispanic",2018,"2018","true","true",1020114,24302.790260967384,8924,"United States","01000US","united-states","United States",0.006823193340553026
+9,"Two or More Races","Not Hispanic","Not Hispanic",2018,"2018","true","true",2946006,41634.718502596166,26102,"United States","01000US","united-states","United States",0.01970482565716112
+1,"White","Hispanic","Hispanic",2017,"2017","true","true",16328399,58854.73662706706,128366,"United States","01000US","united-states","United States",0.11053802391410858
+1,"White","Not Hispanic","Not Hispanic",2017,"2017","true","true",92364756,117061.6721604782,964837,"United States","01000US","united-states","United States",0.6252797722268303
+2,"Black","Hispanic","Hispanic",2017,"2017","true","true",525460,17610.354133689973,4097,"United States","01000US","united-states","United States",0.0035571956592870798
+2,"Black","Not Hispanic","Not Hispanic",2017,"2017","true","true",17157471,94306.46527538694,123092,"United States","01000US","united-states","United States",0.11615057543018299
+3,"American Indian","Hispanic","Hispanic",2017,"2017","true","true",152856,9569.61843010083,1483,"United States","01000US","united-states","United States",0.0010347860916073268
+3,"American Indian","Not Hispanic","Not Hispanic",2017,"2017","true","true",655693,19827.12823243158,8657,"United States","01000US","united-states","United States",0.004438831297196596
+4,"Alaska Native","Hispanic","Hispanic",2017,"2017","true","true",1600,982.0214185186557,20,"United States","01000US","united-states","United States",0.000010831486801772405
+4,"Alaska Native","Not Hispanic","Not Hispanic",2017,"2017","true","true",37287,4740.098708175615,687,"United States","01000US","united-states","United States",0.0002524210302360548
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2017,"2017","true","true",83472,7081.488938882149,731,"United States","01000US","united-states","United States",0.0005650786664484664
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2017,"2017","true","true",81170,6992.438010425813,813,"United States","01000US","united-states","United States",0.0005494948648124163
+6,"Asian","Hispanic","Hispanic",2017,"2017","true","true",91198,7400.822893575575,896,"United States","01000US","united-states","United States",0.0006173812083425248
+6,"Asian","Not Hispanic","Not Hispanic",2017,"2017","true","true",8836986,70302.59619725145,82644,"United States","01000US","united-states","United States",0.0598235607665297
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2017,"2017","true","true",25866,3946.538627417894,234,"United States","01000US","united-states","United States",0.00017510452350915314
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2017,"2017","true","true",247683,12206.283177896947,2149,"United States","01000US","united-states","United States",0.0016767344659521215
+8,"Other","Hispanic","Hispanic",2017,"2017","true","true",7075324,55382.02241248457,51298,"United States","01000US","united-states","United States",0.04789767407766471
+8,"Other","Not Hispanic","Not Hispanic",2017,"2017","true","true",332425,14136.165921631553,2589,"United States","01000US","united-states","United States",0.002250410625049495
+9,"Two or More Races","Hispanic","Hispanic",2017,"2017","true","true",911673,23013.967328700786,7947,"United States","01000US","united-states","United States",0.006171733791895158
+9,"Two or More Races","Not Hispanic","Not Hispanic",2017,"2017","true","true",2808167,40667.86177138374,25285,"United States","01000US","united-states","United States",0.019010389873545506
+1,"White","Hispanic","Hispanic",2016,"2016","true","true",15613212,57685.04428629118,123332,"United States","01000US","united-states","United States",0.10738671568912919
+1,"White","Not Hispanic","Not Hispanic",2016,"2016","true","true",92001974,115643.04145927519,948734,"United States","01000US","united-states","United States",0.6327839412400637
+2,"Black","Hispanic","Hispanic",2016,"2016","true","true",445286,16231.311881944863,3702,"United States","01000US","united-states","United States",0.0030626498303071513
+2,"Black","Not Hispanic","Not Hispanic",2016,"2016","true","true",16891348,93611.05067471207,124408,"United States","01000US","united-states","United States",0.11617765680003199
+3,"American Indian","Hispanic","Hispanic",2016,"2016","true","true",148296,9425.450753123772,1399,"United States","01000US","united-states","United States",0.00101997080356272
+3,"American Indian","Not Hispanic","Not Hispanic",2016,"2016","true","true",636571,19536.872371801634,8201,"United States","01000US","united-states","United States",0.0043782963424146585
+4,"Alaska Native","Hispanic","Hispanic",2016,"2016","true","true",1305,886.8869849946467,9,"United States","01000US","united-states","United States",0.000008975710057245978
+4,"Alaska Native","Not Hispanic","Not Hispanic",2016,"2016","true","true",36691,4702.066933057781,688,"United States","01000US","united-states","United States",0.00025235845035280626
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2016,"2016","true","true",85723,7175.4870560223535,726,"United States","01000US","united-states","United States",0.0005895975427105724
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2016,"2016","true","true",85589,7180.098218292047,813,"United States","01000US","united-states","United States",0.0005886758989192537
+6,"Asian","Hispanic","Hispanic",2016,"2016","true","true",92539,7454.243928015664,920,"United States","01000US","united-states","United States",0.0006364775731704871
+6,"Asian","Not Hispanic","Not Hispanic",2016,"2016","true","true",8423059,68734.33893506152,77692,"United States","01000US","united-states","United States",0.0579332838153841
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2016,"2016","true","true",24528,3843.131094385133,229,"United States","01000US","united-states","United States",0.00016870208144377727
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2016,"2016","true","true",247774,12208.389904408388,2230,"United States","01000US","united-states","United States",0.0017041743936582873
+8,"Other","Hispanic","Hispanic",2016,"2016","true","true",6892116,54487.636727126825,50393,"United States","01000US","united-states","United States",0.04740355164513864
+8,"Other","Not Hispanic","Not Hispanic",2016,"2016","true","true",309549,13642.197411593586,2465,"United States","01000US","united-states","United States",0.0021290590593949694
+9,"Two or More Races","Hispanic","Hispanic",2016,"2016","true","true",850259,22236.60223176585,7520,"United States","01000US","united-states","United States",0.005848029316140926
+9,"Two or More Races","Not Hispanic","Not Hispanic",2016,"2016","true","true",2606578,39209.441145390665,23645,"United States","01000US","united-states","United States",0.017927883808119622
+1,"White","Hispanic","Hispanic",2015,"2015","true","true",15537807,56475.063990284645,120867,"United States","01000US","united-states","United States",0.10834825894813593
+1,"White","Not Hispanic","Not Hispanic",2015,"2015","true","true",91453565,114276.33362782744,943094,"United States","01000US","united-states","United States",0.6377241358674478
+2,"Black","Hispanic","Hispanic",2015,"2015","true","true",417149,15715.977960065951,3470,"United States","01000US","united-states","United States",0.002908864029007179
+2,"Black","Not Hispanic","Not Hispanic",2015,"2015","true","true",16487667,92579.5203248012,123545,"United States","01000US","united-states","United States",0.11497182411691917
+3,"American Indian","Hispanic","Hispanic",2015,"2015","true","true",140793,9184.675715786667,1289,"United States","01000US","united-states","United States",0.0009817779576026977
+3,"American Indian","Not Hispanic","Not Hispanic",2015,"2015","true","true",621613,19306.589680230136,8005,"United States","01000US","united-states","United States",0.004334632698779668
+4,"Alaska Native","Hispanic","Hispanic",2015,"2015","true","true",903,737.7518571840201,8,"United States","01000US","united-states","United States",0.000006296800946888241
+4,"Alaska Native","Not Hispanic","Not Hispanic",2015,"2015","true","true",39280,4865.072480370329,662,"United States","01000US","united-states","United States",0.0002739073545888927
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2015,"2015","true","true",78631,6872.990924936743,676,"United States","01000US","united-states","United States",0.0005483098064836869
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2015,"2015","true","true",80886,6980.151209899048,796,"United States","01000US","united-states","United States",0.0005640343758471786
+6,"Asian","Hispanic","Hispanic",2015,"2015","true","true",84539,7125.622094381379,804,"United States","01000US","united-states","United States",0.000589507480895886
+6,"Asian","Not Hispanic","Not Hispanic",2015,"2015","true","true",8187500,67808.53295111938,74646,"United States","01000US","united-states","United States",0.05709308721223419
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2015,"2015","true","true",22200,3656.339807140197,190,"United States","01000US","united-states","United States",0.00015480507311286707
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2015,"2015","true","true",217701,11444.851393373481,2007,"United States","01000US","united-states","United States",0.0015180729379164087
+8,"Other","Hispanic","Hispanic",2015,"2015","true","true",6448772,53133.9011758318,47777,"United States","01000US","united-states","United States",0.04496858652919865
+8,"Other","Not Hispanic","Not Hispanic",2015,"2015","true","true",273040,12814.232771666784,2198,"United States","01000US","united-states","United States",0.0019039629352584333
+9,"Two or More Races","Hispanic","Hispanic",2015,"2015","true","true",830786,21979.83568026809,7276,"United States","01000US","united-states","United States",0.0057932381743759625
+9,"Two or More Races","Not Hispanic","Not Hispanic",2015,"2015","true","true",2483321,38286.38568323415,22394,"United States","01000US","united-states","United States",0.017316697701248565
+1,"White","Hispanic","Hispanic",2014,"2014","true","true",14988250,55354.08220927422,117143,"United States","01000US","united-states","United States",0.1064289936032612
+1,"White","Not Hispanic","Not Hispanic",2014,"2014","true","true",90895244,112419.2653533143,934869,"United States","01000US","united-states","United States",0.6454315441924752
+2,"Black","Hispanic","Hispanic",2014,"2014","true","true",428052,15910.564909996468,3386,"United States","01000US","united-states","United States",0.0030395238650184754
+2,"Black","Not Hispanic","Not Hispanic",2014,"2014","true","true",15881657,91028.20897948563,122684,"United States","01000US","united-states","United States",0.11277292354091961
+3,"American Indian","Hispanic","Hispanic",2014,"2014","true","true",123591,8607.591748777873,1102,"United States","01000US","united-states","United States",0.0008775985020546531
+3,"American Indian","Not Hispanic","Not Hispanic",2014,"2014","true","true",603910,19030.407424732144,8112,"United States","01000US","united-states","United States",0.004288261373205375
+4,"Alaska Native","Not Hispanic","Not Hispanic",2014,"2014","true","true",35277,4610.581839392252,678,"United States","01000US","united-states","United States",0.00025049592896717396
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Hispanic","Hispanic",2014,"2014","true","true",80212,6941.048898859738,680,"United States","01000US","united-states","United States",0.0005695716601274189
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2014,"2014","true","true",85371,7170.888692934123,862,"United States","01000US","united-states","United States",0.0006062048346474079
+6,"Asian","Hispanic","Hispanic",2014,"2014","true","true",73655,6652.264978177,709,"United States","01000US","united-states","United States",0.0005230115272862545
+6,"Asian","Not Hispanic","Not Hispanic",2014,"2014","true","true",7877622,66571.5462480249,72372,"United States","01000US","united-states","United States",0.05593764325034008
+7,"Native Hawaiian and Other Pacific Islander","Hispanic","Hispanic",2014,"2014","true","true",19655,3440.511550153433,184,"United States","01000US","united-states","United States",0.00013956678526659877
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2014,"2014","true","true",229156,11741.370605737353,1956,"United States","01000US","united-states","United States",0.0016271974685603005
+8,"Other","Hispanic","Hispanic",2014,"2014","true","true",6187219,52077.42912238993,45567,"United States","01000US","united-states","United States",0.043934381356928
+8,"Other","Not Hispanic","Not Hispanic",2014,"2014","true","true",256131,12411.794391924506,2066,"United States","01000US","united-states","United States",0.0018187423188562304
+9,"Two or More Races","Hispanic","Hispanic",2014,"2014","true","true",779451,21299.788777522313,6840,"United States","01000US","united-states","United States",0.00553474791874005
+9,"Two or More Races","Not Hispanic","Not Hispanic",2014,"2014","true","true",2284183,36745.22870424509,21069,"United States","01000US","united-states","United States",0.016219591873345988
+1,"White","Hispanic","Hispanic",2019,"2019","true","true",94720,7542.675988035875,823,,,,"Police officers",0.11665527455001139
+1,"White","Not Hispanic","Not Hispanic",2019,"2019","true","true",543917,18067.325264409475,5768,,,,"Police officers",0.6698773961931856
+2,"Black","Hispanic","Hispanic",2019,"2019","true","true",4163,1583.9598640415597,28,,,,"Police officers",0.005127068284963022
+2,"Black","Not Hispanic","Not Hispanic",2019,"2019","true","true",100543,7781.725327866645,703,,,,"Police officers",0.12382676593202908
+3,"American Indian","Hispanic","Hispanic",2019,"2019","true","true",695,647.234293179247,8,,,,"Police officers",0.000855948224369277
+3,"American Indian","Not Hispanic","Not Hispanic",2019,"2019","true","true",4593,1663.8531761484244,53,,,,"Police officers",0.00565664776191092
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2019,"2019","true","true",872,724.9891145618759,6,,,,"Police officers",0.001073937916043179
+6,"Asian","Hispanic","Hispanic",2019,"2019","true","true",480,537.8875366716697,6,,,,"Police officers",0.000591158485895328
+6,"Asian","Not Hispanic","Not Hispanic",2019,"2019","true","true",17977,3291.5626638856024,173,,,,"Police officers",0.022140116876958982
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2019,"2019","true","true",933,749.9183131080575,12,,,,"Police officers",0.001149064306959044
+8,"Other","Hispanic","Hispanic",2019,"2019","true","true",21773,3621.2382930562153,167,,,,"Police officers",0.02681519523624787
+8,"Other","Not Hispanic","Not Hispanic",2019,"2019","true","true",1301,885.5460418141278,10,,,,"Police officers",0.0016022858128121285
+9,"Two or More Races","Hispanic","Hispanic",2019,"2019","true","true",3913,1535.6700725133119,35,,,,"Police officers",0.004819173240225872
+9,"Two or More Races","Not Hispanic","Not Hispanic",2019,"2019","true","true",16085,3113.5607154062823,156,,,,"Police officers",0.019809967178388233
+1,"White","Hispanic","Hispanic",2018,"2018","true","true",92730,7462.846768922618,796,,,,"Police officers",0.1166010290766979
+1,"White","Not Hispanic","Not Hispanic",2018,"2018","true","true",520884,17681.888182090228,5459,,,,"Police officers",0.6549726132814269
+2,"Black","Hispanic","Hispanic",2018,"2018","true","true",3955,1543.8843919006854,36,,,,"Police officers",0.004973116251464901
+2,"Black","Not Hispanic","Not Hispanic",2018,"2018","true","true",101497,7818.493061141997,708,,,,"Police officers",0.12762487488620303
+3,"American Indian","Hispanic","Hispanic",2018,"2018","true","true",546,573.6757516724355,5,,,,"Police officers",0.0006865541019721455
+3,"American Indian","Not Hispanic","Not Hispanic",2018,"2018","true","true",4782,1697.7398666573263,57,,,,"Police officers",0.006013006805184615
+4,"Alaska Native","Not Hispanic","Not Hispanic",2018,"2018","true","true",169,319.1668770375958,5,,,,"Police officers",0.00021250484108661648
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2018,"2018","true","true",742,668.7678829638646,6,,,,"Police officers",0.0009330094206288132
+6,"Asian","Hispanic","Hispanic",2018,"2018","true","true",695,647.2339990956735,5,,,,"Police officers",0.0008739104411550204
+6,"Asian","Not Hispanic","Not Hispanic",2018,"2018","true","true",19886,3461.8922990809283,188,,,,"Police officers",0.025005155442890267
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2018,"2018","true","true",1062,800.0832015034983,9,,,,"Police officers",0.0013353854510886787
+8,"Other","Hispanic","Hispanic",2018,"2018","true","true",24097,3809.3750244515227,176,,,,"Police officers",0.03030017251872306
+8,"Other","Not Hispanic","Not Hispanic",2018,"2018","true","true",1460,938.0988913084286,11,,,,"Police officers",0.0018358406389731364
+9,"Two or More Races","Hispanic","Hispanic",2018,"2018","true","true",5111,1755.0308735395147,43,,,,"Police officers",0.006426699661501165
+9,"Two or More Races","Not Hispanic","Not Hispanic",2018,"2018","true","true",17660,3262.4141665444345,164,,,,"Police officers",0.02220612718100383
+1,"White","Hispanic","Hispanic",2017,"2017","true","true",83985,7103.143667330638,730,,,,"Police officers",0.10640225207648141
+1,"White","Not Hispanic","Not Hispanic",2017,"2017","true","true",529964,17834.323560477205,5334,,,,"Police officers",0.6714218386552407
+2,"Black","Hispanic","Hispanic",2017,"2017","true","true",3469,1445.929137198073,23,,,,"Police officers",0.004394944483578187
+2,"Black","Not Hispanic","Not Hispanic",2017,"2017","true","true",105853,7984.333299109812,733,,,,"Police officers",0.13410725235520374
+3,"American Indian","Hispanic","Hispanic",2017,"2017","true","true",636,619.1527912059121,8,,,,"Police officers",0.0008057609373178803
+3,"American Indian","Not Hispanic","Not Hispanic",2017,"2017","true","true",4276,1605.4102384460393,57,,,,"Police officers",0.005417348691778704
+4,"Alaska Native","Not Hispanic","Not Hispanic",2017,"2017","true","true",221,364.98120761449104,8,,,,"Police officers",0.0002799892565208358
+6,"Asian","Hispanic","Hispanic",2017,"2017","true","true",554,577.8629713463529,6,,,,"Police officers",0.0007018735208712354
+6,"Asian","Not Hispanic","Not Hispanic",2017,"2017","true","true",15759,3081.8475714342185,139,,,,"Police officers",0.01996538775344729
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2017,"2017","true","true",2159,1140.7677982075552,14,,,,"Police officers",0.0027352796598573955
+8,"Other","Hispanic","Hispanic",2017,"2017","true","true",22553,3685.3815843138395,164,,,,"Police officers",0.02857284028196565
+8,"Other","Not Hispanic","Not Hispanic",2017,"2017","true","true",1533,961.2649763262023,11,,,,"Police officers",0.0019421879196671549
+9,"Two or More Races","Hispanic","Hispanic",2017,"2017","true","true",3053,1356.4751662546507,30,,,,"Police officers",0.003867905883068378
+9,"Two or More Races","Not Hispanic","Not Hispanic",2017,"2017","true","true",15301,3036.7395543338343,149,,,,"Police officers",0.019385138525001393
+1,"White","Hispanic","Hispanic",2016,"2016","true","true",80071,6935.716286760633,694,,,,"Police officers",0.10764936886018395
+1,"White","Not Hispanic","Not Hispanic",2016,"2016","true","true",508230,17465.970435314437,5119,,,,"Police officers",0.6832765762362314
+2,"Black","Hispanic","Hispanic",2016,"2016","true","true",3731,1499.5254375993125,31,,,,"Police officers",0.005016045699658382
+2,"Black","Not Hispanic","Not Hispanic",2016,"2016","true","true",93346,7498.171366054108,711,,,,"Police officers",0.12549659659080978
+3,"American Indian","Hispanic","Hispanic",2016,"2016","true","true",990,772.4732608701996,6,,,,"Police officers",0.0013309796951653172
+3,"American Indian","Not Hispanic","Not Hispanic",2016,"2016","true","true",2279,1172.0410945679698,38,,,,"Police officers",0.00306394214674925
+4,"Alaska Native","Not Hispanic","Not Hispanic",2016,"2016","true","true",216,360.82884431460553,9,,,,"Police officers",0.000290395569854251
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2016,"2016","true","true",182,331.21509903570825,5,,,,"Police officers",0.00024468515608089665
+6,"Asian","Hispanic","Hispanic",2016,"2016","true","true",649,625.4480922968493,7,,,,"Police officers",0.0008725311334972634
+6,"Asian","Not Hispanic","Not Hispanic",2016,"2016","true","true",14782,2984.79755627607,140,,,,"Police officers",0.019873274599933047
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2016,"2016","true","true",808,697.8771709210325,9,,,,"Police officers",0.0010862945390844204
+8,"Other","Hispanic","Hispanic",2016,"2016","true","true",19029,3385.412521324949,142,,,,"Police officers",0.025583043049798807
+9,"Two or More Races","Hispanic","Hispanic",2016,"2016","true","true",5429,1808.7804908993216,42,,,,"Police officers",0.007298877540457077
+9,"Two or More Races","Not Hispanic","Not Hispanic",2016,"2016","true","true",14071,2912.1385712811852,123,,,,"Police officers",0.01891738918249614
+1,"White","Hispanic","Hispanic",2015,"2015","true","true",81414,6993.1473866517,661,,,,"Police officers",0.11068783241426568
+1,"White","Not Hispanic","Not Hispanic",2015,"2015","true","true",498901,17305.17903573876,5012,,,,"Police officers",0.6782896096409654
+2,"Black","Hispanic","Hispanic",2015,"2015","true","true",2524,1233.3779248337844,22,,,,"Police officers",0.0034315484930553287
+2,"Black","Not Hispanic","Not Hispanic",2015,"2015","true","true",91413,7420.156147147774,680,,,,"Police officers",0.12428214833425784
+3,"American Indian","Hispanic","Hispanic",2015,"2015","true","true",500,548.9782679840032,5,,,,"Police officers",0.0006797837743770461
+3,"American Indian","Not Hispanic","Not Hispanic",2015,"2015","true","true",4163,1584.0555993520309,52,,,,"Police officers",0.005659879705463286
+6,"Asian","Not Hispanic","Not Hispanic",2015,"2015","true","true",16211,3125.721548239958,155,,,,"Police officers",0.02203994953285259
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2015,"2015","true","true",1246,866.6256164973569,8,,,,"Police officers",0.001694021165747599
+8,"Other","Hispanic","Hispanic",2015,"2015","true","true",20626,3524.455971612204,152,,,,"Police officers",0.028042440260601906
+8,"Other","Not Hispanic","Not Hispanic",2015,"2015","true","true",1323,893.0016957140584,11,,,,"Police officers",0.0017987078670016641
+9,"Two or More Races","Hispanic","Hispanic",2015,"2015","true","true",4429,1633.7544239175595,40,,,,"Police officers",0.006021524673431875
+9,"Two or More Races","Not Hispanic","Not Hispanic",2015,"2015","true","true",12778,2775.1281753125604,113,,,,"Police officers",0.017372554137979793
+1,"White","Hispanic","Hispanic",2014,"2014","true","true",76854,6794.710088189951,641,,,,"Police officers",0.10212735422195232
+1,"White","Not Hispanic","Not Hispanic",2014,"2014","true","true",522939,17714.831380688836,5150,,,,"Police officers",0.6949069207780144
+2,"Black","Hispanic","Hispanic",2014,"2014","true","true",3443,1440.4901850401914,29,,,,"Police officers",0.0045752268012879205
+2,"Black","Not Hispanic","Not Hispanic",2014,"2014","true","true",89396,7337.860268599704,675,,,,"Police officers",0.1187937772663186
+3,"American Indian","Not Hispanic","Not Hispanic",2014,"2014","true","true",4077,1567.608541054751,58,,,,"Police officers",0.005417717010993567
+4,"Alaska Native","Not Hispanic","Not Hispanic",2014,"2014","true","true",295,421.6821567240764,9,,,,"Police officers",0.00039201042880625513
+5,"American Indian and Alaska Native tribes specified; or American Indian or Alaska Native, not specified and no other races","Not Hispanic","Not Hispanic",2014,"2014","true","true",632,617.2088379790787,5,,,,"Police officers",0.0008398325118832314
+6,"Asian","Not Hispanic","Not Hispanic",2014,"2014","true","true",16448,3148.480987713109,145,,,,"Police officers",0.021856906891543338
+7,"Native Hawaiian and Other Pacific Islander","Not Hispanic","Not Hispanic",2014,"2014","true","true",552,576.8239483754191,9,,,,"Police officers",0.0007335245989866198
+8,"Other","Hispanic","Hispanic",2014,"2014","true","true",19406,3418.667754364569,138,,,,"Police officers",0.02578764197089555
+8,"Other","Not Hispanic","Not Hispanic",2014,"2014","true","true",1022,784.8710821162897,9,,,,"Police officers",0.0013580835872542129
+9,"Two or More Races","Hispanic","Hispanic",2014,"2014","true","true",4252,1600.7764010924684,38,,,,"Police officers",0.0056502655704549045
+9,"Two or More Races","Not Hispanic","Not Hispanic",2014,"2014","true","true",13215,2822.1757314493034,134,,,,"Police officers",0.017560738361609023
