@@ -1,0 +1,28 @@
+# Introduction
+
+```{r, echo = FALSE, message = FALSE}
+source(here::here("Setup/set.R"))
+```
+
+# Table of content 
+
+1. **Introduction**
+    + Purpose
+    + Objective
+
+2. **Data**
+    + Description 
+    + Sources 
+
+3. **Exploratory Data Analysis**
+    + REAL ESTATE
+    + EDUCATION
+    + CRIME
+    + NEW VARIABLES
+
+4. **Multivariate analysis** 
+    + All the variables 
+    + One-to-one analysis 
+    + Modeling 
+
+5. **Final analysis**

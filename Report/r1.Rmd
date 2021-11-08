@@ -1,0 +1,92 @@
+---
+title: "Does race and politics have an impact on police violence in the United States ?"
+author: "Jérémy Olivier and Chloé Mousse"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+
+
+# 3. Exploratory Data Analysis
+
+
+## REAL ESTATEs
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#Library 
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#Dowload data
+Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
+democratic_vs_republican_votes_by_usa_state_2020 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_by_usa_state_2020.csv"))
+democratic_vs_republican_votes_usa_2016 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_usa_2016.csv"))
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+head(Gender_Composition)
+summary(Gender_Composition)
+str(Gender_Composition)
+str(Gender_Composition)
+
+colSums(is.na(Gender_Composition))
+
+Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
+  tail(10) %>%
+  ggplot( aes(x=Year, y=share)) +
+  geom_line() +
+  geom_point()
+
+library(DT)
+datatable(Gender_Composition, options = list(pageLength = 5))
+
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+
+democratic_vs_republican_votes_usa_2016 <- democratic_vs_republican_votes_usa_2016 %>% 
+  rename(
+    state = ï..State,
+  )
+
+election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
+
+election <- election %>% 
+  rename(
+    percent_democrat_2016 = percD,
+    percent_democrat_2020 = percent_democrat
+  )
+
+par(mar=c(1, 5, 1, 1))
+barplot(election$percent_democrat_2016 ~ election$usa_state_code,
+        horiz = TRUE)
+
+
+all_states <- map_data("state")
+election$region <- tolower(election$usa_state)
+totaldf <- merge(all_states, election, by = "region")
+# switched to data.table to fix the cut up map issue
+# getting sort by region then order 
+totaldt <- as.data.table(totaldf)
+setkey(totaldt, region, order)
+ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "GnBu"))
+
+ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "GnBu"))
+```
+
+
+
