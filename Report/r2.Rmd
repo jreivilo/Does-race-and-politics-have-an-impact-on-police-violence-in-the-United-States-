@@ -1,0 +1,200 @@
+---
+title: "Does race and politics have an impact on police violence in the United States ?"
+author: "Jérémy Olivier and Chloé Mousset"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+# 2013-2021 POLICE KILLINGS
+
+# 1) Cleaning the Police Mapping dataset 
+## Table 1
+
+To get started, we had to rearrange the dataset in order to retain only the variables and observations we needed. This dataset was huge, we had to concentrate on the essential : Moving from 53 variables to 14. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
+Our most important variables were : race, sex, state and date. These are the ones we are going to link with other datasets to run our hypothesis. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+
+library(readr)
+X2013_2021_police_killings <- X2013_2021_police_killings <- read_delim(file=here::here("Data/2013_2021_police_killings.csv"), 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+
+head(X2013_2021_police_killings)
+summary(X2013_2021_police_killings)
+str(X2013_2021_police_killings)
+
+library(tidyverse)
+library(dplyr)
+
+## Selecting the main variables
+police_killings <- X2013_2021_police_killings %>% 
+select(.,c(2:4,6,8:9,11,14,17,19,20,23:24)) ##keeping the main variables
+names(police_killings)[1:13]<-c("age","gender","race", "date_of_incident", "city","state","county","cause_of_death","criminal_charges","mental_illness","armed_status","fleing","body_camera") ## Renaming the variables 
+police_killings$date_of_incident<-as.Date(police_killings$date_of_incident,"%d/%m/%Y") #changing character to date type
+police_killings$date_of_incident<-format(police_killings$date_of_incident,"%Y")
+
+
+##NA
+police_killings <- police_killings[!police_killings$race== "Unknown race", ]
+#We don't want to delete the NAs from the other columns because some of these observations are related to known race/sex which are observations we need, so we switched them to "unknown" 
+
+
+##Tiyding the observations
+#Fleing
+police_killings$fleing[police_killings$fleing %in% c("car","foot","Foot","Car","car,foot")]<-"yes"
+police_killings$fleing[police_killings$fleing %in% c("not fleeing","Not fleeing","Not Fleeing")]<-"no"
+police_killings$fleing[police_killings$fleing %in% c("Other")]<-"other"
+
+#Armed Status
+police_killings$armed_status[police_killings$armed_status %in% c("Allegedly Armed")]<-"Allegedly armed"
+police_killings$armed_status[police_killings$armed_status %in% c("Unarmed/Did Not Have Actual Weapon")]<-"Unarmed"
+
+#Body Camera
+#We have multiple observations here such as : Surveillance video, dashcam, bystander video, but we want only yes and no observations to make it easier. So every observations will be no unless it is "yes" or "Yes". The reason is that having a body camera has a lot more psychological pressure on a person than an external camera, because we might not know of it. 
+
+police_killings$body_camera[police_killings$body_camera%in% c("Yes")]<-"yes"
+police_killings$body_camera[police_killings$body_camera%in% c("Bystander Video","cell phone video","Dashcam video","Dashcam Video","No", "surveillance video", "Surveillance video","Surveillance Video")]<-"no"
+
+police_killings$mental_illness[police_killings$mental_illness %in% c("unknown")]<-"Unknown"
+police_killings$mental_illness[police_killings$mental_illness %in% c("Drug or Alcohol Use")]<-"Drug or alcohol use"
+police_killings$mental_illness[police_killings$mental_illness %in% c(NA)]<-"Unknown"
+
+
+```
+## Table 2
+
+The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states. 
+In this table we want to focus only on black versus white killings. Our main variables will be : 
+- State 
+- State abbrevation 
+- Total population 
+- Black population 
+- White population 
+- Black people killed 
+- White people killed 
+- Total people killed 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(readr)
+Killingsbystate <- read_delim(file=here::here("Data/2013-2021_killings_by_state.csv"), 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+head(Killingsbystate)
+summary(Killingsbystate)
+str(Killingsbystate)
+
+kbs<- Killingsbystate %>%
+select(.,c(1:4,9,14,19,21)) %>%
+arrange(.,desc(Killingsbystate$`Total Population`)) %>%
+subset(.,!Killingsbystate$`State Abbreviation`=="") 
+view(kbs)
+#Now we have 51 observations for 8 variables ordered from the most populated State to the least.
+```
+
+# 2) Analysing our variables 
+## Table 1
+
+In this part we analysed our most important variables : 
+
+-Average people killed per year
+-Percentage of black and white people killed 
+-Percentage of male and female killed
+-Percentage of officers charged
+-Percentage of officers wearing a body camera
+-Percentage of victim's armed
+-Percentage of victim's showing a mental illness or uncapacity to be clear minded
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+killings.race<-table(police_killings$race)
+prop.table(killings.race)*100
+       
+killings.gender<-table(police_killings$gender)
+prop.table(killings.gender)*100
+
+#Not finished, still other variables to organize, rename observation in order to have simplified analysis. 
+       
+```
+We want to create a table with the total killings per year for black and white people to compare the evolution throughout the year. 
+
+### Total killings of black and white people from 2013 to 2021
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+bpk <- police_killings %>% 
+  count(., race=="Black", date_of_incident)
+bpk <- subset(bpk,bpk$`race == "Black"`!="FALSE" )
+names(bpk)[2:3] <- c("year", "black people killed")
+bpk<- select(bpk,!c(1))
+#creation of a table of black people killed throughout the years
+wpk <- police_killings %>% 
+     count(., race=="White", date_of_incident)
+wpk <- subset(wpk,wpk$`race == "White"`!="FALSE" )
+names(wpk)[2:3] <- c("year", "white people killed")
+wpk<- select(wpk,!c(1))
+#creation of a table of white people killed
+
+killings_per_year<-merge(wpk, bpk, by="year")
+
+tpk <- police_killings %>% 
+    count(.,date_of_incident)
+names(tpk)[1:2] <- c("year", "total people killed")
+
+killings_per_year<- merge(killings_per_year, tpk, by="year") 
+#merging all the tables because I don't know how to do it another way
+
+killings_per_year<- killings_per_year %>% mutate(.,"other people killed" = `total people killed`-`white people killed`-`black people killed`, "perc_bpk" = `black people killed`/`total people killed`, "perc_wpk" = `white people killed`/`total people killed`, "perc_opk" = `other people killed`/`total people killed`)
+
+killings_per_year <- killings_per_year[ ,c(1,2,7,3,6,5,8,4)]
+
+library(DT)
+
+datatable(killings_per_year, options = list(pageLength = 5))
+
+summary(killings_per_year)
+```
+In average, 964 people were killed each year since 2013, 0,28 % being black people and 0,48 being white people.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+```
+## Table 2 
+
+
+# 3) Graphic vizualisation 
+
+## Table 1
+
+Total people killed per State
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+barplot(kbs$`# People Killed`~kbs$`State Abbreviation`, horiz = TRUE)
+ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`# People Killed`))
+#a graph on the total killings of each state
+```
+
+Total population per State
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`Total Population`)) #a graph on the total population of each state
+
+
+```
+We can see a slight correlation between the 2 graphs, the pattern is similar with the bigger cities having the highest count of deaths. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+ggplot(police_killings)+geom_bar(mapping=aes(x=race,y=stat(prop), group=1)) 
+```
+We can see that White people are the most killed and Black people are the second most killed
+
+
+## Table 2
+
+Killings per year 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+KPY <- pivot_longer(killings_per_year, c(`white people killed`,`black people killed`,`total people killed`), names_to = "population killed", values_to = "count")
+
+KPY %>%
+     filter(KPY$`population killed` %in% c("white people killed", "black people killed","total people killed")) %>%
+    ggplot(aes(x = year, y = count, group = `population killed`, colour = `population killed`)) +
+    geom_line()
+```
+
