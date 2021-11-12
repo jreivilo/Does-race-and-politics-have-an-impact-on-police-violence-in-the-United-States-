@@ -1,0 +1,24 @@
+# 2. Data
+
+
+## Sources 
+For this research, we are using a variety of datasets gathered from both official and non-official sources. 
+...
+
+We decided to focus our analysis on a time window that goes from 2013 to 2020
+
+## Description
+
+
+
+#### **offender**
+   
+
+#### **police**  
+
+
+  
+#### **USA Election**
+
+* **Origin** : From Kaggle.com, an online platform of data scientists and machine learning practitioners sharing their research and analysis and from worldpopulationreview.com, an independent organization without political affiliations. https://worldpopulationreview.com/state-rankings/2016-election-results-by-state and https://www.kaggle.com/paultimothymooney/percent-voting-for-democratic-party-by-state?select=democratic_vs_republican_votes_by_usa_state_2020.csv 
+

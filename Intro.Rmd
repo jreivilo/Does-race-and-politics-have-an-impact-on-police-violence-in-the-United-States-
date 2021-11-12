@@ -1,0 +1,49 @@
+
+
+```{r, echo = FALSE, message = FALSE}
+source(here::here("Setup/set.R"))
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Table of content 
+
+1. **Introduction**
+    + Purpose
+    + Objective
+
+2. **Data**
+    + Description 
+    + Sources 
+
+3. **Exploratory Data Analysis**
+    + Officer composition
+    + Offender composition
+    + USA Election
+    + NEW VARIABLES
+
+4. **Multivariate analysis** 
+    + All the variables 
+    + One-to-one analysis 
+    + Modeling 
+
+5. **Final analysis**
+
+# 1. Introduction
+
+## Purpose
+
+Since the “Black Lives Matter” movement, the media have put in light the police violence and discrimination towards the public. Their feeling of power push them to behave like they’re above the law. In 2021, already 827 people have been killed by the police in the USA, 28% of them are Black people.
+Do black people have a tendency to do more crimes or is the police racist ?
+ 
+We thought it would be interesting to go deeper in this analysis and discover the factors of killing rate and what influences the police to be more violent or not. We chose the United States because we knew we would find more data, moreover, having 50 states with different law policies, it is easier to compare.
+
+In the searching of our variables of interest, we found that the location (state) factors gather interesting variables : 
+
+- minorities percentage 
+- political orientation
+- police killings rate 
+- crime rate 
+ 
+We were motivated on this project because we think police violence is a good description of how the world is right now : separated, with still a lot of discrimination, corruption and inequalities. Every day we can see new evidence of how the police behave through social media, but can we believe everything we see ? That’s why we chose this project.
