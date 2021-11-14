@@ -7,11 +7,14 @@ output: html_document
 
 # 2013-2021 POLICE KILLINGS
 
-# 1) Cleaning the Police Mapping dataset 
+# 1) Cleaning the dataset 
+
 ## Table 1
 
-To get started, we had to rearrange the dataset in order to retain only the variables and observations we needed. This dataset was huge, we had to concentrate on the essential : Moving from 53 variables to 14. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
+
+To get started, we had to rearrange the dataset in order to retain only the variables and observations we needed. This dataset was huge, we had to concentrate on the essential : Moving from 53 variables to 13. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
 Our most important variables were : race, sex, state and date. These are the ones we are going to link with other datasets to run our hypothesis. 
+
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -63,18 +66,22 @@ police_killings$mental_illness[police_killings$mental_illness %in% c(NA)]<-"Unkn
 
 
 ```
+
 ## Table 2
 
-The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states. 
+The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 51 observations corresponding to the states. 
 In this table we want to focus only on black versus white killings. Our main variables will be : 
-- State 
-- State abbrevation 
-- Total population 
-- Black population 
-- White population 
-- Black people killed 
-- White people killed 
-- Total people killed 
+
+* State 
+* State abbrevation 
+* Total population 
+* Black population 
+* White population 
+* Black people killed 
+* White people killed 
+* Total people killed 
+
+We need to clean the empty rows and select the interesting variables to make the table easy to use.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 library(readr)
@@ -86,26 +93,28 @@ summary(Killingsbystate)
 str(Killingsbystate)
 
 kbs<- Killingsbystate %>%
-select(.,c(1:4,9,14,19,21)) %>%
+mutate(.,"Other population" = `Black Population`+`Hispanic Population`+`Asian Population`+`Pacific Islander Population`+`Other Population`) %>% select(.,c(1:4,9,14,19,21,37)) %>%
 arrange(.,desc(Killingsbystate$`Total Population`)) %>%
 subset(.,!Killingsbystate$`State Abbreviation`=="") 
+
 view(kbs)
 #Now we have 51 observations for 8 variables ordered from the most populated State to the least.
 ```
 
-# 2) Analysing our variables 
+# 2) Analysis of the variables 
+
 ## Table 1
 
-In this part we analysed our most important variables : 
+In this part we analysed our most important variables :   
 
--Average people killed per year
--Percentage of black and white people killed 
--Percentage of male and female killed
--Percentage of officers charged
--Percentage of officers wearing a body camera
--Percentage of victim's armed
--Percentage of victim's showing a mental illness or uncapacity to be clear minded
-
+* Average people killed per year  
+* Percentage of black and white people killed   
+* Percentage of male and female killed  
+* Percentage of officers charged  
+* Percentage of officers wearing a body camera  
+* Percentage of victim's armed  
+* Percentage of victim's showing a mental illness or uncapacity to be clear minded  
+  
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 killings.race<-table(police_killings$race)
 prop.table(killings.race)*100
@@ -116,6 +125,7 @@ prop.table(killings.gender)*100
 #Not finished, still other variables to organize, rename observation in order to have simplified analysis. 
        
 ```
+
 We want to create a table with the total killings per year for black and white people to compare the evolution throughout the year. 
 
 ### Total killings of black and white people from 2013 to 2021
@@ -152,42 +162,52 @@ datatable(killings_per_year, options = list(pageLength = 5))
 
 summary(killings_per_year)
 ```
+
 In average, 964 people were killed each year since 2013, 0,28 % being black people and 0,48 being white people.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 ```
 ## Table 2 
 
+Here's a preview of our cleaned data table for the killings per state. 
+
+```{r}
+datatable(kbs, options = list(pageLength = 10))
+
+
+```
+
 
 # 3) Graphic vizualisation 
 
 ## Table 1
 
-Total people killed per State
+### Total people killed per State
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 barplot(kbs$`# People Killed`~kbs$`State Abbreviation`, horiz = TRUE)
 ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`# People Killed`))
 #a graph on the total killings of each state
 ```
 
-Total population per State
+### Total population per State
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`Total Population`)) #a graph on the total population of each state
 
 
 ```
+
 We can see a slight correlation between the 2 graphs, the pattern is similar with the bigger cities having the highest count of deaths. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 ggplot(police_killings)+geom_bar(mapping=aes(x=race,y=stat(prop), group=1)) 
 ```
-We can see that White people are the most killed and Black people are the second most killed
 
+We can see that White people are the most killed and Black people are the second most killed
 
 ## Table 2
 
-Killings per year 
+### Killings per year 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 KPY <- pivot_longer(killings_per_year, c(`white people killed`,`black people killed`,`total people killed`), names_to = "population killed", values_to = "count")
@@ -198,3 +218,4 @@ KPY %>%
     geom_line()
 ```
 
+This graph shows that there was 3 major phase since 2013 in police killings. We can see that globally the killings rose from 2013 to 2015 then stagnated until 2018 when it finally started dropping. 
