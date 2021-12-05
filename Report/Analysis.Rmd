@@ -1,0 +1,321 @@
+# Modelling
+## Armed and Unarmed (Black and white)
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
+Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
+pk <- read.csv(file = here::here("Data/2013_2021_police_killings.csv"), sep = ";")
+Killingsbystate <- read.csv(file = here::here("Data/2013-2021_killings_by_state.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
+Race_and_ethnicity <- read.csv(file = here::here("Data/Race_and_ethnicity.csv"))
+democratic_vs_republican_votes_by_usa_state_2020 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_by_usa_state_2020.csv"))
+democratic_vs_republican_votes_usa_2016 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_usa_2016.csv"))
+rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
+cr <- read.csv(file = here::here("Data/crime_rate.csv"), sep = ";")
+
+
+election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
+election <- election %>% 
+  rename(
+    percent_democrat_2016 = percD,
+    percent_democrat_2020 = percent_democrat
+  )
+election$percent_democrat_2016 <- election$percent_democrat_2016 * 100
+election_percent <- election %>% select(percent_democrat_2020, percent_democrat_2016, state)
+
+names(Killingsbystate)[1]<-paste("state")
+state <- Killingsbystate[c("state", "State.Abbreviation")]
+
+pk_count_armed <- count(pk, Victim.s.race, Armed.Unarmed.Status)
+
+#subset(subset(pk_count_armed, Victim.s.race == "White"))[2:3][2:6,][-4,]
+#subset(subset(pk_count_armed, Victim.s.race == "White"),Armed.Unarmed.Status== "Allegedly Armed") [3]
+#subset(subset(pk_count_armed, Victim.s.race == "White"),Armed.Unarmed.Status== "Unarmed/Did Not Have Actual Weapon")[3]
+#subset(subset(pk_count_armed, Victim.s.race == "Black"))[2:3][2:5,]
+#subset(subset(pk_count_armed, Victim.s.race == "Black"),Armed.Unarmed.Status== "Allegedly Armed")[3]
+#subset(subset(pk_count_armed, Victim.s.race == "Black"),Armed.Unarmed.Status== "Unarmed/Did Not Have Actual Weapon")[3]
+
+plt_white <- subset(subset(pk_count_armed, Victim.s.race == "White"))[2:3][2:6,][-4,]
+ggplotwhite <- ggplot(plt_white, aes(x=Armed.Unarmed.Status, y=n)) + 
+  geom_bar(stat="identity", fill="White") +
+  labs(title = "White Armed/unaremed Status",
+       subtitle = "2013-2020 ",
+       x = "Armed Status",
+       y= "Number") +
+    geom_text(aes(label=n)) 
+ggplotwhite
+
+plt_black <- subset(subset(pk_count_armed, Victim.s.race == "Black"))[2:3][2:5,]
+ggplotblack <- ggplot(plt_black, aes(x=Armed.Unarmed.Status, y=n)) + 
+  geom_bar(stat="identity", fill="Black") +
+  labs(title = "Black Armed/unaremed Status",
+       subtitle = "2013-2020 ",
+       x = "Armed Status",
+       y= "Number") +
+    geom_text(aes(label=n), color = "white") 
+ggplotblack
+
+#grid.arrange(ggplotwhite, ggplotblack, ncol=2)
+
+```
+
+
+## Can we predict the number of people getting shot by the police with the democratic percentage?
+
+### Correlation table
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#setp data
+election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
+Killingsbystate$X..White <- Killingsbystate$'White.Population' / Killingsbystate$'Total.Population'
+Killingsbystate$X..Hispanic <- Killingsbystate$'Hispanic.Population' / Killingsbystate$'Total.Population'
+Killingsbystate$X..Asian <- Killingsbystate$'Asian.Population' / Killingsbystate$'Total.Population'
+
+b_pop <- data.frame(Killingsbystate[c("state","Rate..All.People.", "X..People.Killed", "Total.Population", "X..African.American","X..White", "X..Hispanic", "X..Asian", "X..Victims.Black","Rate..Black.People.","X..White", "Disparity", "Disparity.in.Rate", "Black.White.Disparity")])
+b_pop <- b_pop[1:51,]
+vote_rel <- merge(b_pop, election_percent, by = "state")
+
+vote_rel$X..African.American <- as.numeric(sub(",", ".", vote_rel$X..African.American, fixed = TRUE))
+vote_rel$Disparity <- as.numeric(sub(",", ".", vote_rel$Disparity, fixed = TRUE))
+vote_rel$X..Victims.Black <- as.numeric(sub(",", ".", vote_rel$X..Victims.Black, fixed = TRUE))
+vote_rel$Rate..All.People. <- as.numeric(sub(",", ".", vote_rel$Rate..All.People., fixed = TRUE))
+vote_rel$Rate..Black.People. <- as.numeric(sub(",", ".", vote_rel$Rate..Black.People., fixed = TRUE))
+vote_rel$Black.White.Disparity <- as.numeric(sub(",", ".", vote_rel$Black.White.Disparity, fixed = TRUE))
+vote_rel$Disparity.in.Rate <- as.numeric(sub(",", ".", vote_rel$Disparity.in.Rate, fixed = TRUE))
+
+vote_rel$X..Victims.Black <- vote_rel$X..Victims.Black * 100
+vote_rel$Disparity <- vote_rel$Disparity * 100
+vote_rel$X..African.American <- vote_rel$X..African.American * 100
+vote_rel$X..White <- vote_rel$X..White * 100
+vote_rel$X..Asian <- vote_rel$X..Asian * 100
+vote_rel$X..Hispanic <- vote_rel$X..Hispanic * 100
+vote_rel_new <- merge(vote_rel, cr[c("state", "X2016")], by = "state")
+vote_rel_new <- vote_rel_new[c("Rate..All.People.", "Disparity.in.Rate", "Black.White.Disparity", "percent_democrat_2016", "X2016", "X..African.American", "X..White", "X..Hispanic", "X..Asian", "Total.Population")]
+
+vote_rel_new <- vote_rel_new %>% 
+  rename(
+    percent_black = X..African.American,
+    percent_asian = X..Asian,
+    percent_white = X..White,
+    percent_hispanic = X..Hispanic,
+    violent_crime_2016 = X2016
+  )
+
+#$disparity_diff <- vote_rel$X..Victims.Black / vote_rel$X..African.American
+
+par(mfrow=c(1,1))
+#vote_no_state <- vote_rel[,-(1)]
+c <- cor(vote_rel_new)
+#corrplot(c, method = "number")
+
+palette = colorRampPalette(c("green", "white", "red")) (20)
+ggcorr(c, nbreaks = 8, palette = "RdGy", label = TRUE, label_size = 3, label_color = "white", legend.size = 9, digits = 3)
+
+#heatmap(x = c, col = palette, symm = TRUE)
+
+vote_rel_new_no8 <- vote_rel_new[vote_rel_new$Disparity.in.Rate <8, ]
+vote_rel_no45 <- vote_rel[vote_rel$X..People.Killed >45, ]
+```
+
+Based on the correlation table, percent_democrat_2016 is slightly correlated with violent_crime_2016. 
+
+### Plot 1
+```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
+
+#Rate..All.People
+ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Rate..All.People.)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed",
+             color="darkred", fill="blue") +
+  ggtitle("Rate..All.People - percent_democrat_2016") +
+  xlab("Percent of democrat in 2016 (percent_democrat_2016)") + ylab("Number of people shoot by 125'000 habitant ( Rate..All.People.)")
+
+```
+
+First of all, there is a clear negative correlation between the percentage of democrat in a stat and the number of people killed by 125'000 people. Police in more democratic state seems to kill less people every year
+
+
+### Plot 2
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Rate..All.People.)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed",
+             color="darkred", fill="blue") +
+  ggtitle("Rate..All.People - Violent_crime 2016") +
+  xlab("Violent Crime Rates per 100'000 habitants in 2016 (violent_crime_2016)") + ylab("Number of people shoot by 125'000 habitant")
+```
+
+Secondly, Violent Crime Ratest is strongly correlated to the number of people killed. Obviously, more violent crimes in a state lead to more shooting by the police.
+
+
+### Multilinear regression
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+lm.fit <- lm(Rate..All.People. ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new)
+tab_model(lm.fit)
+
+#knitr::kable(bptest(lm.fit)[4])
+```
+
+An R-squared of 0.709 is very high as well as the adjusted R-squared. 
+
+Percent white and percent black are extremely significative (p<0.001).Percent asian is also significative with 2 stars (p<0.01) and in the end percent hispanic but with only 1 star (p<0.5).
+
+Weirdly, all demographic variable are negative.
+
+The variable we were interested primarily, percent democrat 2016, is also significative but with p<0.05. In this regression, police in less democratic state definitely shoot more people during arrest than more democratic state. 
+
+As expected, the Total Population variable has no influence on Rate All People. Maybe we can remove this variable to get a better regression.
+
+### Regression Diagnosis
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow=c(2,2))
+plot(lm.fit)
+par(mfrow=c(1,1))
+
+```
+**Residual vs Fitted :** The curve is flat meaning there is no heteroscedasticity 
+
+**Normal Q-Q :** The linearity regression fit perfectly all the variable. The curve stay flat on both extreme. 
+
+**Scale-Location :** The red line is roughly horizontal across the plot; homoscedasticity is satisfied. 
+
+**Residual vs Leverage :** Observation 5 is slightly out of the red line meaning this observation has a huge impact on our regression. Globally, there is no big anomaly.
+
+The 4 plots indicate our multilinear regression is really good and there is no issue with it. 
+
+### Exhaustive Search
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+regsubsets.out <-
+regsubsets(Rate..All.People. ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new,
+             nbest = 1,       # 1 best model for each number of predictors
+             nvmax = NULL,    # NULL for no limit on number of variables
+             force.in = NULL, force.out = NULL,
+             method = "exhaustive")
+plot(regsubsets.out, scale = "adj", main = "Adjusted-r2")
+
+
+```
+
+Three models have a close adj R2; 5, 6 or 7 variables. Let's take a deeper look and choose the best one according to other criteria.
+
+
+### Forward selection
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow = c(1, 1))
+model.f2 <- regsubsets(Rate..All.People. ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new, nvmax = 20, method = "forward")
+plot(model.f2)
+sum.model.f <- summary(model.f2)
+#sum.model.f
+par(mfrow = c(1, 2))
+plot(sum.model.f$cp, xlab = "No. of variables", ylab = "RSS", type = "l")
+points(which.min(sum.model.f$cp), sum.model.f$cp[which.min(sum.model.f$cp)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$cp, xlab = "No. of variables", ylab = "Cp", type = "l")
+points(which.min(sum.model.f$cp), sum.model.f$cp[which.min(sum.model.f$cp)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$bic, xlab = "No. of variables", ylab = "BIC", type = "l") #6 variables is the best model
+points(which.min(sum.model.f$bic), sum.model.f$bic[which.min(sum.model.f$bic)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$adjr2, xlab = "No. of variables", ylab = "Adj. R2", type = "l")
+points(which.max(sum.model.f$adjr2), sum.model.f$adjr2[which.max(sum.model.f$adjr2)], col = "blue", cex = 3, pch = 20)
+#coef(model.f2,6)
+```
+
+All indicator suggest for the forward selection the model with all variables included (7 variables)
+
+In the forward selection, percent_asian is surprisingly the last variable to be added to the regression and violent_crime_2016 is the first one as the plot suggested it. 
+
+### Backward selection
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+par(mfrow = c(1, 1))
+model.f1 <- regsubsets(Rate..All.People. ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new, nvmax = 20, method = "backward")
+plot(model.f1)
+sum.model.f <- summary(model.f1)
+#sum.model.f
+par(mfrow = c(1, 2))
+plot(sum.model.f$cp, xlab = "No. of variables", ylab = "RSS", type = "l")
+points(which.min(sum.model.f$cp), sum.model.f$cp[which.min(sum.model.f$cp)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$cp, xlab = "No. of variables", ylab = "Cp", type = "l")
+points(which.min(sum.model.f$cp), sum.model.f$cp[which.min(sum.model.f$cp)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$bic, xlab = "No. of variables", ylab = "BIC", type = "l") #6 variables is the best model
+points(which.min(sum.model.f$bic), sum.model.f$bic[which.min(sum.model.f$bic)], col = "blue", cex = 3, pch = 20)
+plot(sum.model.f$adjr2, xlab = "No. of variables", ylab = "Adj. R2", type = "l")
+points(which.max(sum.model.f$adjr2), sum.model.f$adjr2[which.max(sum.model.f$adjr2)], col = "blue", cex = 3, pch = 20)
+#coef(model.f1,6)
+
+```
+However, for the backward selection, it is less explicit. The best model seems to be the one with 6 variables.
+
+Obviously, Total.Population is the first variable to me removed
+from the backward selection process. This variable is the less significative in the base model with the 7 variables. 
+
+
+### Conclusion
+To conclude, the best model is the one with all variables except Total.Population. Despite the adjusted R-squared being slightly higher with this variable, the other test proved the model is better without it.
+
+
+## Can we explain the disparity between black and white shots with the democratic percentage of the state?
+
+
+### Plot 3
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow = c(1, 1))
+ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Black.White.Disparity)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
+  ggtitle("Black.White.Disparity - percent_democrat_2016") +
+  xlab("Percent of democrat in 2016") + ylab("More time black killed compared to white")
+
+```
+
+
+### Plot 4
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow = c(1, 1))
+ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Black.White.Disparity)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
+  ggtitle("Black.White.Disparity - violent_crime_2016") +
+  xlab("Violent crime rate per 100'000 habitans in 2016)") + ylab("More time black killed compared to white")
+
+```
+
+### Plot 5
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow = c(1, 1))
+ggplot(vote_rel_new, aes(x=percent_black, y=Black.White.Disparity)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
+  ggtitle("Black.White.Disparity - percent_black") +
+  xlab("Percent of black") + ylab("More time black killed compared to white")
+
+```
+
+### Multilinear regression
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+lm.fit <- lm(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new)
+tab_model(lm.fit)
+```
+
+### Regression Diagnosis
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+par(mfrow=c(2,2))
+plot(lm.fit)
+par(mfrow=c(1,1))
+
+```
+**Residual vs Fitted :** The curve is not flat. This show us there is no homoscedasticity.
+
+**Normal Q-Q :** The linearity regression do not fit observation 44 and 39 that are clearly way above the line.
+
+**Scale-Location :** The red line has a banana shape confirming what said above: there is heteroscedasticity. 
+
+**Residual vs Leverage :** Observation 11 is out of the red ine and observation 39 and 2 are close to it. Thi regression suffer from this variable that have a huge influence on it. 
+
+The 4 plots indicate our multilinear regression is not a good fit at all.
+
+### Exhaustive Search
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+regsubsets.out <-
+regsubsets(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new,
+             nbest = 1,       # 1 best model for each number of predictors
+             nvmax = NULL,    # NULL for no limit on number of variables
+             force.in = NULL, force.out = NULL,
+             method = "exhaustive")
+plot(regsubsets.out, scale = "adj", main = "Adjusted-r2")
+```
