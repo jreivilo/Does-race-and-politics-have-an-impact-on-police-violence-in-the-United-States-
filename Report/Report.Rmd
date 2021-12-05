@@ -2,8 +2,12 @@
 title: "Does race and politics have an impact on police violence in the United States ?"
 author: "Jérémy Olivier and Chloé Mousse"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output: 
+  html_document:
+    theme: cerulean
+    toc: true
+    toc_float: true
 ---
 
-```{r child = c('intro.Rmd', 'Data.Rmd', 'r1.Rmd', 'r2.Rmd')}
+```{r child = c('intro.Rmd', 'Data.Rmd', 'r1.Rmd', 'r2.Rmd', 'Analysis.Rmd')}
 ```
