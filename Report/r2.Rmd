@@ -18,44 +18,6 @@ To get started, we had to rearrange the dataset in order to retain only the vari
 Our most important variables were : race, sex, state and date. These are the ones we are going to link with other datasets to run our hypothesis. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-library(shiny)
-library(RColorBrewer)
-library(mapproj)
-library(gridExtra)
-library(kableExtra)
-library(MASS)
-library(data.table)
-library(car)
-library(boot)
-library(ISLR)
-library(maps)
-library(DT)
-library(class)
-library(tidyverse)
-library(dplyr)
-library(ggplot2)
-library(readr)
-library(leaps)
-library(glmnet)
-library(corrplot)
-library(glmnet)
-library(pls)
-library(leaps)
-library(tree)
-library(randomForest)
-library(splines)
-library(gam)
-library(lmtest)
-library(gbm)
-library(corrplot)
-library(ggplot2)
-library(dplyr)
-library(corrplot)
-library(GGally)
-library(sjPlot)
-library(sjmisc)
-library(sjlabelled)
-library(readr)
 
 X2013_2021_police_killings<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"), 
      delim = ";", escape_double = FALSE, trim_ws = TRUE)
@@ -361,7 +323,7 @@ total$proportion_k <- round(total$proportion_k,3)
 
 kable(total) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") 
 
 ```
 After some calculation, we fount out that from 2013 to 2021, black people were killed 3 times more than white people : 0.006% black people killed against 0.002% white people killed. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 

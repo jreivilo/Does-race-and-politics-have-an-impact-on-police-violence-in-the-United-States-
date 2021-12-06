@@ -33,7 +33,7 @@ Gender_Composition$share <- Gender_Composition$share * 100
 kable(Gender_Composition) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
-  scroll_box(height = "400px", width = "100%")
+  scroll_box(height = "400px", width = "75%")
 
 ```
 
@@ -76,7 +76,7 @@ RAE <- Race_and_ethnicity %>%
 kable(RAE) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
-  scroll_box(height = "400px", width = "100%")
+  scroll_box(height = "400px", width = "95%")
 ```
 
 #### 2) Data vizualisation
@@ -126,6 +126,21 @@ For the past 20 years, the percentage of black population is rising in the unite
 
 ## All violent crime offenders 
 
+#### 1) Cleaning and creating a new table
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+osr <- offender_sex_and_race
+osr$offender_white <- round(osr$offender_white/osr$offender_total*100,2)
+osr$offender_black <- round(osr$offender_black/osr$offender_total*100,2)
+osr$offender_male <- round(osr$offender_male/osr$offender_total*100,2)
+osr$offender_female <- round(osr$offender_female/osr$offender_total*100,2)
+
+kable(osr) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") 
+
+```
+
 In 2020, there were 538,203 violent-crime incident compared to only  276,363 in 2013. Violence is rising in the United Sates, but what population is more responsible of it ? 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -143,7 +158,6 @@ offender_sex_and_race$share_race_white <- offender_sex_and_race$offender_white /
 offender_sex_and_race$share_race_white <- offender_sex_and_race$share_race_white * 100
 offender_sex_and_race$share_race <-offender_sex_and_race$share_race*100
 offender_sex_and_race$share_sex <- offender_sex_and_race$share_sex*100
-
 
 
 #offender_sex_and_race   %>%
@@ -191,8 +205,8 @@ On the opposite, the percentage  violent crime done by women is very low.
 
 ## USA Elections
 
-### Creating new dataframe and rename columns
-
+#### 1) Cleaning and creating a new table
+  
 We create a new table that regroup all the result of the election of 2016 and 2020 by merging the previous one on the state code. This step done, we rename the columns to focus on the percentage of democrats in each state in the USA. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -215,13 +229,42 @@ election_percent <- election %>%
 kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
   column_spec(1, color = "white", background = "cadetblue") %>% 
-  scroll_box(height = "350px", width = "65%")
+  scroll_box(height = "350px", width = "57%")
 
 ```
 
 Almost every state got more democrat vote in 2020 than in 2016. 
 
-### Graphic visualization
+#### 2) Election map 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#USA MAP ELECTION
+all_states <- map_data("state")
+election$region <- tolower(election$usa_state)
+totaldf <- merge(all_states, election, by = "region")
+# switched to data.table to fix the cut up map issue
+# getting sort by region then order 
+totaldt <- as.data.table(totaldf)
+setkey(totaldt, region, order)
+
+options(scipen=999) #turn off scientific notation
+
+e1 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
+
+e2 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
+grid.arrange(e1, e2, ncol=2)
+
+```
+
+As previously stated, more states turned into being democrats in 2020. We can observe this small difference on the 2 maps. 
+
+#### 3) Graphic visualization
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #USA BARPLOT ELECTION
@@ -252,32 +295,3 @@ grid.arrange(plot1, plot2, ncol=2)
 
 
 In the election of 2020, there is more state above the 50 percent line than 4 years ago. This situation led to the election of a democrat president.
-
-### Election map 
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-#USA MAP ELECTION
-all_states <- map_data("state")
-election$region <- tolower(election$usa_state)
-totaldf <- merge(all_states, election, by = "region")
-# switched to data.table to fix the cut up map issue
-# getting sort by region then order 
-totaldt <- as.data.table(totaldf)
-setkey(totaldt, region, order)
-
-options(scipen=999) #turn off scientific notation
-
-e1 <- ggplot(data = totaldt, 
-       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
-  geom_polygon() + coord_map() +
-  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
-
-e2 <- ggplot(data = totaldt, 
-       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
-  geom_polygon() + coord_map() +
-  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
-grid.arrange(e1, e2, ncol=2)
-
-```
-
-As previously stated, more state turned to be in 2020 more democrat than 2016. We can observe this small difference on the 2 maps. 
