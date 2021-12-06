@@ -1,76 +1,184 @@
 ---
-title: "Does race and politics have an impact on police violence in the United States ?"
-author: "Jérémy Olivier and Chloé Mousset"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+title: "2013-2021 Police killings"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-# 2013-2021 POLICE KILLINGS
+## R Markdown
 
-# 1) Cleaning the dataset 
+# Data description 
+  
+For our project, we selected – datasets from different sources on 3 different topics. The data related to police killings and police components are from official sources : one is from the mapping .., and the other directly from ……
+Our goal from the beginning was to split our data into states, maybe county, to really distinguish the different political party and killings rates, that’s why we were looking for complete data with the states as variables. Of course we also needed numbers for the whole territory to compare our analysis. We still think that our most significant analysis will focus at the states level because of the information we gather, our hypothesis being that republicans states will have higher kilings rate than democrats. This would be explained by the values of the political party : republicans are conservatory so we assumed they tend more to have racist or sexist tendencies. 
+Our biggest dataset contains about 9000 values going from 2013 to 2021, however, since we decided to link this dataset to political party data we will take a time window from --- to 2021.
 
-## Table 1
+## Police killings data
+
+Source :   
+[link](https://mappingpoliceviolence.org/)  
+
+It is an unofficial website created by people to track police killings all over the united states. Their data come from different souces such as official police use of data collection programs in different states combined with nationwide data from the Fatal Encounters database. Other researches were made to complete a maximum of informations : social media, obituaries, criminal records database, police reports and other. 
+
+### Table 1  
+
+Size :     
+This database has 9729 entries of 49 variables (a voir si on le met a jour ou si on utilise celui quon a déjà téléchargé) going from 2013 to today. 
+Content : It contains every information on every person who was killed by the police like the date of death, their name, age, race, but also the circumstances of the murder : If the person was armed or not, if they had an illness etc. We also have information on the officer, if they were charged, if they were on duty and other details.
+   
+This dataset is the most interesting for our analysis because it’s the most complete. Our main goal for our project was to see if the political party of a state was corelated with the rate of police killings, meaning whearas a political party could have an impact on racism. The variables we will be using are most importantly the race, sex and state of the victim and the circumstances around their death. To do so we had to create a smaller table and clean a lot of data. From this dataset we also created another table with the killings per states : killings rates and population rates. 
+  
+So the initial dataset was entirely cleaned and used to create additional tables. Firstly, we removed the variables that were irrelevant for us, going from 49 variables to 13. We renamed each variable in order to make them easier to use in our code. Then, we did basic modifications such as filtering the variables with NAs, changing some observations to make the understanding clearer, for instance, the variable “Fleing” had more than 10 different observation such as : car, foot, Car, other, Fleing, not fleing, etc. So in order to use these we changed the variables to yes, no and other. We applied that pattern to every other variables. This first table will help us analyze the circumstances of death and see the tendencies in order to make conclusions.  
+After that we substracted a table with the numbers of killings per year for each state and population in order to have an evolution of the population and the killings. 
+  
+For this we estimated average number of killings per year (for each population and in total).
+
+TABLE 2
+Size : 
+Content:
+
+Explanation : 
+   
+## Police officers data 
+Source : [datausa.io ](https://datausa.io/profile/soc/police-officers#demographics)      
+Datausa.io is a website of public US Government data. It was created and made by Deloitte, Datawheel and Cesar Hidalgo (MIT Media Lab professor and director of Collective Learning) in 2014. This website is a research engine for anyone to have informations on cities and places regarding education like statistics and vizualisation on universities or best skills for a specific job. 
+Data comes from ---- official sources. 
+
+### Table 1 : Police gender composition  
+
+The first data set we downloaded from the website is the gender composition of the US police workforce. It has --- entries and ---- variables. Obviously, it countains information on the police officers gender rate in each state. The data concerns year …. 
+   
+We thought we’d use this table to see if male or female was considered more violent regarding the killings. Did the gender played a role in these events or if its was obsolete ?
+   
+### Table 2 : Police ethnicity and race
+   
+The second characteristic we wanted was the composition of ethnicity and race in the police workforce. Once more, does the race have an impact on the killings, meaning is the police racist ? In our hypothesis, white kills black. Through our analysis we want to see the proportion of black and white population agains the proportion of black and white police officers. 
 
 
-To get started, we had to rearrange the dataset in order to retain only the variables and observations we needed. This dataset was huge, we had to concentrate on the essential : Moving from 53 variables to 13. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
+## Presidential election data 
+Source : [worldpopultationreview.com](https://worldpopulationreview.com/state-rankings/2016-election-results-by-state)  
+
+Our first data set for the 2016 presidential elections comes from the website worldpopulationreview.com. We could download the the data in CSV file directly from the page we were interested in. This website, as it states, review the world population and its growth. It shows information about demographics for each continents, countries, cities but also on US States and Counties. The sources used are official, coming from United Nations population.un.org data and United States Census Bureau. 
+  
+This table countains 51 observations for 7 variables. It makes a census of the votes per states and which party won in 2016
+  
+The second data set for the 2020 presidential elections comes from the website Kaggle.com. (We know it wasn’t advised to use this website, however it was the best one we found and since we’re only two on the project and already started, we decided to keep this data set)
+  
+The data set contains 52 observations for 6 variables. It is the same as the previous table on the 2016 elections, only it doesn’t have a “win” variable. 
+  
+Our objective by using these data sets was to compare them with our police killings analysis. We wanted to do some visualizations and interpretation on the country overall : does democrat or republican dominates ? How did the elections evolved between 2016 and 2020 (ajouter 2012 ou pas ?) and did the pattern had a correlation with the evolution of the killings ? 
+  
+To accomplish our goal we had to clean the tables first. We created new dataframes and rename the columns : the new table regrouped all the result of the election of 2016 and 2020 by merging the previous one on the state code. This step done, we rename the columns to focus on the percentage of democrats for each state in the USA. This focus is related to our hypothesis being that republicans tend to be more racist than democrats.Our wish is to see that a rise of democratic states is correlated to a decrease of police killings. 
+  
+## All offenders crime data   
+Source : [crime-data-explorer.fr.cloud.gov](https://crime-data-explorer.fr.cloud.gov/pages/explorer/crime/crime-trend )
+  
+crime-data-explorer.fr.cloud.gov is an American website from the FBI’s Uniform Crime Reporting Program’s solution to have a better vision on the constant change in crime. It gathers national and state data on all crimes across the country. It is presented as a research engine in terms of States and year and can display graphs. The website allows us to view trends, download data and access Crime Data API.   
+We downloaded data on the offenders sex and race, giving a table of 8 observations of 6 variables. (We removed the years prior to 2013, matching our project time frame). The table display the total count on : all offenders, black and white offenders, male and female offenders.
+  
+We added this data set for our research for another hypothesis we had. In case we couldn’t find a correlation between politics and police killings, we thought crime rate could be a factor of police killings : the higher the crime rate, the higher the police killings. We thought that police officers might be in more stress when they have a lot of work or face more crimes, this stress could lead to impulsive decisions or bias thinking and results in murder. 
+  
+For this table we want to extract the rate of killings per year for each state and how it evolved. If possible identify whether black or white people were more responsible of these crimes aswell (compared to their population proportion).
+    
+Regarding the cleaning we didn’t have much to do since the table hold only numbers. 
+  
+Dernière table ??
+
+  
+# Exporatory Data Analysis
+
+## MPV Dataset
+
+## 1) Cleaning the dataset 
+
+### Table 1
+
+To get started, we had to rearrange the dataset in order to retain only the variables and observations we needed. This dataset was huge, we had to concentrate on the essential : Moving from 53 variables to 12. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
 Our most important variables were : race, sex, state and date. These are the ones we are going to link with other datasets to run our hypothesis. 
-
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
-
-library(readr)
-X2013_2021_police_killings <- X2013_2021_police_killings <- read_delim(file=here::here("Data/2013_2021_police_killings.csv"), 
-     delim = ";", escape_double = FALSE, trim_ws = TRUE)
-
-
-head(X2013_2021_police_killings)
-summary(X2013_2021_police_killings)
-str(X2013_2021_police_killings)
-
+library(shiny)
+library(RColorBrewer)
+library(mapproj)
+library(gridExtra)
+library(MASS)
+library(data.table)
+library(car)
+library(boot)
+library(ISLR)
+library(maps)
+library(DT)
+library(class)
 library(tidyverse)
 library(dplyr)
+library(ggplot2)
+library(readr)
+library(corrplot)
+library(glmnet)
+library(pls)
+library(leaps)
+library(tree)
+library(randomForest)
+library(splines)
+library(gam)
+library(lmtest)
+library(gbm)
+library(corrplot)
+library(ggplot2)
+library(dplyr)
+library(kableExtra)
+library(systemfonts)
+library(rmarkdown)
 
-## Selecting the main variables
+
+
+library(readr)
+X2013_2021_police_killings <- read_delim("Data/MPVDataset.csv", 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
 police_killings <- X2013_2021_police_killings %>% 
-select(.,c(2:4,6,8:9,11,14,17,19,20,23:24)) ##keeping the main variables
-names(police_killings)[1:13]<-c("age","gender","race", "date_of_incident", "city","state","county","cause_of_death","criminal_charges","mental_illness","armed_status","fleing","body_camera") ## Renaming the variables 
-police_killings$date_of_incident<-as.Date(police_killings$date_of_incident,"%d/%m/%Y") #changing character to date type
-police_killings$date_of_incident<-format(police_killings$date_of_incident,"%Y")
-
+select(.,c(2:4,6,8:9,11,17,19,20,23:24)) ## Selecting the main variables
+names(police_killings)[1:12]<-c("age","gender","race", "date_of_incident", "city","state","county","criminal_charges","mental_illness","armed_status","fleing","body_camera") ## Renaming the variables 
+police_killings$date_of_incident<-as.Date(police_killings$date_of_incident,"%d/%m/%Y") #changing character to date type 
+police_killings$date_of_incident<-format(police_killings$date_of_incident,"%Y") #changing the date format to Year only
 
 ##NA
-police_killings <- police_killings[!police_killings$race== "Unknown race", ]
 #We don't want to delete the NAs from the other columns because some of these observations are related to known race/sex which are observations we need, so we switched them to "unknown" 
-
 
 ##Tiyding the observations
 #Fleing
-police_killings$fleing[police_killings$fleing %in% c("car","foot","Foot","Car","car,foot")]<-"yes"
+police_killings$fleing[police_killings$fleing %in% c("car","foot","Foot","Car","car,foot", "car, foot")]<-"yes"
 police_killings$fleing[police_killings$fleing %in% c("not fleeing","Not fleeing","Not Fleeing")]<-"no"
 police_killings$fleing[police_killings$fleing %in% c("Other")]<-"other"
+#Simplifying the observations 
 
 #Armed Status
 police_killings$armed_status[police_killings$armed_status %in% c("Allegedly Armed")]<-"Allegedly armed"
 police_killings$armed_status[police_killings$armed_status %in% c("Unarmed/Did Not Have Actual Weapon")]<-"Unarmed"
+#Simplifying the observations
 
 #Body Camera
-#We have multiple observations here such as : Surveillance video, dashcam, bystander video, but we want only yes and no observations to make it easier. So every observations will be no unless it is "yes" or "Yes". The reason is that having a body camera has a lot more psychological pressure on a person than an external camera, because we might not know of it. 
-
 police_killings$body_camera[police_killings$body_camera%in% c("Yes")]<-"yes"
 police_killings$body_camera[police_killings$body_camera%in% c("Bystander Video","cell phone video","Dashcam video","Dashcam Video","No", "surveillance video", "Surveillance video","Surveillance Video")]<-"no"
+#We have multiple observations here such as : Surveillance video, dashcam, bystander video, but we want only yes and no observations to make it easier. So every observations will be no unless it is "yes" or "Yes". The reason is that having a body camera has a lot more psychological pressure on a person than an external camera, because we might not know of it.
 
+#Mental Illness
 police_killings$mental_illness[police_killings$mental_illness %in% c("unknown")]<-"Unknown"
-police_killings$mental_illness[police_killings$mental_illness %in% c("Drug or Alcohol Use")]<-"Drug or alcohol use"
+police_killings$mental_illness[police_killings$mental_illness %in% c("Drug or Alcohol Use, Drug or alcohol use")]<-"Yes"
 police_killings$mental_illness[police_killings$mental_illness %in% c(NA)]<-"Unknown"
+#Simplifying the observations
+
+#criminal_charges
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Plead No Contest, Sentenced to 10 years probation","Charged, Plead Guilty to Manslaughter, Sentenced to 5 years in prison", "Charged, Convicted, Sentenced to life in prison","Charged, Convicted, Sentenced to 7 years in prison","Charged, Convicted, Sentenced to 6 years in prison","Charged, Convicted, Sentenced to 5 years in prison","Charged, Convicted, Sentenced to 40 years to Life in prison","Charged, Convicted, Sentenced to 40 years in prison","Charged, Convicted, Sentenced to 4.75 years in prison","Charged, Convicted, Sentenced to 30 years in prison","Charged, Convicted, Sentenced to 3.5 years in prison","Charged, Convicted, Sentenced to 25 years in prison","Charged, Convicted, Sentenced to 2 years suspension and 3 years probation","Charged, Convicted, Sentenced to 18 months","Charged, Convicted, Sentenced to 10 years in prison","Charged, Convicted, Sentenced to 1 year in prison","Charged, Convicted, Sentenced to 1 year in jail, 3 years suspended","Charged, Convicted","Charged with a crime")]<-"Charged or sentenced"
 
 
 ```
 
 ## Table 2
 
-The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 51 observations corresponding to the states. 
-In this table we want to focus only on black versus white killings. Our main variables will be : 
+The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states. 
+In this table we want to focus only on black versus white killings. Our main variables will be :
 
 * State 
 * State abbrevation 
@@ -81,57 +189,133 @@ In this table we want to focus only on black versus white killings. Our main var
 * White people killed 
 * Total people killed 
 
-We need to clean the empty rows and select the interesting variables to make the table easy to use.
-
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 library(readr)
-Killingsbystate <- read_delim(file=here::here("Data/2013-2021_killings_by_state.csv"), 
-     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+Killingsbystate <- read_delim(file=here::here("Data/2013-2021_killings_by_state.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE)
 
-head(Killingsbystate)
-summary(Killingsbystate)
-str(Killingsbystate)
 
-kbs<- Killingsbystate %>%
-mutate(.,"Other population" = `Black Population`+`Hispanic Population`+`Asian Population`+`Pacific Islander Population`+`Other Population`) %>% select(.,c(1:4,9,14,19,21,37)) %>%
-arrange(.,desc(Killingsbystate$`Total Population`)) %>%
-subset(.,!Killingsbystate$`State Abbreviation`=="") 
-
-view(kbs)
 #Now we have 51 observations for 8 variables ordered from the most populated State to the least.
 ```
 
-# 2) Analysis of the variables 
-
+# 2) Analysing our variables 
 ## Table 1
 
-In this part we analysed our most important variables :   
+In this part we analysed our most important variables : 
 
-* Average people killed per year  
-* Percentage of black and white people killed   
-* Percentage of male and female killed  
-* Percentage of officers charged  
-* Percentage of officers wearing a body camera  
-* Percentage of victim's armed  
-* Percentage of victim's showing a mental illness or uncapacity to be clear minded  
-  
+* Average people killed per year
+* Percentage of black and white people killed 
+* Percentage of male and female killed
+* Percentage of officers charged
+* Percentage of officers wearing a body camera
+* Percentage of victim's armed
+* Percentage of victim's showing a mental illness or incapacity to be clear minded
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-killings.race<-table(police_killings$race)
-prop.table(killings.race)*100
-       
-killings.gender<-table(police_killings$gender)
-prop.table(killings.gender)*100
 
-#Not finished, still other variables to organize, rename observation in order to have simplified analysis. 
-       
+white_victims <- subset(police_killings,race=="White")
+white_victims <- data_frame(c("FALSE","TRUE"),
+prop.table(table(white_victims$mental_illness=="Yes")), prop.table(table(white_victims$fleing == "yes")),
+prop.table(table(white_victims$body_camera == "yes")),
+prop.table(table(white_victims$armed_status == "Allegedly armed")),
+prop.table(table(white_victims$criminal_charges == "Charged or sentenced")))
+names(white_victims) <- c("Status", "Illness, alcohol or drugs", "Fleing", "Body_camera", "Armed", "Charged or sentenced")
+
+white_victims$`Fleing` <- round(white_victims$`Fleing`*100,2)
+white_victims$Body_camera <- round(white_victims$Body_camera*100,2)
+white_victims$`Armed` <- round(white_victims$`Armed`*100,2)
+white_victims$`Charged or sentenced` <- round(white_victims$`Charged or sentenced`*100,2)
+white_victims$`Illness, alcohol or drugs` <- round(white_victims$`Illness, alcohol or drugs`*100,2)
+
+datatable(white_victims, options = list)
+
+
+black_victims <- subset(police_killings,race=="Black")
+black_victims <- data_frame(c("FALSE","TRUE"),
+prop.table(table(black_victims$mental_illness=="Yes")), prop.table(table(black_victims$fleing == "yes")),
+prop.table(table(black_victims$body_camera == "yes")),
+prop.table(table(black_victims$armed_status == "Allegedly armed")),
+prop.table(table(black_victims$criminal_charges == "Charged or sentenced")))
+names(black_victims) <- c("Status", "Illness, alcohol or drugs", "Fleing", "Body_camera", "Armed", "Charged or sentenced")
+
+black_victims$`Fleing` <- round(black_victims$`Fleing`*100,2)
+black_victims$Body_camera <- round(black_victims$Body_camera*100,2)
+black_victims$`Armed` <- round(black_victims$`Armed`*100,2)
+black_victims$`Charged or sentenced` <- round(black_victims$`Charged or sentenced`*100,2)
+
+datatable(black_victims, options = list)
 ```
+We created two tables comparing circumstances in black and white killings. We can see once again that there is a clear difference between the two races : 
+
+* Black people are 2 times more likely to get killed regardless of their mental illness or incapacity to be clear minded
+* Black people are 1.3 times more likely to get killed if they're fleeing 
+* Black people are 1.2 times more likely to be unarmed when killed
+
+However we can see that from 2013 to 2021 :
+
+* 1% of white killings ended up charged and convicted with a crime against 1.53% for black killings, meaning that it seems like sentence over black killings are "harder".
+* 16.12% police officers were wearing a body camera when they killed a black person against 9.28% for white people. In our hypothesis it could mean that police officers are less scared about the sentence they could get when the crime concerns a black person, however as we saw above, it doesnt match reality. 
+
+These entries don't mean a lot of things like that, because there are a lot of other factors. It would be interesting to correlate the circumstances in between them.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+data.table(count(police_killings, race=="Black", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))
+
+data.table(count(police_killings, race=="White", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))
+
+#COMMENT MONTRER QUE TRUE ?
+  
+```
+For more analysis and in comparison with the total of black people killed and white people killed : black people are 1.35 times more likely to get killed when showing no deviant behaviour that could justify a murder meaning neither : fleing, having a mental illness or being armed.
+
+Even if 0.023% and 0.031% are short numbers, it still represents at least 173 people killed for no apparent reasons since 2013.
 
 We want to create a table with the total killings per year for black and white people to compare the evolution throughout the year. 
 
+## Table on black killings per state per year
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+black_state_killings <- subset(police_killings, police_killings$race=="Black")
+black_state_killings <- table(black_state_killings$`state`,black_state_killings$`date_of_incident`)
+black_state_killings <- as.data.frame(black_state_killings)
+black_state_killings <- black_state_killings %>%
+     pivot_wider(names_from = Var2,
+             values_from = Freq)
+black_state_killings$`Average Black killing per year`<- round(rowMeans(black_state_killings[,2:9]),2)
+black_state_killings <- arrange(black_state_killings,desc(`Average Black killing per year`))
+names(black_state_killings)[1]<-"State"
+
+
+kable(black_state_killings) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+In this table we rank the States from the one with the highest count of black killings from 2013 to 2021. We can see that the 3 states with the highest count are : California, Florida and Texas. And the 3 states with the lowest count are : Idaho, Maine and Montana. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
 ### Total killings of black and white people from 2013 to 2021
+
+white_state_killings <- subset(police_killings, police_killings$race=="White")
+white_state_killings <- table(white_state_killings$`state`,white_state_killings$`date_of_incident`)
+white_state_killings <- as.data.frame(white_state_killings)
+white_state_killings <- white_state_killings %>%
+     pivot_wider(names_from = Var2,
+             values_from = Freq)
+white_state_killings$`Average White killing per year`<- round(rowMeans(white_state_killings[,2:9]),2)
+white_state_killings <- arrange(white_state_killings,desc(`Average White killing per year`))
+names(white_state_killings)[1]<-"State"
+
+
+kable(white_state_killings) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+Here is the second table with the ranking of the States from the highest to the lowest average killing of White people from 2013 to 2021. We can see that the 3 first States are the same as the 1st table, however the 3 lasts are different (HI, Rhode Island, DC)
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 bpk <- police_killings %>% 
-  count(., race=="Black", date_of_incident)
+count(., race=="Black", date_of_incident)
 bpk <- subset(bpk,bpk$`race == "Black"`!="FALSE" )
 names(bpk)[2:3] <- c("year", "black people killed")
 bpk<- select(bpk,!c(1))
@@ -156,58 +340,99 @@ killings_per_year<- killings_per_year %>% mutate(.,"other people killed" = `tota
 
 killings_per_year <- killings_per_year[ ,c(1,2,7,3,6,5,8,4)]
 
-library(DT)
-
 datatable(killings_per_year, options = list(pageLength = 5))
 
 summary(killings_per_year)
 ```
-
 In average, 964 people were killed each year since 2013, 0,28 % being black people and 0,48 being white people.
 
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-```
+
 ## Table 2 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#A table of the population and percent of k
 
-Here's a preview of our cleaned data table for the killings per state. 
+Killingsbystate <- Killingsbystate %>%
+subset(.,!`State Abbreviation`=="") %>%
+arrange(.,desc(`Total Population`))
 
-```{r}
-datatable(kbs, options = list(pageLength = 10))
+kbs<- Killingsbystate %>%
+select(.,c(1:3,21,11,12)) 
+
+names(kbs)[6]<-"% Black victims"
+
+kbs$`% White`<-Killingsbystate$`White Population`/Killingsbystate$`Total Population`*100
+kbs$`% White victims` <- Killingsbystate$`# White people killed`/Killingsbystate$`# People Killed`*100
+
+kbs$`% African-American`<-str_replace(kbs$`% African-American`, ",", ".")
+kbs$`% Black victims`<-str_replace(kbs$`% Black victims`, ",", ".")
+
+kbs$`% African-American`<-as.numeric(as.character(kbs$`% African-American`))
+kbs$`% Black victims`<-as.numeric(as.character(kbs$`% Black victims`))
+
+kbs$`% African-American`<-kbs$`% African-American`*100
+kbs$`% Black victims`<-kbs$`% Black victims`*100
 
 
+kbs <- kbs %>% 
+  .[,c(1:3,5,7,4,6,8)] %>%
+  mutate_at(vars(`% African-American`,`% White`,`% Black victims`,`% White victims`), funs(round(., 2)))
+  
+kable(kbs) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  scroll_box(height = "400px", width = "100%")
+  
+view(kbs)
 ```
+
 
 
 # 3) Graphic vizualisation 
 
 ## Table 1
 
-### Total people killed per State
+Total people killed per State
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-barplot(kbs$`# People Killed`~kbs$`State Abbreviation`, horiz = TRUE)
 ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`# People Killed`))
 #a graph on the total killings of each state
 ```
 
-### Total population per State
+Total population per State
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 ggplot(kbs)+geom_point(mapping=aes(x=`State Abbreviation`,y=`Total Population`)) #a graph on the total population of each state
 
 
 ```
-
 We can see a slight correlation between the 2 graphs, the pattern is similar with the bigger cities having the highest count of deaths. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 ggplot(police_killings)+geom_bar(mapping=aes(x=race,y=stat(prop), group=1)) 
+ggplot(police_killings)+geom_bar(mapping=aes(x=race,fill=gender), position="dodge")
+ggplot(police_killings)+geom_bar(mapping=aes(x=race,fill=gender), position="fill")
 ```
+We can see that between 2013 and 2021, White people were the most killed and Black people are the second most killed population.
 
-We can see that White people are the most killed and Black people are the second most killed
+The proportion of women killed is very little compared to men. However we can see that Asian, Native american and white women are more affected. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+total <- data.frame(c("Total","Black","White"),c(sum(kbs$`Total Population`),sum(kbs$`Black Population`),sum(kbs$`White Population`)))
+names(total)<-c("race","count")
+total$proportion<-c(total$count/322903030*100)
+total$killed<-c(sum(killings_per_year$`total people killed`),sum(killings_per_year$`black people killed`),sum(killings_per_year$`white people killed`))
+total$proportion_k<-c((9727/322903030*100),(2415/39715917*100),(4224/197181177*100))
+names(total)<-c("Race","Total_pop","proportion_tp","pop_killed","proportion_k")
+
+datatable(total, options = list)
+
+```
+After some calculation, we fount out that from 2013 to 2021, black people were killed 3 times more than white people : 0.006% black people killed against 0.002% white people killed. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
+
 
 ## Table 2
 
-### Killings per year 
+Killings per year 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 KPY <- pivot_longer(killings_per_year, c(`white people killed`,`black people killed`,`total people killed`), names_to = "population killed", values_to = "count")
@@ -218,4 +443,4 @@ KPY %>%
     geom_line()
 ```
 
-This graph shows that there was 3 major phase since 2013 in police killings. We can see that globally the killings rose from 2013 to 2015 then stagnated until 2018 when it finally started dropping. 
+The graph shows globally that the killings dropped a little since 2018, a decrease of about 150.
