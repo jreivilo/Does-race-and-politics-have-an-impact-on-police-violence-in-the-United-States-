@@ -9,5 +9,5 @@ output:
     toc_float: true
 ---
 
-```{r child = c('intro.Rmd', 'Data.Rmd', 'r1.Rmd', 'r2.Rmd', 'Analysis.Rmd')}
+```{r child = c('intro.Rmd', 'Data.Rmd','r2.Rmd', 'r1.Rmd', 'Analysis.Rmd')}
 ```

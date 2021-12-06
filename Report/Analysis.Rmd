@@ -1,5 +1,5 @@
-# Modelling
-## Armed and Unarmed (Black and white)
+# 4. Modelling
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
 Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
@@ -33,25 +33,25 @@ pk_count_armed <- count(pk, Victim.s.race, Armed.Unarmed.Status)
 #subset(subset(pk_count_armed, Victim.s.race == "Black"),Armed.Unarmed.Status== "Allegedly Armed")[3]
 #subset(subset(pk_count_armed, Victim.s.race == "Black"),Armed.Unarmed.Status== "Unarmed/Did Not Have Actual Weapon")[3]
 
-plt_white <- subset(subset(pk_count_armed, Victim.s.race == "White"))[2:3][2:6,][-4,]
-ggplotwhite <- ggplot(plt_white, aes(x=Armed.Unarmed.Status, y=n)) + 
-  geom_bar(stat="identity", fill="White") +
-  labs(title = "White Armed/unaremed Status",
-       subtitle = "2013-2020 ",
-       x = "Armed Status",
-       y= "Number") +
-    geom_text(aes(label=n)) 
-ggplotwhite
+#plt_white <- subset(subset(pk_count_armed, Victim.s.race == "White"))[2:3][2:6,][-4,]
+#ggplotwhite <- ggplot(plt_white, aes(x=Armed.Unarmed.Status, y=n)) + 
+ # geom_bar(stat="identity", fill="White") +
+#  labs(title = "White Armed/unaremed Status",
+  #     subtitle = "2013-2020 ",
+  #     x = "Armed Status",
+  #     y= "Number") +
+ #   geom_text(aes(label=n)) 
+#ggplotwhite
 
-plt_black <- subset(subset(pk_count_armed, Victim.s.race == "Black"))[2:3][2:5,]
-ggplotblack <- ggplot(plt_black, aes(x=Armed.Unarmed.Status, y=n)) + 
-  geom_bar(stat="identity", fill="Black") +
-  labs(title = "Black Armed/unaremed Status",
-       subtitle = "2013-2020 ",
-       x = "Armed Status",
-       y= "Number") +
-    geom_text(aes(label=n), color = "white") 
-ggplotblack
+#plt_black <- subset(subset(pk_count_armed, Victim.s.race == "Black"))[2:3][2:5,]
+#ggplotblack <- ggplot(plt_black, aes(x=Armed.Unarmed.Status, y=n)) + 
+#  geom_bar(stat="identity", fill="Black") +
+#  labs(title = "Black Armed/unaremed Status",
+ #      subtitle = "2013-2020 ",
+#       x = "Armed Status",
+ #      y= "Number") +
+#    geom_text(aes(label=n), color = "white") 
+#ggplotblack
 
 #grid.arrange(ggplotwhite, ggplotblack, ncol=2)
 

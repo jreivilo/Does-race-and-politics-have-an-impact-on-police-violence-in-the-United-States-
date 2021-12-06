@@ -4,7 +4,6 @@ author: "Jérémy Olivier and Chloé Mousse"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
-# 3. Exploratory Data Analysis
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #Dowload data
@@ -22,9 +21,67 @@ pk<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"),
 ```
 
 ## Police composition
-In the united state in 2020, there is roughly 50.5 % of women and the black population represent approximately 13,5% of the total population. 
+
+### Table 1 : Gender composition
+
+#### 1) Cleaning the data set 
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-Race_and_ethnicity$share <- Race_and_ethnicity$share * 100
+Gender_Composition <- select(Gender_Composition,c(2,4:7,11))
+Gender_Composition$share <- Gender_Composition$share * 100 
+
+kable(Gender_Composition) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  scroll_box(height = "400px", width = "100%")
+
+```
+
+#### 2) Data vizualisation
+
+In the united state in 2020, there is roughly 51% of women and the black population represent approximately 13,5% of the total population. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
+  tail(10) %>%
+  ggplot( aes(x=Year, y=share)) +
+  geom_line() +
+  geom_point() +
+  expand_limits(x = c(2013, 2020)) +
+  ggtitle("Women percentage in the police \n 2014-2019") +
+  xlab("Year") + ylab("PErcentage")
+
+#head(Race_and_ethnicity)
+#summary(Race_and_ethnicity)
+#str(Race_and_ethnicity)
+#colSums(is.na(Race_and_ethnicity))
+```
+
+On the opposite, the number of women in the police is really low. INTRODUIRE DONNEE SUR LA POPULATION TOTALE HOMME FEMME POUR COMPARER ? 
+There has always been more women than men in the United States. Women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020. 
+
+### Table 2 : Race and ethnicity composition
+
+#### 1) Cleaning the data set
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+Race_and_ethnicity$share <- round(Race_and_ethnicity$share * 100,2)
+
+RAE <- Race_and_ethnicity %>%
+  subset(.,Race=="Black" |  Race=="White") %>%
+  subset(.,Slug.Geography=="united-states") %>%
+  select(.,c(2,4,6,9:11,16))
+
+kable(RAE) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  scroll_box(height = "400px", width = "100%")
+```
+
+#### 2) Data vizualisation
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 Race_and_ethnicity_b <- Race_and_ethnicity[Race_and_ethnicity$Race == "Black",]
 Race_and_ethnicity_c <- Race_and_ethnicity_b[Race_and_ethnicity_b$Slug.Geography == "united-states",]
@@ -64,33 +121,12 @@ grid.arrange(bp1, bp2, ncol=2)
 
 ```
 
-
 For the past 20 years, the percentage of black population is rising in the united state and this trend is even stronger in the force police. However, the share in the police is approximately 1.5 point down compared to the share in the united state. Though, We can still agree that the black population is correctly represent in the police.
 
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-Gender_Composition$share <- Gender_Composition$share * 100 
 
-Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
-  tail(10) %>%
-  ggplot( aes(x=Year, y=share)) +
-  geom_line() +
-  geom_point() +
-  expand_limits(x = c(2013, 2020)) +
-  ggtitle("Women percentage in the police \n 2014-2019") +
-  xlab("Year") + ylab("PErcentage")
+## All violent crime offenders 
 
-#head(Race_and_ethnicity)
-#summary(Race_and_ethnicity)
-#str(Race_and_ethnicity)
-#colSums(is.na(Race_and_ethnicity))
-```
-
-On the opposite, the number of women in the police is really low.
-
-
-## Violent crime
-
-In 2020, there were 538,203 violent-crime incident compared to only  276,363 in 2013. Violence is rising in the United Sates, but who is responsible of? 
+In 2020, there were 538,203 violent-crime incident compared to only  276,363 in 2013. Violence is rising in the United Sates, but what population is more responsible of it ? 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #head(offender_sex_and_race)
@@ -153,7 +189,7 @@ offender_sex_and_race   %>%
 On the opposite, the percentage  violent crime done by women is very low.
 
 
-## USA Election
+## USA Elections
 
 ### Creating new dataframe and rename columns
 
@@ -173,10 +209,13 @@ election <- election %>% mutate(across(starts_with("percent_democrat"), round, 1
 ```
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-election_percent <- election %>% select(state, percent_democrat_2016, percent_democrat_2020)
+election_percent <- election %>% 
+  select(state, percent_democrat_2016, percent_democrat_2020)
 
 kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% column_spec(1, color = "white", background = "cadetblue") %>% scroll_box(height = "350px", width = "54%")
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  column_spec(1, color = "white", background = "cadetblue") %>% 
+  scroll_box(height = "350px", width = "65%")
 
 ```
 

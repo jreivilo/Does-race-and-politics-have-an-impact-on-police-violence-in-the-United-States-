@@ -14,12 +14,13 @@ knitr::opts_chunk$set(echo = TRUE)
     + Objective
 
 2. **Data**
-    + Description 
-    + Sources 
+    + Sources
+    + Description
 
 3. **Exploratory Data Analysis**
-    + Officer composition
-    + Offender composition
+    + Mapping Police Violence 
+    + Police composition
+    + All violent crime offenders
     + USA Election
     + NEW VARIABLES
 
