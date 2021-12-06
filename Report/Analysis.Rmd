@@ -1,5 +1,9 @@
 # 4. Modelling
 
+First of all, we will build different model based on the population sample in every state of 2018, the election result of 2016, and the people shoot from 2013 to 2020. 
+
+The election result of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
 Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
@@ -252,7 +256,7 @@ To conclude, the best model is the one with all variables except Total.Populatio
 ## Can we explain the disparity between black and white shots with the democratic percentage of the state?
 
 
-### Plot 3
+### Plot 1
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
 ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Black.White.Disparity)) + 
@@ -264,7 +268,7 @@ ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Black.White.Disparity)) +
 ```
 
 
-### Plot 4
+### Plot 2
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
 ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Black.White.Disparity)) + 
@@ -275,7 +279,7 @@ ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Black.White.Disparity)) +
 
 ```
 
-### Plot 5
+### Plot 3
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
 ggplot(vote_rel_new, aes(x=percent_black, y=Black.White.Disparity)) + 
@@ -291,6 +295,12 @@ ggplot(vote_rel_new, aes(x=percent_black, y=Black.White.Disparity)) +
 lm.fit <- lm(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new)
 tab_model(lm.fit)
 ```
+
+An R-squared of 0.124 is very low and a negative adjusted R-squared is really bad.
+
+On top of that, none of the variable are significative. 
+
+Basically, this multilinear regression do not predict or explain Rate all People and there is no need to pick a "bette" model among this one. 
 
 ### Regression Diagnosis
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -309,13 +319,3 @@ par(mfrow=c(1,1))
 
 The 4 plots indicate our multilinear regression is not a good fit at all.
 
-### Exhaustive Search
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-regsubsets.out <-
-regsubsets(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new,
-             nbest = 1,       # 1 best model for each number of predictors
-             nvmax = NULL,    # NULL for no limit on number of variables
-             force.in = NULL, force.out = NULL,
-             method = "exhaustive")
-plot(regsubsets.out, scale = "adj", main = "Adjusted-r2")
-```
