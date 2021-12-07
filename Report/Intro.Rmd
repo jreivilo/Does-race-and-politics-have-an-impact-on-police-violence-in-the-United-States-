@@ -22,7 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
     + Police composition
     + All violent crime offenders
     + USA Election
-    + NEW VARIABLES
 
 4. **Multivariate analysis** 
     + All the variables 

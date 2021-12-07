@@ -137,7 +137,7 @@ osr$offender_female <- round(osr$offender_female/osr$offender_total*100,2)
 
 kable(osr) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
 
@@ -187,20 +187,6 @@ xlab("Year") + ylab("Percentage")
 ``` 
 
 First of all, despite represent only 13.5 percent of the population, black people represent more than 40 percent of all violent crime in the United States. However, for the past years, the share of black people involved in violent crime is going down except in 2019. 
-
-In 2016, black people represent 13.3% of the population but 44.2% of violent crime. The ratio is 3.3. 
-
-On the other side, they represent approximately 25% of people getting shot every year. The ratio in is the case is 1.9
-
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-kbsr1 <- read.csv(file = here::here("Data/2013-2021_killings_by_state.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
-kbsr1$Disparity.in.Rate <- as.numeric(sub(",", ".", kbsr1$Disparity.in.Rate, fixed = TRUE))
-boxplot(kbsr1$Disparity.in.Rate)
-```
-
-
-
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
