@@ -4,6 +4,26 @@ First of all, we will build different model based on the population sample in ev
 
 The election result of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
 
+**Variable**
+
+Rate..All.People. : Rate of peaople killed by 125'000 inhabitants (2013-2020)
+
+Black.White.Disparity : Disparity in rate between black and white (2013-2018)
+
+percent_democrat_2016 : percent of democrat  for 2016
+
+percent_black : percent of black in 2018 
+
+percent_asian : percent of asian in 2018 
+
+percent_white : percent of white in 2018
+
+percent_hispanic : percent of hispanic in 2018
+
+violent_crime_2016 : Violent crime rates per 100000 inhabitants in 2016
+
+Total.Population : Total population in 2018
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
 Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
@@ -64,7 +84,7 @@ pk_count_armed <- count(pk, Victim.s.race, Armed.Unarmed.Status)
 
 ## Can we predict the number of people getting shot by the police with the democratic percentage?
 
-### Correlation table
+## Correlation table
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #setp data
 election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
@@ -72,7 +92,7 @@ Killingsbystate$X..White <- Killingsbystate$'White.Population' / Killingsbystate
 Killingsbystate$X..Hispanic <- Killingsbystate$'Hispanic.Population' / Killingsbystate$'Total.Population'
 Killingsbystate$X..Asian <- Killingsbystate$'Asian.Population' / Killingsbystate$'Total.Population'
 
-b_pop <- data.frame(Killingsbystate[c("state","Rate..All.People.", "X..People.Killed", "Total.Population", "X..African.American","X..White", "X..Hispanic", "X..Asian", "X..Victims.Black","Rate..Black.People.","X..White", "Disparity", "Disparity.in.Rate", "Black.White.Disparity")])
+b_pop <- data.frame(Killingsbystate[c("state","Rate..All.People.", "X..People.Killed", "Total.Population", "X..African.American","X..White", "X..Hispanic", "X..Asian", "X..Victims.Black","Rate..Black.People.", "Disparity.in.Rate", "X..White", "Disparity", "Disparity.in.Rate", "Black.White.Disparity")])
 b_pop <- b_pop[1:51,]
 vote_rel <- merge(b_pop, election_percent, by = "state")
 
@@ -91,7 +111,7 @@ vote_rel$X..White <- vote_rel$X..White * 100
 vote_rel$X..Asian <- vote_rel$X..Asian * 100
 vote_rel$X..Hispanic <- vote_rel$X..Hispanic * 100
 vote_rel_new <- merge(vote_rel, cr[c("state", "X2016")], by = "state")
-vote_rel_new <- vote_rel_new[c("Rate..All.People.", "Disparity.in.Rate", "Black.White.Disparity", "percent_democrat_2016", "X2016", "X..African.American", "X..White", "X..Hispanic", "X..Asian", "Total.Population")]
+vote_rel_new <- vote_rel_new[c("Rate..All.People.", "Black.White.Disparity", "percent_democrat_2016", "X2016", "X..African.American", "X..White", "X..Hispanic", "X..Asian", "Total.Population")]
 
 vote_rel_new <- vote_rel_new %>% 
   rename(
@@ -118,7 +138,17 @@ vote_rel_new_no8 <- vote_rel_new[vote_rel_new$Disparity.in.Rate <8, ]
 vote_rel_no45 <- vote_rel[vote_rel$X..People.Killed >45, ]
 ```
 
-Based on the correlation table, percent_democrat_2016 is slightly correlated with violent_crime_2016. 
+
+Rate all people is strongly correlated with violent crime 2016. This does make sense, more violent states lead to more police shooting. It is also negatively correlated with percent democrat 2016
+
+
+
+Percent_democrat_2016 is slightly negativel correlated with violent_crime_2016. 
+
+Percent of white is srtrongly negatively correlated to percent_Democrat while percent black is positevely correlated. Black population vote more for democrat president than thre white population who prefer republican president. 
+
+
+## Can we predict the number of people getting shot by the police with the democratic percentage?
 
 ### Plot 1
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
