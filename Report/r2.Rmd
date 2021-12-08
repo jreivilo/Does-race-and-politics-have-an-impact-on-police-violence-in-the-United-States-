@@ -17,20 +17,17 @@ output:
 To get started, we had to rearrange the data set in order to retain only the variables and observations we needed. This data set was huge, we had to concentrate on the essential : Moving from 53 variables to 12. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
 Our most important variables were : 
   
-* Age
 * Race 
 * Sex 
 * State 
-* County
-* City
 * Date 
 * Armed Status
 * Mental illness
 * Criminal charges
-* Fleing
+* Fleeing
 * Body camera
   
-These are the ones we are going to link with other datasets to run our hypothesis. 
+These are the ones we are going to link with other data sets to run our hypothesis. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -108,6 +105,8 @@ names(black_state_killings)[1]<-"State"
 
 kable(black_state_killings) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(1, bold = T, italic = T, background = "lightbluesky") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
@@ -129,6 +128,8 @@ names(white_state_killings)[1]<-"State"
 
 kable(white_state_killings) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(10, bold = T, italic = T, background = "darkseagreen") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
@@ -138,6 +139,7 @@ Here is the second table with the ranking of the States from the highest to the 
 ##### Death circumstances Black people
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
 black_victims <- subset(police_killings,race=="Black")
 black_victims <- data_frame(c("FALSE","TRUE"),
 prop.table(table(black_victims$mental_illness=="Yes")), prop.table(table(black_victims$fleing == "yes")),
@@ -154,6 +156,7 @@ black_victims$`Illness, alcohol or drugs` <- round(black_victims$`Illness, alcoh
 
 kable(black_victims) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(2, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") 
 ```
 
@@ -177,6 +180,7 @@ white_victims$`Illness, alcohol or drugs` <- round(white_victims$`Illness, alcoh
 
 kable(white_victims) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(2, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") 
 ```
 
@@ -200,6 +204,8 @@ To go further we wanted to see how much people were killed regardless of the cir
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 kable((count(police_killings, race=="Black", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))) %>% 
      kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+     row_spec(11, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(23, bold = T, italic = T, background = "gainsboro") %>%
      row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
@@ -209,6 +215,8 @@ kable((count(police_killings, race=="Black", mental_illness=="No", armed_status=
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 kable((count(police_killings, race=="White", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))) %>% 
      kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+     row_spec(11, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(23, bold = T, italic = T, background = "gainsboro") %>%
      row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
@@ -264,6 +272,10 @@ killings_per_year <- killings_per_year[ ,c(1,2,7,3,6,5,8,4)]
 
 kable(killings_per_year) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(1, bold = T, italic = T,color = "white", background = "darksalmon") %>%
+  column_spec(3, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(5, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(7, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 ```
 
@@ -273,12 +285,14 @@ kable(killings_per_year) %>%
 
 kable(summary(killings_per_year)) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(4, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
 In average, 1096 people were killed each year since 2013, 25,42% being Black people and 44,15% being White people.
 
-#### 3) Graphic vizualisation 
+#### 3) Graphic vizualisation   
+  
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 ggplot(black_state_killings, 
        aes(y= reorder(`State`, `Average Black killing per year`), x=`Average Black killing per year`)) + 
@@ -290,23 +304,29 @@ ggplot(black_state_killings,
 
 
 ```
-
+  
+  
+Here is a graphic representation of the Black killings table showing the average number of black people killed in each state from 2013 to 2020. 
+  
+  
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-police_killings %>% ggplot() +
-coord_flip() + 
-geom_bar(mapping=aes(x=race,fill=race)) +
-geom_label(aes(x= race,
-                label=..count..),
-            stat='count') +
-labs(title="Population killed by the police from 2013 to 2021")
+police_killings %>% 
+  ggplot(mapping=aes(x=reorder(race,race,function(x)-length(x)),fill=race)) +
+    coord_flip() +
+    geom_bar() +
+    geom_label(aes(x= race,
+               label=..count..),
+               stat='count') +
+    labs(title="Population killed by the police from 2013 to 2021",  x = "Race",
+          y= "Number people killed")
 
 ggplot(police_killings) +
-  geom_bar(mapping=aes(x=gender,fill=race), position="fill") +
+  geom_bar(mapping=aes(x=race,fill=gender), position="fill") + 
   labs(title="Gender killed by the police from 2013 to 2021")
 ```
-We can see that between 2013 and 2021, White people were the most killed and Black people are the second most killed population.
-
-The proportion of women killed is very little compared to men. However we can see that Asian, Native american and white women are more affected. 
+    
+We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
+The proportion of women killed is very little compared to men. However we can observe that White, Black and Hispanic women are the most affected. 
 
 #### Killings per year 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -320,6 +340,11 @@ KPY %>%
   labs(title = "Black and White killings from 2013 to 2020",          
           x = "Year",
           y= "Number of people killed")
+```
+
+The graph shows globally that the killings dropped a little since 2018, a decrease of about 150. We can still say that Black and White killings decreased since 2015.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 black_state_killings %>% 
   pivot_longer(c(`2013`, `2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`),
@@ -335,12 +360,14 @@ filter(State%in% c("CA", "FL","TX")) %>%
   
 ```
 
-The graph shows globally that the killings dropped a little since 2018, a decrease of about 150.
+We wanted to show the evolution of black killings in the 3 most violent states. We can observe that in 2016 there's a big decrease in all states, 2016 being the Trump presidential elections. However Trump didn't start the service until January 2017 meaning that Barack Obama was still president at that time. We know that in 2015 the Black Lives Matter movement started to spread and people asked political personalities to take action. It could explain the decrease of killings in 2016 in these states. 
+  
 
 
 ### Table 2 : 2013 to 2021 State killings
-
-#### 1) Cleaning the dataset 
+  
+  
+#### 1) Cleaning the data set 
 
 The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states. 
 
@@ -356,7 +383,6 @@ In this table we want to focus only on black versus white killings. Our main var
 * White population 
 * Black people killed 
 * White people killed 
-* Total people killed 
 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -391,22 +417,27 @@ kbs$`% Black victims`<-as.numeric(as.character(kbs$`% Black victims`))
 kbs$`% African-American`<-kbs$`% African-American`*100
 kbs$`% Black victims`<-kbs$`% Black victims`*100
 
-
 kbs <- kbs %>% 
   .[,c(1:3,5,7,4,6,8)] %>%
   mutate_at(vars(`% African-American`,`% White`,`% Black victims`,`% White victims`), funs(round(., 2)))
   
+names(kbs)[4]<-"% Black"
+
 kable(kbs) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(1, bold = T, italic = T, color = "white", background = "darksalmon") %>%
+  column_spec(4:5, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(7:8, bold = T, italic = T, background = "gainsboro") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   scroll_box(height = "400px", width = "100%")
-  
-view(kbs)
+
 
 ```
+  
 We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3%of people killed are White. 
 
-##### Summary of total Black and White people killed
+
+##### Summary of Black and White people killed
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -422,20 +453,22 @@ total$proportion_k <- round(total$proportion_k,3)
 
 kable(total) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(3, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(5, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(1, bold = T, italic = T, color="white",background = "darksalmon")%>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
-After some calculation, we fount out that from 2013 to 2021, black people were killed 3 times more than white people : 0.006% black people killed against 0.002% white people killed. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
+After some calculation, we fount out that from 2013 to 2021, black people were killed 3 times more than white people : 0.006% of black people are killed against 0.002% for white people. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
 
 
 #### 3) Graphic vizualisation 
 
-##### Total people killed per State
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 kbs %>%
 ggplot(.)+
-  geom_point(mapping=aes(x=reorder(`State Abbreviation`,-`% African-American`),y=`% African-American`), color="brown") + 
+  geom_point(mapping=aes(x=reorder(`State Abbreviation`,-`% Black`),y=`% Black`), color="brown") + 
     geom_point(mapping=aes(x=reorder(`State Abbreviation`,-`% Black victims`),y=`% Black victims`)) +
     labs(title = "Proportion of Black people killed and their total population per state",          
           x = "State abreviation",

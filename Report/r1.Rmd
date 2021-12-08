@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
 #Dowload data
 Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
 democratic_vs_republican_votes_by_usa_state_2020 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_by_usa_state_2020.csv"))
@@ -28,11 +29,12 @@ pk<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"),
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 Gender_Composition <- select(Gender_Composition,c(2,4:7,11))
-Gender_Composition$share <- Gender_Composition$share * 100 
+Gender_Composition$share <- round(Gender_Composition$share * 100,2) 
 
 kable(Gender_Composition) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  column_spec(6, bold=T) %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   scroll_box(height = "400px", width = "75%")
 
 ```
@@ -74,8 +76,10 @@ RAE <- Race_and_ethnicity %>%
   select(.,c(2,4,6,9:11,16))
 
 kable(RAE) %>% 
-  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1,color="white") %>%
+  column_spec(8,bold=T) %>%
   scroll_box(height = "400px", width = "95%")
 ```
 
@@ -227,8 +231,8 @@ election_percent <- election %>%
   select(state, percent_democrat_2016, percent_democrat_2020)
 
 kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "darkslategray") %>% 
-  column_spec(1, color = "white", background = "cadetblue") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon") %>% 
   scroll_box(height = "350px", width = "57%")
 
 ```
