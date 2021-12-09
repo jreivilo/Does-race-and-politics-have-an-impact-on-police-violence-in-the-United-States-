@@ -31,13 +31,16 @@ pk<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"),
 Gender_Composition <- select(Gender_Composition,c(2,4:7,11))
 Gender_Composition$share <- round(Gender_Composition$share * 100,2) 
 
-kable(Gender_Composition) %>% 
+kable(Gender_Composition[c(1,2,6)]) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  column_spec(6, bold=T) %>%
+  column_spec(3, bold=T) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
-  scroll_box(height = "400px", width = "75%")
+  scroll_box(height = "400px", width = "28%")
 
 ```
+
+
+We only kept this 3 variables to have a claer vision of the evolution among time of the gender diversity in the police. 
 
 #### 2) Data vizualisation
 
@@ -52,7 +55,7 @@ Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
   geom_point() +
   expand_limits(x = c(2013, 2020)) +
   ggtitle("Women percentage in the police \n 2014-2019") +
-  xlab("Year") + ylab("PErcentage")
+  xlab("Year") + ylab("Percentage")
 
 #head(Race_and_ethnicity)
 #summary(Race_and_ethnicity)
@@ -60,8 +63,10 @@ Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
 #colSums(is.na(Race_and_ethnicity))
 ```
 
-On the opposite, the number of women in the police is really low. INTRODUIRE DONNEE SUR LA POPULATION TOTALE HOMME FEMME POUR COMPARER ? 
-There has always been more women than men in the United States. Women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020. 
+On the opposite, the number of women in the police is really low.
+There has always been more women than men in the United States but still close to 50&%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
+
+
 
 ### Table 2 : Race and ethnicity composition
 
@@ -72,15 +77,16 @@ Race_and_ethnicity$share <- round(Race_and_ethnicity$share * 100,2)
 
 RAE <- Race_and_ethnicity %>%
   subset(.,Race=="Black" |  Race=="White") %>%
+  subset(.,PUMS.Ethnicity.Parent=="Not Hispanic") %>%
   subset(.,Slug.Geography=="united-states") %>%
   select(.,c(2,4,6,9:11,16))
 
-kable(RAE) %>% 
+kable(RAE[c(1,2,3,7 )]) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   column_spec(1,color="white") %>%
-  column_spec(8,bold=T) %>%
-  scroll_box(height = "400px", width = "95%")
+  column_spec(4,bold=T) %>%
+  scroll_box(height = "400px", width = "55%")
 ```
 
 #### 2) Data vizualisation
@@ -144,9 +150,15 @@ kable(osr) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
+We kept this 
 
-In 2020, there were 538,203 violent-crime incident compared to only  276,363 in 2013. Violence is rising in the United Sates, but what population is more responsible of it ? 
 
+In 2020, there were 615'989 violent-crime incident compared to only  339'777 in 2013. the percentage of black offender and white offender is very close in many states.
+
+Violence is rising in the United Sates, but what population is more responsible of it ? Let's take a deeper look. 
+
+
+#### 2) Data vizualisation
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #head(offender_sex_and_race)
 #summary(offender_sex_and_race)
@@ -192,6 +204,8 @@ xlab("Year") + ylab("Percentage")
 
 First of all, despite represent only 13.5 percent of the population, black people represent more than 40 percent of all violent crime in the United States. However, for the past years, the share of black people involved in violent crime is going down except in 2019. 
 
+The huge share that black people represent in the violent crime could explain why they are overkilled compared to their population. In 2016, black people represent 13.3% of the population but 44.2% of violent crime. The ratio is 3.3. On the other side, they represent approximately 25% of people getting shot every year. The ratio in this the case is 1.9.
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 offender_sex_and_race   %>%
@@ -233,11 +247,12 @@ election_percent <- election %>%
 kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   column_spec(1, color = "white", background = "darksalmon") %>% 
-  scroll_box(height = "350px", width = "57%")
+  scroll_box(height = "350px", width = "70%")
 
 ```
 
-Almost every state got more democrat vote in 2020 than in 2016. 
+
+Almost every state got more democrat vote in 2020 than in 2016. This led to the elction of a democrat president in 2020.
 
 #### 2) Election map 
 
@@ -298,4 +313,30 @@ grid.arrange(plot1, plot2, ncol=2)
 ```
 
 
-In the election of 2020, there is more state above the 50 percent line than 4 years ago. This situation led to the election of a democrat president.
+In the election of 2020, there is more state above the 50 percent line than 4 years ago. With this graph, the difference between 2016 and 2020 is easy to spot and more state are democrats in 2020. 
+
+
+## Crime Rate 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+cr <- read.csv(file = here::here("Data/crime_rate.csv"), sep = ";")
+crdf <- data.frame(colMeans(cr[2:7]))
+#crdf$colMeans.cr.2.11.. <- as.factor(crdf$colMeans.cr.2.11..)
+
+vec <- c(2019,2018,2017,2016,2015,2014)
+crdf$year <- vec
+
+crdf$colMeans.cr.2.7.. <- round(as.numeric(crdf$colMeans.cr.2.7., 2))
+
+
+crdf   %>%
+  tail(10) %>%
+  ggplot( aes(x=year, y=colMeans.cr.2.7..)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Crime rate") +
+  xlab("Year") + ylab("Violent crime rates per 100'000 inhabitants")
+
+```
+
+After a rise between 2014 and 2016, the crime rate is dropping every year until 2019. 
