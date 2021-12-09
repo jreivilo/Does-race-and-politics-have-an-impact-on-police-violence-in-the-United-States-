@@ -4,11 +4,15 @@ First of all, we will build different model based on the population sample in ev
 
 The election result of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
 
-**Variable**
+## Variables
+
+**Dependant variable**
 
 Rate..All.People. : Rate of peaople killed by 125'000 inhabitants (2013-2020)
 
 Black.White.Disparity : Disparity in rate between black and white (2013-2018)
+
+**Independent Variables**
 
 percent_democrat_2016 : percent of democrat  for 2016
 
@@ -82,7 +86,6 @@ pk_count_armed <- count(pk, Victim.s.race, Armed.Unarmed.Status)
 ```
 
 
-## Can we predict the number of people getting shot by the police with the democratic percentage?
 
 ## Correlation table
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -135,20 +138,26 @@ ggcorr(c, nbreaks = 8, palette = "RdGy", label = TRUE, label_size = 3, label_col
 #heatmap(x = c, col = palette, symm = TRUE)
 
 vote_rel_new_no8 <- vote_rel_new[vote_rel_new$Disparity.in.Rate <8, ]
-vote_rel_no45 <- vote_rel[vote_rel$X..People.Killed >45, ]
+vote_rel_new_no10 <- vote_rel_new[vote_rel_new$Black.White.Disparity < 10, ]
 ```
 
 
-Rate all people is strongly correlated with violent crime 2016. This does make sense, more violent states lead to more police shooting. It is also negatively correlated with percent democrat 2016
+Rate all people is strongly correlated with violent crime 2016. This does make sense, more violent states lead to more police shooting. It is also negatively correlated with percent democrat 2016 while percent_democrat_2016 is slightly negatively correlated with violent_crime_2016. 
 
+Black white disparity is strongly negatively correlated with violent crime in 2016. On the other side, percent democrat 2016 is positevely correlated to black and white disparity. The other variable have a small influence on the black white disparity
 
-
-Percent_democrat_2016 is slightly negativel correlated with violent_crime_2016. 
-
-Percent of white is srtrongly negatively correlated to percent_Democrat while percent black is positevely correlated. Black population vote more for democrat president than thre white population who prefer republican president. 
+Percent of white is srtrongly negatively correlated to percent Democrat 2016 while percent black is positevely correlated. Black population vote more for a democrat president than the white population who prefer a republican president. 
 
 
 ## Can we predict the number of people getting shot by the police with the democratic percentage?
+
+### Boxplot 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
+boxplot(vote_rel_new$Rate..All.People., col="dodgerblue3", ylab="Rate All People", main="Boxplot Rate All People")
+```
+
+Despite 2 outliers, we decided to keep both of them. 
 
 ### Plot 1
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
@@ -163,7 +172,7 @@ ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Rate..All.People.)) +
 
 ```
 
-First of all, there is a clear negative correlation between the percentage of democrat in a stat and the number of people killed by 125'000 people. Police in more democratic state seems to kill less people every year
+First of all, there is a clear negative correlation between the percentage of democrat in a stat and the number of people killed by 125'000 people. Police in more democratic state seems to kill less people every year.
 
 
 ### Plot 2
@@ -176,7 +185,7 @@ ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Rate..All.People.)) +
   xlab("Violent Crime Rates per 100'000 habitants in 2016 (violent_crime_2016)") + ylab("Number of people shoot by 125'000 habitant")
 ```
 
-Secondly, Violent Crime Ratest is strongly correlated to the number of people killed. Obviously, more violent crimes in a state lead to more shooting by the police.
+Secondly, Violent Crime Rate is strongly correlated to the number of people killed. Obviously, more violent crimes in a state lead to more shooting by the police.
 
 
 ### Multilinear regression
@@ -285,52 +294,72 @@ To conclude, the best model is the one with all variables except Total.Populatio
 
 ## Can we explain the disparity between black and white shots with the democratic percentage of the state?
 
+### Boxplot 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
+boxplot(vote_rel_new$Black.White.Disparity, col="dodgerblue3", ylab="Black White Disparity", main="Boxplot Black White Disparity")
+```
+
+First of all, I removed 1 outliers (Black White Disprity = 19) of the model but I kept the second outliers (Black White Disprity = 10)
+
 
 ### Plot 1
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
-ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Black.White.Disparity)) + 
+ggplot(vote_rel_new_no10, aes(x=percent_democrat_2016, y=Black.White.Disparity)) + 
   geom_point(shape=18, color="blue")+
   geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
   ggtitle("Black.White.Disparity - percent_democrat_2016") +
-  xlab("Percent of democrat in 2016") + ylab("More time black killed compared to white")
+  xlab("Percent of democrat in 2016") + ylab("Disparity in rate between black and white")
 
 ```
+On average, the number of black people shoot by police per 125'000 inhabitant is 3.7 time higher than for white people. 
 
+This black white disparity is positively correlated to the percent of democrat in 2016. 
+
+Democrat state seems to killed more black than white per 125^000 inhabitant.
 
 ### Plot 2
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
-ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Black.White.Disparity)) + 
+ggplot(vote_rel_new_no10, aes(x=violent_crime_2016, y=Black.White.Disparity)) + 
   geom_point(shape=18, color="blue")+
   geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
   ggtitle("Black.White.Disparity - violent_crime_2016") +
-  xlab("Violent crime rate per 100'000 habitans in 2016)") + ylab("More time black killed compared to white")
+  xlab("Violent crime rate per 100'000 habitans in 2016)") + ylab("Disparity in rate between black and white")
 
 ```
+
+MOreover, violent crime rate is slightly negatively correlated to the black and white disparity.
 
 ### Plot 3
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 par(mfrow = c(1, 1))
-ggplot(vote_rel_new, aes(x=percent_black, y=Black.White.Disparity)) + 
+ggplot(vote_rel_new_no10, aes(x=percent_black, y=Black.White.Disparity)) + 
   geom_point(shape=18, color="blue")+
   geom_smooth(method=lm,  linetype="dashed", color="darkred", fill="blue") +
   ggtitle("Black.White.Disparity - percent_black") +
-  xlab("Percent of black") + ylab("More time black killed compared to white")
+  xlab("Percent of black") + ylab("Disparity in rate between black and white")
 
 ```
+
+As before, the line is pretty flat but still slightly negatively correlated. 
+
+In this plot, if the percentage of black people in a state is lower, the disparity between them and white people will be lower as well.
 
 ### Multilinear regression
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
-lm.fit <- lm(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new)
+lm.fit <- lm(Black.White.Disparity ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian + Total.Population, data=vote_rel_new_no10)
 tab_model(lm.fit)
 ```
 
-An R-squared of 0.124 is very low and a negative adjusted R-squared is really bad.
+An R-squared of 0.15 is very low and an adjusted R-squared close to be negative is really bad.
 
-On top of that, none of the variable are significative. 
+On top of that, none of the variable are significative despite some being close to.
 
-Basically, this multilinear regression do not predict or explain Rate all People and there is no need to pick a "bette" model among this one. 
+Basically, this multilinear regression do not predict or explain the black and white disparity and there is no need to pick a "better" model among this one. 
+
+We can still show the total population do not have an effect on the regression again. 
 
 ### Regression Diagnosis
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -339,13 +368,13 @@ plot(lm.fit)
 par(mfrow=c(1,1))
 
 ```
-**Residual vs Fitted :** The curve is not flat. This show us there is no homoscedasticity.
+**Residual vs Fitted :** The curve is not flat and have a weird shape. This show us there is no homoscedasticity.
 
-**Normal Q-Q :** The linearity regression do not fit observation 44 and 39 that are clearly way above the line.
+**Normal Q-Q :** The linearity regression do not fit observation 44 that is clearly way above the line.
 
 **Scale-Location :** The red line has a banana shape confirming what said above: there is heteroscedasticity. 
 
-**Residual vs Leverage :** Observation 11 is out of the red ine and observation 39 and 2 are close to it. Thi regression suffer from this variable that have a huge influence on it. 
+**Residual vs Leverage :** Observation 11 is out of the red ine and observation 2 is close to it. This regression suffer from variable 11 that have a huge influence on it. 
 
-The 4 plots indicate our multilinear regression is not a good fit at all.
+The 4 plots indicate our multilinear regression is not a good fit at all. 
 
