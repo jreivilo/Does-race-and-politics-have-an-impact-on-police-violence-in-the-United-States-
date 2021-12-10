@@ -222,13 +222,14 @@ kable((count(police_killings, race=="White", mental_illness=="No", armed_status=
 ```
 We want to focus on the lines where we have on the first table : 
 
-* False, True, True, True : This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
+* False, True, True, True :  
+This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
 
 On both tables : 
 
-* True, True, True, True : 
-** All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation. 
-** All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.
+* True, True, True, True :   
+  + All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation.   
+  + All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.  
 
 
 ##### Total people killed from 2013 to 2020
