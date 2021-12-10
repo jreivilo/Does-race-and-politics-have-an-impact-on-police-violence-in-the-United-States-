@@ -14,7 +14,8 @@ output:
 
 #### 1) Cleaning the dataset 
 
-To get started, we had to rearrange the data set in order to retain only the variables and observations we needed. This data set was huge, we had to concentrate on the essential : Moving from 53 variables to 12. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. 
+To get started, we had to rearrange the data set in order to retain only the variables and observations we needed. This data set was huge, we had to concentrate on the essential : Moving from 53 variables to 12. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. We also decided to not take into account the year 2021 since it isn't complete.
+  
 Our most important variables were : 
   
 * Race 
@@ -129,7 +130,7 @@ names(white_state_killings)[1]<-"State"
 kable(white_state_killings) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
-  column_spec(10, bold = T, italic = T, background = "darkseagreen") %>%
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
@@ -184,7 +185,7 @@ kable(white_victims) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") 
 ```
 
-We created two tables comparing circumstances in Black and White killings. We can see once again that there is a clear difference between the two races : 
+We created two tables comparing circumstances in Black and White killings. We kept the data for 2021 because we thought with more data this analysis would be more precise. We can see once again that there is a clear difference between the two races : 
 
 * Black people are 2 times more likely to get killed regardless of their mental illness or incapacity to be clear minded
 * Black people are 1.3 times more likely to get killed if they're fleeing 
@@ -222,14 +223,13 @@ kable((count(police_killings, race=="White", mental_illness=="No", armed_status=
 ```
 We want to focus on the lines where we have on the first table : 
 
-* False, True, True, True :  
-This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
+* False, True, True, True : This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
 
 On both tables : 
 
-* True, True, True, True :   
-  + All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation.   
-  + All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.  
+* True, True, True, True : 
+** All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation. 
+** All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.
 
 
 ##### Total people killed from 2013 to 2020
@@ -313,17 +313,18 @@ Here is a graphic representation of the Black killings table showing the average
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 police_killings %>% 
   ggplot(mapping=aes(x=reorder(race,race,function(x)-length(x)),fill=race)) +
+  guides(fill="none") +
     coord_flip() +
     geom_bar() +
     geom_label(aes(x= race,
                label=..count..),
                stat='count') +
-    labs(title="Population killed by the police from 2013 to 2021",  x = "Race",
+    labs(title="Population killed by the police from 2013 to 2020",  x = "Race",
           y= "Number people killed")
 
 ggplot(police_killings) +
   geom_bar(mapping=aes(x=race,fill=gender), position="fill") + 
-  labs(title="Gender killed by the police from 2013 to 2021")
+  labs(title="Gender killed by the police from 2013 to 2020")
 ```
     
 We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
@@ -370,12 +371,13 @@ We wanted to show the evolution of black killings in the 3 most violent states. 
   
 #### 1) Cleaning the data set 
 
-The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states. 
+The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states.   
+In this part of the analysis, the data goes from 2013 to 2021 and we will keep this time frame because it represents the total killings.
 
 
 #### 2) Analyzing our variables
 
-In this table we want to focus only on black versus white killings. Our main variables will be :
+We want to focus only on black versus white killings. Our main variables will be :
 
 * State 
 * State abbreviation 
@@ -396,7 +398,7 @@ arrange(.,desc(`Total Population`))
 #Now we have 51 observations for 8 variables ordered from the most populated State to the least.
 ```
 
-Our goal is to compare the ratio between Black and White killings to their population in each State. So we created a new dataframe substracted from the original one. We added columns for the White population killed and its percentage. 
+Our goal is to compare the ratio between Black and White killings to their population in each State. So we created a new data frame subtracted from the original one. We added columns for the White population killed and its percentage. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #A table of the population and percent of k
@@ -460,20 +462,25 @@ kable(total) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
-After some calculation, we fount out that from 2013 to 2021, black people were killed 3 times more than white people : 0.006% of black people are killed against 0.002% for white people. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
+After some calculation, we fount out that from 2013 to 2020, black people were killed 3 times more than white people : 0.006% of black people are killed against 0.002% for white people. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
 
 
 #### 3) Graphic vizualisation 
 
 
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-kbs %>%
-ggplot(.)+
-  geom_point(mapping=aes(x=reorder(`State Abbreviation`,-`% Black`),y=`% Black`), color="brown") + 
-    geom_point(mapping=aes(x=reorder(`State Abbreviation`,-`% Black victims`),y=`% Black victims`)) +
+```{r, fig.width=12,echo = FALSE, message = FALSE, warning=FALSE}
+
+kbs2 <- select(kbs,c(2,4,7))
+
+names(kbs2) <- c("State abbrevation", "Black", "Black killed")
+
+kbs.melt <- melt(kbs2, id.vars = 'State abbrevation', variable.name = 'Population', 
+    value.name = 'Proportion')
+
+ggplot(kbs.melt, aes(x = reorder(`State abbrevation`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
+geom_point() +
     labs(title = "Proportion of Black people killed and their total population per state",          
-          x = "State abreviation",
-          y= "Percentage")
+          x = "State abbreviation")
 
 #a graph on the total killings of Black people in each state compared to their total Black population
 ```
