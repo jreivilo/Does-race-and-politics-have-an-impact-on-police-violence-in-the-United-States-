@@ -35,12 +35,12 @@ kable(Gender_Composition[c(1,2,6)]) %>%
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   column_spec(3, bold=T) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
-  scroll_box(height = "400px", width = "28%")
+  scroll_box(height = "200px", width = "22%")
 
 ```
 
 
-We only kept this 3 variables to have a claer vision of the evolution among time of the gender diversity in the police. 
+We only kept this 3 variables to have a clear vision of the evolution among time of the gender diversity in the police. 
 
 #### 2) Data vizualisation
 
@@ -86,7 +86,7 @@ kable(RAE[c(1,2,3,7 )]) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   column_spec(1,color="white") %>%
   column_spec(4,bold=T) %>%
-  scroll_box(height = "400px", width = "55%")
+  scroll_box(height = "400px", width = "45%")
 ```
 
 #### 2) Data vizualisation
@@ -247,12 +247,12 @@ election_percent <- election %>%
 kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
   column_spec(1, color = "white", background = "darksalmon") %>% 
-  scroll_box(height = "350px", width = "70%")
+  scroll_box(height = "350px", width = "57%")
 
 ```
 
 
-Almost every state got more democrat vote in 2020 than in 2016. This led to the elction of a democrat president in 2020.
+Almost every state got more democrat vote in 2020 than in 2016. This led to the election of a democrat president in 2020.
 
 #### 2) Election map 
 
@@ -279,9 +279,12 @@ e2 <- ggplot(data = totaldt,
   scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
 grid.arrange(e1, e2, ncol=2)
 
+
 ```
 
-As previously stated, more states turned into being democrats in 2020. We can observe this small difference on the 2 maps. 
+The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
+  
+Another detail we can add is that states that are democratic are bigger and corresponds to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
 
 #### 3) Graphic visualization
 
