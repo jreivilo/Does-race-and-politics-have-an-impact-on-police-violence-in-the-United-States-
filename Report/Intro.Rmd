@@ -47,3 +47,5 @@ In the searching of our variables of interest, we found that the location (state
 - crime rate 
  
 We were motivated on this project because we think police violence is a good description of how the world is right now : separated, with still a lot of discrimination, corruption and inequalities. Every day we can see new evidence of how the police behave through social media, but can we believe everything we see ? That’s why we chose this project.
+
+Is being black is a risk factor of getting shot by the police? Are republican states more willing to shoot offenders and show more racial bias? Our final objective would be to see if it is possible to predict the disparity between black and white people shot by the police according to the state demographic and politics. This will help states to put in place laws and awareness among police forces.
