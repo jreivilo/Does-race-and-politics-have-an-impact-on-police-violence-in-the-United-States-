@@ -111,8 +111,12 @@ kable(black_state_killings) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
+  
+    
 In this table we rank the States from the one with the highest count of Black killings from 2013 to 2020. We excluded 2021 since the year wasn't over and the analysis would be incomplete. We can see that the 3 states with the highest count are : California, Florida and Texas. And the 3 states with the lowest count are : Idaho, Maine and Montana.   
 
+
+  
 ##### Table on White killings per state 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -135,8 +139,12 @@ kable(white_state_killings) %>%
   scroll_box(height = "400px", width = "75%")
 ```
 
+  
+    
 Here is the second table with the ranking of the States from the highest to the lowest average killing of White people from 2013 to 2020. We can see that the 3 first States are the same as the 1st table, however the 3 lasts are different : Hawaii, Rhode Island, District of Columbia.
 
+
+   
 ##### Death circumstances Black people
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -161,6 +169,8 @@ kable(black_victims) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") 
 ```
 
+
+   
 ##### Death circumstances White people
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -185,6 +195,8 @@ kable(white_victims) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") 
 ```
 
+
+    
 We created two tables comparing circumstances in Black and White killings. We kept the data for 2021 because we thought with more data this analysis would be more precise. We can see once again that there is a clear difference between the two races : 
 
 * Black people are 2 times more likely to get killed regardless of their mental illness or incapacity to be clear minded
@@ -200,6 +212,8 @@ These entries don't mean a lot of things like that, because there are other fact
 
 To go further we wanted to see how much people were killed regardless of the circumstances meaning : Not fleeing, Unarmed and not showing mental illness (or incapacity to be clear minded)
 
+
+   
 ##### Black people killing circumstances
   
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -211,6 +225,8 @@ kable((count(police_killings, race=="Black", mental_illness=="No", armed_status=
   scroll_box(height = "400px", width = "75%")
 ```
 
+
+   
 ##### White people killing circumstances
   
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -221,17 +237,20 @@ kable((count(police_killings, race=="White", mental_illness=="No", armed_status=
      row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
   scroll_box(height = "400px", width = "75%")
 ```
+   
+
 We want to focus on the lines where we have on the first table : 
 
-* False, True, True, True : This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
+* **FALSE, TRUE, TRUE, TRUE** : This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
 
 On both tables : 
 
-* True, True, True, True : 
-** All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation. 
-** All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.
+* **TRUE, TRUE, TRUE, TRUE** :   
++ All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation.   
++ All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.  
 
-
+   
+  
 ##### Total people killed from 2013 to 2020
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -290,8 +309,12 @@ kable(summary(killings_per_year)) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
+   
+   
 In average, 1096 people were killed each year since 2013, 25,42% being Black people and 44,15% being White people.
 
+
+    
 #### 3) Graphic vizualisation   
   
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -306,10 +329,10 @@ ggplot(black_state_killings,
 
 ```
   
-  
+     
 Here is a graphic representation of the Black killings table showing the average number of black people killed in each state from 2013 to 2020. 
-  
-  
+
+     
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 police_killings %>% 
   ggplot(mapping=aes(x=reorder(race,race,function(x)-length(x)),fill=race)) +
@@ -322,15 +345,33 @@ police_killings %>%
     labs(title="Population killed by the police from 2013 to 2020",  x = "Race",
           y= "Number people killed")
 
+
+police_killings %>% 
+  ggplot(mapping=aes(x=reorder(gender,gender,function(x)-length(x)),fill=gender)) +
+  guides(fill="none") +
+    coord_flip() +
+    geom_bar() +
+    geom_label(aes(x= gender,
+               label=..count..),
+               stat='count') +
+    labs(title="Gender killed by the police from 2013 to 2020",  x = "Race",
+          y= "Number people killed")
+
+
 ggplot(police_killings) +
   geom_bar(mapping=aes(x=race,fill=gender), position="fill") + 
   labs(title="Gender killed by the police from 2013 to 2020")
-```
-    
-We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
-The proportion of women killed is very little compared to men. However we can observe that White, Black and Hispanic women are the most affected. 
 
+
+```
+
+        
+We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
+The proportion of women killed is very little compared to men. However we can observe that White, Black and Hispanic women are the most affected. Since women represent such a little proportion of the killings (5%) we won't be analyzing further on gender. 
+
+    
 #### Killings per year 
+   
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 KPY <- pivot_longer(killings_per_year, c(`white people killed`,`black people killed`,`total people killed`), names_to = "population killed", values_to = "count")
@@ -344,8 +385,10 @@ KPY %>%
           y= "Number of people killed")
 ```
 
+   
 The graph shows globally that the killings dropped a little since 2018, a decrease of about 150. We can still say that Black and White killings decreased since 2015.
 
+    
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 black_state_killings %>% 
@@ -362,21 +405,22 @@ filter(State%in% c("CA", "FL","TX")) %>%
   
 ```
 
+     
 We wanted to show the evolution of black killings in the 3 most violent states. We can observe that in 2016 there's a big decrease in all states, 2016 being the Trump presidential elections. However Trump didn't start the service until January 2017 meaning that Barack Obama was still president at that time. We know that in 2015 the Black Lives Matter movement started to spread and people asked political personalities to take action. It could explain the decrease of killings in 2016 in these states. 
   
-
-
+   
+    
 ### Table 2 : 2013 to 2021 State killings
   
-  
+     
 #### 1) Cleaning the data set 
 
 The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states.   
 In this part of the analysis, the data goes from 2013 to 2021 and we will keep this time frame because it represents the total killings.
 
-
+   
 #### 2) Analyzing our variables
-
+    
 We want to focus only on black versus white killings. Our main variables will be :
 
 * State 
@@ -387,7 +431,7 @@ We want to focus only on black versus white killings. Our main variables will be
 * Black people killed 
 * White people killed 
 
-
+   
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 library(readr)
 Killingsbystate <- read_delim(file=here::here("Data/2013-2021_killings_by_state.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE)
@@ -398,8 +442,10 @@ arrange(.,desc(`Total Population`))
 #Now we have 51 observations for 8 variables ordered from the most populated State to the least.
 ```
 
+    
 Our goal is to compare the ratio between Black and White killings to their population in each State. So we created a new data frame subtracted from the original one. We added columns for the White population killed and its percentage. 
 
+     
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 #A table of the population and percent of k
 
@@ -437,9 +483,10 @@ kable(kbs) %>%
 
 ```
   
+     
 We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3%of people killed are White. 
 
-
+    
 ##### Summary of Black and White people killed
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -462,9 +509,11 @@ kable(total) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
+    
+       
 After some calculation, we fount out that from 2013 to 2020, black people were killed 3 times more than white people : 0.006% of black people are killed against 0.002% for white people. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
 
-
+      
 #### 3) Graphic vizualisation 
 
 
@@ -485,6 +534,7 @@ geom_point() +
 #a graph on the total killings of Black people in each state compared to their total Black population
 ```
   
+       
 This graph compares the percentage of black people killed with the percentage of black population in each state. The black points representing the percentage of Black people killed are clearly above the red points meaning that the proportion of Black people killed is higher than their population proportion in almost every State. For instance in DC (District of Columbia), Black people represent 46% of the population but 89% of the total police killings are Black people. 
 Drawing a conclusion on this graph we could say that there is clearly a tendency from the police to kill Black people more. 
 

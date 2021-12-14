@@ -1,0 +1,39 @@
+---
+title: "Conclusion"
+output: html_document
+---
+
+Our objective was to answer the questions : 
+
+- Is there a real disparity between black and white people getting shot every year ?
+
+- Can we explain the disparity between black and white killed with the democratic percentage within a state?
+
+- Is race an important factor in the rate of police killings ?
+
+- Is the rate of crime positively correlated with the police killings regarding a certain race ? 
+ie : If black people are more responsible of crime rate, does it mean they are killed more ?
+
+  
+Here is what we found out : 
+
+-	The United States represents 2 main population : White at 76% and black at 13%.
+-	Since 2013, an average number of 1096 people are killed each year. White people represent 44% of these killings and 25% are Black people, meaning that Black people were killed 3 times more than White people. Most of these people killed were male (95%). This first analysis answered our first question : yes, there is a disparity among Black and White people killed in the United States. 
+
+So how could we explain this disparity in Black and White killings ? 
+
+-	United states is a country that has 2 main party : democratic and republican (exp) Since a long time most president have been democratic. Our hypotehtis was that the states where there were more republican vote, there would be higher rate of black killings. Our modelling and analysis part revealed that there was no real correlation between the political party of a state and the black killings (...).  For instance in Rhode Island since 2016 more than 50% of the votes were democrats. However 50% of people killed by the police were Black while representing only 5,6% of the population. 
+While some states fitted the hypothesis, others didn't, making the political party a minor factor of disparity in Black and White killings. 
+
+-	Another question we had was, if the political party didn't explain the disparity than, did crime rate ?
+
+In our analysis we observed that men were responsible of more than 80% of crime, while women represented approximately 16%. However, 95% of killed people were men, meaning there is even a disparity between gender. This could be explained by factors such as : the fact that women were in general less tempted to flee or to be armed, but also the fact that, and without research, in our society male are more prone to violence. Moreover, it is "inculqué" in every children that "a boy shouldn't hit a woman", making the man the "strong" one and the woman the one to defend. In consequence, it means that no matter the circumstance, for a lot of people it would be harder to shoot or kill a woman. 
+
+Regarding crime, we found out that there were approximately the same amount of White and Black offenders (44% in 2020). This information meant that the disparity in killings could come from the fact that comparing to their population, there is a bigger proportion of Black people responsible of violent crimes. The correlation revealed that ...... At the state scale, 
+
+
+-	Crime rate is cause by …. White and …. Black, meaning that compared to their population they are more responsible than white people but white and black people have the same rate of crime meaning that overall there is no real explainable discrimination. 
+-	So what could explain the disparity in killings? Personal beliefs and behavior, things that cant be measured and explained. 
+-	We still found out that a lot of people are killed regardless of aggressive behavior and mostly black people. 
+-	To conclude, it is likely that if you’re a black male in the united states you are in more danger than a white person male or female.
+

@@ -44,7 +44,7 @@ We only kept this 3 variables to have a clear vision of the evolution among time
 
 #### 2) Data vizualisation
 
-In the united state in 2020, there is roughly 51% of women and the black population represent approximately 13,5% of the total population. 
+In the United States in 2020, there is roughly 51% of women and the Black population represents approximately 13,5% of the total population. 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -150,7 +150,6 @@ kable(osr) %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
-We kept this 
 
 
 In 2020, there were 615'989 violent-crime incident compared to only  339'777 in 2013. the percentage of black offender and white offender is very close in many states.
@@ -204,7 +203,7 @@ xlab("Year") + ylab("Percentage")
 
 First of all, despite represent only 13.5 percent of the population, black people represent more than 40 percent of all violent crime in the United States. However, for the past years, the share of black people involved in violent crime is going down except in 2019. 
 
-The huge share that black people represent in the violent crime could explain why they are overkilled compared to their population. In 2016, black people represent 13.3% of the population but 44.2% of violent crime. The ratio is 3.3. On the other side, they represent approximately 25% of people getting shot every year. The ratio in this the case is 1.9.
+The share that black people represent in the violent crime could explain why they are over killed compared to their population. In 2016, black people represent 13.3% of the population but 44.2% of violent crime. The ratio is 3.3. On the other side, they represent approximately 25% of people getting shot every year. The ratio in this the case is 1.9.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -217,8 +216,79 @@ offender_sex_and_race   %>%
   xlab("Year") + ylab("Percentage")
 
 ```
+On the opposite, the percentage  violent crime done by women is very low. Still, their proportion has increased by more than 1.5% since 2013.
 
-On the opposite, the percentage  violent crime done by women is very low.
+### New tables : Massachusetts and Alabama
+
+#### 1) Cleaning our tables
+   
+For further analysis on a state level, we decided to look for information on crime and offenders in Alabama and Massachusetts. We chose these 2 states because they differ in our interested variables : Alabama is mainly republican, and 26% of its population is black whereas Massachusetts has only 7% of Black people and is a democrat state.
+
+We were only interested to compare the race variables, we rearrange one column to use it for our analysis. The main table had "Race_ID" and another table had the matching race to the ID, so we had to rename the observations in order to have understandable results. 
+
+
+##### Massachussetts offenders race proportion
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+MA <- read_csv(file = here::here("Data/NIBRS_OFFENDER_MA.csv"))
+MAprop<-as.data.frame(round(prop.table(table(MA$RACE_ID))*100, 2))
+names(MAprop)[1:2]<-c("Race","Proportion")
+MAprop$Race<-c("Unknown","White", "Black","American indian or Alaska native","Asian","Pacific Islander")
+
+kable(MAprop) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon")
+```
+
+
+
+##### Alabama offenders race proportion
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+AL <- read_csv(file = here::here("Data/NIBRS_OFFENDER_AL.csv"))
+ALprop<-as.data.frame(round(prop.table(table(AL$RACE_ID))*100, 2))
+names(ALprop)[1:2]<-c("Race","Proportion")
+ALprop$Race<-c("Unknown","White", "Black","American indian or Alaska native","Asian","Pacific Islander")
+
+kable(ALprop) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon")
+
+```
+To summarize, we created a table for each state that breaks down the proportion of the different races in the offender category. This helped then plotting the following graph. 
+
+   
+#### 2) Data vizualisation   
+   
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+#merging tables to plot 
+MAxAL<-subset(kbs,State=="Massachusetts" | State=="Alabama")
+MAxAL<-select(MAxAL,!c(2,3,6))
+MAxAL<- melt(MAxAL, id.vars = 'State', variable.name = 'Population',  value.name = 'Proportion')
+
+MAprop$State<-"Massachusetts"
+MAprop<-MAprop[,c(3,1,2)]
+names(MAprop)[2]<-c("Population")
+MAxAL<-rbind(subset(MAprop,Population=="Black"|Population=="White"),MAxAL)
+
+ALprop$State<-"Alabama"
+ALprop<-ALprop[,c(3,1,2)]
+names(ALprop)[2]<-c("Population")
+MAxAL<-rbind(subset(ALprop,Population=="Black"|Population=="White"),MAxAL)
+
+MAxAL$Population[MAxAL$Population %in% c("Black","White")]<-c("% Black offenders", "% White offenders")
+MAxAL<-subset(MAxAL,Population=="% Black victims" | Population=="% Black" | Population=="% Black offenders")
+                         
+                         
+ggplot(MAxAL, aes(x = reorder(`State`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
+geom_point() +
+    labs(title = "2020 Black offenders, police victims and population rate", x="State")
+```
+
+In order to compare the states we merged variables from the Killings by State and the Crime Offenders tables. Our objective was to compare the proportion of Black people, Black offenders and Black people killed by the police. 
+
+We can observe that both in Alabama and Massachusetts the rate of Black offenders is way above the population rate. The pattern is quite similar but surprisingly, the difference between crime rate and Black victims in Massachusetts is higher than in Alabama, when the first one is majorly democrat and the second one republican. 
 
 
 ## USA Elections
@@ -284,7 +354,7 @@ grid.arrange(e1, e2, ncol=2)
 
 The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
   
-Another detail we can add is that states that are democratic are bigger and corresponds to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
+Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
 
 #### 3) Graphic visualization
 
@@ -342,4 +412,6 @@ crdf   %>%
 
 ```
 
-After a rise between 2014 and 2016, the crime rate is dropping every year until 2019. 
+The crime rate exploded from 2014 to 2016. Since then it's been decreasing each year, but is still higher than in 2014. 
+2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. 
+Comparing this to the police killings rate, there's no correlation since we saw that the killings rose from 2016 to 2018. 
