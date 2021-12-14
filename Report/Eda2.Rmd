@@ -1,0 +1,418 @@
+---
+title: "Does race and politics have an impact on police violence in the United States ?"
+author: "Jérémy Olivier and Chloé Mousse"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+#Dowload data
+Gender_Composition <- read.csv(file = here::here("Data/Gender_Composition.csv"))
+democratic_vs_republican_votes_by_usa_state_2020 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_by_usa_state_2020.csv"))
+democratic_vs_republican_votes_usa_2016 <- read.csv(file = here::here("Data/democratic_vs_republican_votes_usa_2016.csv"))
+Race_and_ethnicity <- read.csv(file = here::here("Data/Race_and_ethnicity.csv"))
+offender_sex_and_race <- read.csv(file = here::here("Data/offender_sex_and_race.csv"), fileEncoding = 'UTF-8-BOM')
+rp <- read.csv(file = here::here("Data/resident_population.csv"), sep = ";", fileEncoding = 'UTF-8-BOM')
+Killingsbystate <- read_delim(file = here::here("Data/2013-2021_killings_by_state.csv"), 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+pk<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"), 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+```
+
+## Police composition
+
+### Table 1 : Gender composition
+
+#### 1) Cleaning the data set 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+Gender_Composition <- select(Gender_Composition,c(2,4:7,11))
+Gender_Composition$share <- round(Gender_Composition$share * 100,2) 
+
+kable(Gender_Composition[c(1,2,6)]) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(3, bold=T) %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  scroll_box(height = "200px", width = "22%")
+
+```
+
+
+We only kept this 3 variables to have a clear vision of the evolution among time of the gender diversity in the police. 
+
+#### 2) Data vizualisation
+
+In the United States in 2020, there is roughly 51% of women and the Black population represents approximately 13,5% of the total population. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
+  tail(10) %>%
+  ggplot( aes(x=Year, y=share)) +
+  geom_line() +
+  geom_point() +
+  expand_limits(x = c(2013, 2020)) +
+  ggtitle("Women percentage in the police \n 2014-2019") +
+  xlab("Year") + ylab("Percentage")
+
+#head(Race_and_ethnicity)
+#summary(Race_and_ethnicity)
+#str(Race_and_ethnicity)
+#colSums(is.na(Race_and_ethnicity))
+```
+
+
+On the opposite, the number of women in the police is really low.
+There has always been more women than men in the United States but still close to 50&%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
+
+
+
+### Table 2 : Race and ethnicity composition
+
+#### 1) Cleaning the data set
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+Race_and_ethnicity$share <- round(Race_and_ethnicity$share * 100,2)
+
+RAE <- Race_and_ethnicity %>%
+  subset(.,Race=="Black" |  Race=="White") %>%
+  subset(.,PUMS.Ethnicity.Parent=="Not Hispanic") %>%
+  subset(.,Slug.Geography=="united-states") %>%
+  select(.,c(2,4,6,9:11,16))
+
+kable(RAE[c(1,2,3,7 )]) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1,color="white") %>%
+  column_spec(4,bold=T) %>%
+  scroll_box(height = "400px", width = "45%")
+```
+
+#### 2) Data vizualisation
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+Race_and_ethnicity_b <- Race_and_ethnicity[Race_and_ethnicity$Race == "Black",]
+Race_and_ethnicity_c <- Race_and_ethnicity_b[Race_and_ethnicity_b$Slug.Geography == "united-states",]
+
+bp2 <- Race_and_ethnicity_c[Race_and_ethnicity_c$ID.PUMS.Ethnicity.Parent == "Not Hispanic" ,]   %>%
+  tail(10) %>%
+  ggplot( aes(x=Year, y=share)) +
+  geom_line() +
+  geom_point()+
+  expand_limits(x = c(2013, 2020)) +
+  ggtitle("Black percentage in the police \n 2014-2019") +
+  xlab("Year") + ylab("Percentage")
+
+
+#head(Gender_Composition)
+#summary(Gender_Composition)
+#str(Gender_Composition)
+#colSums(is.na(Gender_Composition))
+
+
+rp$total_population <- rp$White + rp$Black.or.African.American + rp$American.Indian.and.Alaska.Native+ rp$Asian + rp$Native.Hawaiian.and.Other.Pacific.Islander + rp$Two.or.more.races
+#str(rp)
+rp$black_share <- (rp$Black.or.African.American / rp$total_population) * 100
+
+
+bp1 <- rp %>%
+  #tail(25) %>%
+  ggplot( aes(x=Characteristic, y=black_share)) +
+  geom_line() +
+  geom_point()+
+  #expand_limits(x = c(2016, 2020)) +
+  xlim(2013, 2020) +
+  ggtitle("Black percentage in the USA \n 2014-2019") +
+  xlab("Year") + ylab("Percentage")
+
+grid.arrange(bp1, bp2, ncol=2)
+
+```
+
+For the past 20 years, the percentage of black population is rising in the united state and this trend is even stronger in the force police. However, the share in the police is approximately 1.5 point down compared to the share in the united state. Though, We can still agree that the black population is correctly represent in the police.
+
+
+## All violent crime offenders 
+
+#### 1) Cleaning and creating a new table
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+osr <- offender_sex_and_race
+osr$offender_white <- round(osr$offender_white/osr$offender_total*100,2)
+osr$offender_black <- round(osr$offender_black/osr$offender_total*100,2)
+osr$offender_male <- round(osr$offender_male/osr$offender_total*100,2)
+osr$offender_female <- round(osr$offender_female/osr$offender_total*100,2)
+
+kable(osr) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
+
+```
+
+
+In 2020, there were 615'989 violent-crime incident compared to only  339'777 in 2013. the percentage of black offender and white offender is very close in many states.
+
+Violence is rising in the United Sates, but what population is more responsible of it ? Let's take a deeper look. 
+
+
+#### 2) Data vizualisation
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#head(offender_sex_and_race)
+#summary(offender_sex_and_race)
+#str(offender_sex_and_race)
+#colSums(is.na(offender_sex_and_race))
+
+offender_sex_and_race$other_race <- offender_sex_and_race$offender_total - offender_sex_and_race$offender_black - offender_sex_and_race$offender_white
+offender_sex_and_race$other_sex <- offender_sex_and_race - offender_sex_and_race$offender_female - offender_sex_and_race$offender_male
+offender_sex_and_race$share_race <- offender_sex_and_race$offender_black / offender_sex_and_race$offender_total
+offender_sex_and_race$share_sex <- offender_sex_and_race$offender_female / offender_sex_and_race$offender_total
+offender_sex_and_race$share_race_white <- offender_sex_and_race$offender_white / offender_sex_and_race$offender_total
+
+offender_sex_and_race$share_race_white <- offender_sex_and_race$share_race_white * 100
+offender_sex_and_race$share_race <-offender_sex_and_race$share_race*100
+offender_sex_and_race$share_sex <- offender_sex_and_race$share_sex*100
+
+
+#offender_sex_and_race   %>%
+  #tail(10) %>%
+  #ggplot( aes(x=year, y=share_race)) +
+  #geom_line(data=data.frame(offender_sex_and_race$share_race_white),aes(color="Second line")) +
+  #geom_line() +
+  #geom_point() +
+  #ggtitle("Black percentage in the offender \n 2013-2020") +
+  #xlab("Year") + ylab("Percentage")
+
+offender_sex_and_race_a <- data.frame(offender_sex_and_race[, c("year", "share_race")])
+offender_sex_and_race_b <- data.frame(offender_sex_and_race[, c("year", "share_race_white")])
+offender_sex_and_race_b <- offender_sex_and_race_b %>% 
+  rename(
+    share_race = share_race_white,
+  )
+
+ggplot(offender_sex_and_race_a, aes(year, share_race)) +
+geom_line(aes(color="Black")) +
+geom_line(data=offender_sex_and_race_b, aes(color="White")) +
+geom_point(data=offender_sex_and_race_b) +
+geom_point() +
+scale_color_manual(values=c('#999999','#FFFFFF')) +
+ggtitle("Black and white percentage in the offender \n 2013-2020") +
+xlab("Year") + ylab("Percentage") 
+``` 
+
+First of all, despite represent only 13.5 percent of the population, black people represent more than 40 percent of all violent crime in the United States. However, for the past years, the share of black people involved in violent crime is going down except in 2019. 
+
+The share that black people represent in the violent crime could explain why they are over killed compared to their population. In 2016, black people represent 13.3% of the population but 44.2% of violent crime. The ratio is 3.3. On the other side, they represent approximately 25% of people getting shot every year. The ratio in this the case is 1.9.
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+offender_sex_and_race   %>%
+  tail(10) %>%
+  ggplot( aes(x=year, y=share_sex)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Women percentage in the offender \n 2013-2020") +
+  xlab("Year") + ylab("Percentage")
+
+```
+On the opposite, the percentage  violent crime done by women is very low. Still, their proportion has increased by more than 1.5% since 2013.
+
+### New tables : Massachusetts and Alabama
+
+#### 1) Cleaning our tables
+   
+For further analysis on a state level, we decided to look for information on crime and offenders in Alabama and Massachusetts. We chose these 2 states because they differ in our interested variables : Alabama is mainly republican, and 26% of its population is black whereas Massachusetts has only 7% of Black people and is a democrat state.
+
+We were only interested to compare the race variables, we rearrange one column to use it for our analysis. The main table had "Race_ID" and another table had the matching race to the ID, so we had to rename the observations in order to have understandable results. 
+
+
+##### Massachussetts offenders race proportion
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+MA <- read_csv(file = here::here("Data/NIBRS_OFFENDER_MA.csv"))
+MAprop<-as.data.frame(round(prop.table(table(MA$RACE_ID))*100, 2))
+names(MAprop)[1:2]<-c("Race","Proportion")
+MAprop$Race<-c("Unknown","White", "Black","American indian or Alaska native","Asian","Pacific Islander")
+
+kable(MAprop) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon")
+```
+
+
+
+##### Alabama offenders race proportion
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+AL <- read_csv(file = here::here("Data/NIBRS_OFFENDER_AL.csv"))
+ALprop<-as.data.frame(round(prop.table(table(AL$RACE_ID))*100, 2))
+names(ALprop)[1:2]<-c("Race","Proportion")
+ALprop$Race<-c("Unknown","White", "Black","American indian or Alaska native","Asian","Pacific Islander")
+
+kable(ALprop) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon")
+
+```
+To summarize, we created a table for each state that breaks down the proportion of the different races in the offender category. This helped then plotting the following graph. 
+
+   
+#### 2) Data vizualisation   
+   
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+#merging tables to plot 
+MAxAL<-subset(kbs,State=="Massachusetts" | State=="Alabama")
+MAxAL<-select(MAxAL,!c(2,3,6))
+MAxAL<- melt(MAxAL, id.vars = 'State', variable.name = 'Population',  value.name = 'Proportion')
+
+MAprop$State<-"Massachusetts"
+MAprop<-MAprop[,c(3,1,2)]
+names(MAprop)[2]<-c("Population")
+MAxAL<-rbind(subset(MAprop,Population=="Black"|Population=="White"),MAxAL)
+
+ALprop$State<-"Alabama"
+ALprop<-ALprop[,c(3,1,2)]
+names(ALprop)[2]<-c("Population")
+MAxAL<-rbind(subset(ALprop,Population=="Black"|Population=="White"),MAxAL)
+
+MAxAL$Population[MAxAL$Population %in% c("Black","White")]<-c("% Black offenders", "% White offenders")
+MAxAL<-subset(MAxAL,Population=="% Black victims" | Population=="% Black" | Population=="% Black offenders")
+                         
+                         
+ggplot(MAxAL, aes(x = reorder(`State`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
+geom_point() +
+    labs(title = "2020 Black offenders, police victims and population rate", x="State")
+```
+
+In order to compare the states we merged variables from the Killings by State and the Crime Offenders tables. Our objective was to compare the proportion of Black people, Black offenders and Black people killed by the police. 
+
+We can observe that both in Alabama and Massachusetts the rate of Black offenders is way above the population rate. The pattern is quite similar but surprisingly, the difference between crime rate and Black victims in Massachusetts is higher than in Alabama, when the first one is majorly democrat and the second one republican. 
+
+
+## USA Elections
+
+#### 1) Cleaning and creating a new table
+  
+We create a new table that regroup all the result of the election of 2016 and 2020 by merging the previous one on the state code. This step done, we rename the columns to focus on the percentage of democrats in each state in the USA. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+#CREATE NEW DF 
+election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
+election <- election %>% 
+  rename(
+    percent_democrat_2016 = percD,
+    percent_democrat_2020 = percent_democrat
+  )
+election$percent_democrat_2016 <- election$percent_democrat_2016 * 100
+election <- election %>% mutate(across(starts_with("percent_democrat"), round, 1))
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+election_percent <- election %>% 
+  select(state, percent_democrat_2016, percent_democrat_2020)
+
+kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon") %>% 
+  scroll_box(height = "350px", width = "57%")
+
+```
+
+
+Almost every state got more democrat vote in 2020 than in 2016. This led to the election of a democrat president in 2020.
+
+#### 2) Election map 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#USA MAP ELECTION
+all_states <- map_data("state")
+election$region <- tolower(election$usa_state)
+totaldf <- merge(all_states, election, by = "region")
+# switched to data.table to fix the cut up map issue
+# getting sort by region then order 
+totaldt <- as.data.table(totaldf)
+setkey(totaldt, region, order)
+
+options(scipen=999) #turn off scientific notation
+
+e1 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
+
+e2 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
+grid.arrange(e1, e2, ncol=2)
+
+
+```
+
+The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
+  
+Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
+
+#### 3) Graphic visualization
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#USA BARPLOT ELECTION
+plot1 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2016), x=percent_democrat_2016)) + 
+  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
+  geom_text(aes(label = percent_democrat_2016), hjust = -0.5, size = 3) + 
+  labs(title = "Democrat percentage by state",
+       subtitle = "2016 ",
+       x = "Percent",
+       y= "State code") +
+  geom_vline(xintercept = 50, 
+             color = "red", size=0.7) +
+  expand_limits(x = c(0, 75))
+
+plot2 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2020), x=percent_democrat_2020)) + 
+  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
+  geom_text(aes(label = percent_democrat_2020), hjust = -0.5, size = 3) + 
+  labs(title = "Democrat percentage by state",
+       subtitle = "2020 ",
+       x = "Percent",
+       y= "State code") +
+  geom_vline(xintercept = 50, 
+             color = "red", size=0.7) +
+  expand_limits(x = c(0, 75))
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+
+In the election of 2020, there is more state above the 50 percent line than 4 years ago. With this graph, the difference between 2016 and 2020 is easy to spot and more state are democrats in 2020. 
+
+
+## Crime Rate 
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+cr <- read.csv(file = here::here("Data/crime_rate.csv"), sep = ";")
+crdf <- data.frame(colMeans(cr[2:7]))
+#crdf$colMeans.cr.2.11.. <- as.factor(crdf$colMeans.cr.2.11..)
+
+vec <- c(2019,2018,2017,2016,2015,2014)
+crdf$year <- vec
+
+crdf$colMeans.cr.2.7.. <- round(as.numeric(crdf$colMeans.cr.2.7., 2))
+
+
+crdf   %>%
+  tail(10) %>%
+  ggplot( aes(x=year, y=colMeans.cr.2.7..)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Crime rate") +
+  xlab("Year") + ylab("Violent crime rates per 100'000 inhabitants")
+
+```
+
+The crime rate exploded from 2014 to 2016. Since then it's been decreasing each year, but is still higher than in 2014. 
+2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. 
+Comparing this to the police killings rate, there's no correlation since we saw that the killings rose from 2016 to 2018. 

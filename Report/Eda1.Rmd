@@ -1,0 +1,541 @@
+---
+title: "2013-2021 Police killings"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+  
+# 3. Exploratory Data Analysis
+
+## Mapping Police Violence 
+
+### Table 1 : 2013 to 2021 police killings
+
+#### 1) Cleaning the dataset 
+
+To get started, we had to rearrange the data set in order to retain only the variables and observations we needed. This data set was huge, we had to concentrate on the essential : Moving from 53 variables to 12. Then we did basic modifications such as changing variable names, filtering the variables with NAs, changing some observations to make the understanding clearer. We also decided to not take into account the year 2021 since it isn't complete.
+  
+Our most important variables were : 
+  
+* Race 
+* Sex 
+* State 
+* Date 
+* Armed Status
+* Mental illness
+* Criminal charges
+* Fleeing
+* Body camera
+  
+These are the ones we are going to link with other data sets to run our hypothesis. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+X2013_2021_police_killings<- read_delim(file = here::here("Data/2013_2021_police_killings.csv"), 
+     delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+police_killings <- X2013_2021_police_killings %>% 
+select(.,c(2:4,6,8:9,11,17,19,20,23:24)) ## Selecting the main variables
+names(police_killings)[1:12]<-c("age","gender","race", "date_of_incident", "city","state","county","criminal_charges","mental_illness","armed_status","fleing","body_camera") ## Renaming the variables 
+police_killings$date_of_incident<-as.Date(police_killings$date_of_incident,"%d/%m/%Y") #changing character to date type 
+police_killings$date_of_incident<-format(police_killings$date_of_incident,"%Y") #changing the date format to Year only
+
+##NA
+#We don't want to delete the NAs from the other columns because some of these observations are related to known race/sex which are observations we need, so we switched them to "unknown" 
+
+##Tiyding the observations
+
+#Gender
+police_killings$gender[police_killings$gender %in% c(NA)]<-"Unknown"
+
+#Fleing
+police_killings$fleing[police_killings$fleing %in% c("car","foot","Foot","Car","car,foot", "car, foot")]<-"yes"
+police_killings$fleing[police_killings$fleing %in% c("not fleeing","Not fleeing","Not Fleeing")]<-"no"
+police_killings$fleing[police_killings$fleing %in% c("Other")]<-"other"
+#Simplifying the observations 
+
+#Armed Status
+police_killings$armed_status[police_killings$armed_status %in% c("Allegedly Armed")]<-"Allegedly armed"
+police_killings$armed_status[police_killings$armed_status %in% c("Unarmed/Did Not Have Actual Weapon")]<-"Unarmed"
+#Simplifying the observations
+
+#Body Camera
+police_killings$body_camera[police_killings$body_camera%in% c("Yes")]<-"yes"
+police_killings$body_camera[police_killings$body_camera%in% c("Bystander Video","cell phone video","Dashcam video","Dashcam Video","No", "surveillance video", "Surveillance video","Surveillance Video")]<-"no"
+#We have multiple observations here such as : Surveillance video, dashcam, bystander video, but we want only yes and no observations to make it easier. So every observations will be no unless it is "yes" or "Yes". The reason is that having a body camera has a lot more psychological pressure on a person than an external camera, because we might not know of it.
+
+#Mental Illness
+police_killings$mental_illness[police_killings$mental_illness %in% c("unknown")]<-"Unknown"
+police_killings$mental_illness[police_killings$mental_illness %in% c("Drug or Alcohol Use, Drug or alcohol use")]<-"Yes"
+police_killings$mental_illness[police_killings$mental_illness %in% c(NA)]<-"Unknown"
+#Simplifying the observations
+
+#criminal_charges
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Plead No Contest, Sentenced to 10 years probation","Charged, Plead Guilty to Manslaughter, Sentenced to 5 years in prison", "Charged, Convicted, Sentenced to life in prison","Charged, Convicted, Sentenced to 7 years in prison","Charged, Convicted, Sentenced to 6 years in prison","Charged, Convicted, Sentenced to 5 years in prison","Charged, Convicted, Sentenced to 40 years to Life in prison","Charged, Convicted, Sentenced to 40 years in prison","Charged, Convicted, Sentenced to 4.75 years in prison","Charged, Convicted, Sentenced to 30 years in prison","Charged, Convicted, Sentenced to 3.5 years in prison","Charged, Convicted, Sentenced to 25 years in prison","Charged, Convicted, Sentenced to 2 years suspension and 3 years probation","Charged, Convicted, Sentenced to 18 months","Charged, Convicted, Sentenced to 10 years in prison","Charged, Convicted, Sentenced to 1 year in prison","Charged, Convicted, Sentenced to 1 year in jail, 3 years suspended","Charged, Convicted","Charged with a crime")]<-"Charged or sentenced"
+
+
+```
+
+
+#### 2) Analysing our variables 
+
+In this part we analysed our most important variables : 
+
+* Average Black and White people killed per State and per Year
+* Percentage of black and white people killed 
+* Percentage of male and female killed
+* Percentage of officers charged
+* Percentage of officers wearing a body camera
+* Percentage of victim's armed
+* Percentage of victim's showing a mental illness or incapacity to be clear minded
+
+##### Table on black killings per state 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+black_state_killings <- subset(police_killings, police_killings$race=="Black")
+black_state_killings <- table(black_state_killings$`state`,black_state_killings$`date_of_incident`)
+black_state_killings <- as.data.frame(black_state_killings)
+black_state_killings <- black_state_killings %>%
+     pivot_wider(names_from = Var2,values_from = Freq) %>%
+    select(.,!c(10))
+black_state_killings$`Average Black killing per year`<- round(rowMeans(black_state_killings[,2:9]),2)
+black_state_killings <- arrange(black_state_killings,desc(`Average Black killing per year`))
+names(black_state_killings)[1]<-"State"
+
+
+kable(black_state_killings) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(1, bold = T, italic = T, background = "lightbluesky") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+  
+    
+In this table we rank the States from the one with the highest count of Black killings from 2013 to 2020. We excluded 2021 since the year wasn't over and the analysis would be incomplete. We can see that the 3 states with the highest count are : California, Florida and Texas. And the 3 states with the lowest count are : Idaho, Maine and Montana.   
+
+
+  
+##### Table on White killings per state 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+white_state_killings <- subset(police_killings, police_killings$race=="White")
+white_state_killings <- table(white_state_killings$`state`,white_state_killings$`date_of_incident`)
+white_state_killings <- as.data.frame(white_state_killings)
+white_state_killings <- white_state_killings %>%
+     pivot_wider(names_from = Var2, values_from = Freq) %>%
+  select(.,!c(10))
+white_state_killings$`Average White killing per year`<- round(rowMeans(white_state_killings[,2:9]),2)
+white_state_killings <- arrange(white_state_killings,desc(`Average White killing per year`))
+names(white_state_killings)[1]<-"State"
+
+kable(white_state_killings) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(10, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+
+  
+    
+Here is the second table with the ranking of the States from the highest to the lowest average killing of White people from 2013 to 2020. We can see that the 3 first States are the same as the 1st table, however the 3 lasts are different : Hawaii, Rhode Island, District of Columbia.
+
+
+   
+##### Death circumstances Black people
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+black_victims <- subset(police_killings,race=="Black")
+black_victims <- data_frame(c("FALSE","TRUE"),
+prop.table(table(black_victims$mental_illness=="Yes")), prop.table(table(black_victims$fleing == "yes")),
+prop.table(table(black_victims$body_camera == "yes")),
+prop.table(table(black_victims$armed_status == "Allegedly armed")),
+prop.table(table(black_victims$criminal_charges == "Charged or sentenced")))
+names(black_victims) <- c("Status", "Illness, alcohol or drugs", "Fleing", "Body_camera", "Armed", "Charged or sentenced")
+
+black_victims$`Fleing` <- round(black_victims$`Fleing`*100,2)
+black_victims$Body_camera <- round(black_victims$Body_camera*100,2)
+black_victims$`Armed` <- round(black_victims$`Armed`*100,2)
+black_victims$`Charged or sentenced` <- round(black_victims$`Charged or sentenced`*100,2)
+black_victims$`Illness, alcohol or drugs` <- round(black_victims$`Illness, alcohol or drugs`*100,2)
+
+kable(black_victims) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(2, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") 
+```
+
+
+   
+##### Death circumstances White people
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+white_victims <- subset(police_killings,race=="White")
+white_victims <- data_frame(c("FALSE","TRUE"),
+prop.table(table(white_victims$mental_illness=="Yes")), prop.table(table(white_victims$fleing == "yes")),
+prop.table(table(white_victims$body_camera == "yes")),
+prop.table(table(white_victims$armed_status == "Allegedly armed")),
+prop.table(table(white_victims$criminal_charges == "Charged or sentenced")))
+names(white_victims) <- c("Status", "Illness, alcohol or drugs", "Fleing", "Body_camera", "Armed", "Charged or sentenced")
+
+white_victims$`Fleing` <- round(white_victims$`Fleing`*100,2)
+white_victims$Body_camera <- round(white_victims$Body_camera*100,2)
+white_victims$`Armed` <- round(white_victims$`Armed`*100,2)
+white_victims$`Charged or sentenced` <- round(white_victims$`Charged or sentenced`*100,2)
+white_victims$`Illness, alcohol or drugs` <- round(white_victims$`Illness, alcohol or drugs`*100,2)
+
+kable(white_victims) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(2, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") 
+```
+
+
+    
+We created two tables comparing circumstances in Black and White killings. We kept the data for 2021 because we thought with more data this analysis would be more precise. We can see once again that there is a clear difference between the two races : 
+
+* Black people are 2 times more likely to get killed regardless of their mental illness or incapacity to be clear minded
+* Black people are 1.3 times more likely to get killed if they're fleeing 
+* Black people are 1.2 times more likely to be unarmed when killed
+
+However we can see that from 2013 to 2021 :
+
+* 1% of White killings ended up charged and convicted with a crime, against 1.53% for Black killings, meaning that it seems like sentence over black killings are "harder".
+* 16.12% police officers were wearing a body camera when they killed a black person against 9.28% for white people. In our hypothesis it could mean that police officers are less scared about the sentence they could get when the crime concerns a black person, however as we saw above, it doesn't match reality. 
+
+These entries don't mean a lot of things like that, because there are other factors. It would be interesting to correlate the circumstances in between them.
+
+To go further we wanted to see how much people were killed regardless of the circumstances meaning : Not fleeing, Unarmed and not showing mental illness (or incapacity to be clear minded)
+
+
+   
+##### Black people killing circumstances
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+kable((count(police_killings, race=="Black", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))) %>% 
+     kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+     row_spec(11, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(23, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(0, bold = T, italic = T, color = "white", background = "lightskyblue") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+
+
+   
+##### White people killing circumstances
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+kable((count(police_killings, race=="White", mental_illness=="No", armed_status=="Unarmed",fleing=="no" ))) %>% 
+     kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+     row_spec(11, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(23, bold = T, italic = T, background = "gainsboro") %>%
+     row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") %>% 
+  scroll_box(height = "400px", width = "75%")
+```
+   
+
+We want to focus on the lines where we have on the first table : 
+
+* **FALSE, TRUE, TRUE, TRUE** : This represent people who aren't Black who were killed despite showing no apparent reason to be. As a result, 168 people were killed in these circumstances.
+
+On both tables : 
+
+* **TRUE, TRUE, TRUE, TRUE** :   
++ All Black people who were killed but showing no apparent reason to be. As a result, 75 Black people were killed in these circumstances. It means 30,86% of the total people killed in this situation.   
++ All White people who were killed but showing no apparent reason to be. As a result, 98 White people were killed in these circumstances. It means 40,32% of the total people killed in this situation.  
+
+   
+  
+##### Total people killed from 2013 to 2020
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+bpk <- police_killings %>% 
+count(., race=="Black", date_of_incident)
+bpk <- bpk %>%
+  subset(.,bpk$`race == "Black"`!="FALSE" ) %>%
+  subset(.,`date_of_incident`!="2021")
+
+names(bpk)[2:3] <- c("year", "black people killed")
+bpk<- select(bpk,!c(1))
+#creation of a table of black people killed throughout the years
+
+wpk <- police_killings %>% 
+     count(., race=="White", date_of_incident)
+wpk <- wpk %>% 
+  subset(.,wpk$`race == "White"`!="FALSE" ) %>%
+   subset(.,`date_of_incident`!="2021")
+names(wpk)[2:3] <- c("year", "white people killed")
+wpk<- select(wpk,!c(1))
+#creation of a table of white people killed
+
+killings_per_year<-merge(wpk, bpk, by="year")
+
+tpk <- police_killings %>% 
+    subset(.,date_of_incident!="2021") %>%
+    count(.,date_of_incident)
+names(tpk)[1:2] <- c("year", "total people killed")
+
+killings_per_year<- merge(killings_per_year, tpk, by="year") 
+#merging all the tables because I don't know how to do it another way
+
+killings_per_year<- killings_per_year %>% 
+  mutate(.,"other people killed" = `total people killed`-`white people killed`-`black people killed`,             "perc_bpk" = round(`black people killed`/`total people killed`*100,2), 
+         "perc_wpk" = round(`white people killed`/`total people killed`*100,2), 
+         "perc_opk" = round(`other people killed`/`total people killed`*100,2))
+
+killings_per_year <- killings_per_year[ ,c(1,2,7,3,6,5,8,4)]
+
+kable(killings_per_year) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(1, bold = T, italic = T,color = "white", background = "darksalmon") %>%
+  column_spec(3, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(5, bold = T, italic = T, background = "gainsboro") %>%
+  column_spec(7, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
+```
+
+##### Summary of the total killings from 2013 to 2020
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+kable(summary(killings_per_year)) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(4, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
+
+```
+   
+   
+In average, 1096 people were killed each year since 2013, 25,42% being Black people and 44,15% being White people.
+
+
+    
+#### 3) Graphic vizualisation   
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+ggplot(black_state_killings, 
+       aes(y= reorder(`State`, `Average Black killing per year`), x=`Average Black killing per year`)) + 
+     geom_bar(stat="identity", width=.5, fill="lightskyblue") + 
+     geom_text(aes(label = `Average Black killing per year`), hjust = -0.10, size = 3) + 
+     labs(title = "Average Black killings from 2013 to 2020",          
+          x = "Black people killed",
+          y= "States")
+
+
+```
+  
+     
+Here is a graphic representation of the Black killings table showing the average number of black people killed in each state from 2013 to 2020. 
+
+     
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+police_killings %>% 
+  ggplot(mapping=aes(x=reorder(race,race,function(x)-length(x)),fill=race)) +
+  guides(fill="none") +
+    coord_flip() +
+    geom_bar() +
+    geom_label(aes(x= race,
+               label=..count..),
+               stat='count') +
+    labs(title="Population killed by the police from 2013 to 2020",  x = "Race",
+          y= "Number people killed")
+
+
+police_killings %>% 
+  ggplot(mapping=aes(x=reorder(gender,gender,function(x)-length(x)),fill=gender)) +
+  guides(fill="none") +
+    coord_flip() +
+    geom_bar() +
+    geom_label(aes(x= gender,
+               label=..count..),
+               stat='count') +
+    labs(title="Gender killed by the police from 2013 to 2020",  x = "Race",
+          y= "Number people killed")
+
+
+ggplot(police_killings) +
+  geom_bar(mapping=aes(x=race,fill=gender), position="fill") + 
+  labs(title="Gender killed by the police from 2013 to 2020")
+
+
+```
+
+        
+We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
+The proportion of women killed is very little compared to men. However we can observe that White, Black and Hispanic women are the most affected. Since women represent such a little proportion of the killings (5%) we won't be analyzing further on gender. 
+
+    
+#### Killings per year 
+   
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+KPY <- pivot_longer(killings_per_year, c(`white people killed`,`black people killed`,`total people killed`), names_to = "population killed", values_to = "count")
+
+KPY %>%
+     filter(KPY$`population killed` %in% c("white people killed", "black people killed","total people killed")) %>%
+    ggplot(aes(x = year, y = count, group = `population killed`, colour = `population killed`)) +
+    geom_line() +
+  labs(title = "Black and White killings from 2013 to 2020",          
+          x = "Year",
+          y= "Number of people killed")
+```
+
+   
+The graph shows globally that the killings dropped a little since 2018, a decrease of about 150. We can still say that Black and White killings decreased since 2015.
+
+    
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+black_state_killings %>% 
+  pivot_longer(c(`2013`, `2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`),
+                                      names_to = "year",
+                                      values_to = "count") %>%
+filter(State%in% c("CA", "FL","TX")) %>%
+    ggplot(aes(x = year, y = count, group = `State`, colour = `State`)) +
+    geom_line() +
+    geom_point()+
+  labs(title = "Evolution of Black killings",          
+          x = "Year",
+          y= "Number of Black people killed")
+  
+```
+
+     
+We wanted to show the evolution of black killings in the 3 most violent states. We can observe that in 2016 there's a big decrease in all states, 2016 being the Trump presidential elections. However Trump didn't start the service until January 2017 meaning that Barack Obama was still president at that time. We know that in 2015 the Black Lives Matter movement started to spread and people asked political personalities to take action. It could explain the decrease of killings in 2016 in these states. 
+  
+   
+    
+### Table 2 : 2013 to 2021 State killings
+  
+     
+#### 1) Cleaning the data set 
+
+The second table is a summary of the killings by state. We have a table of 999 observations of 36 variables. We already see a problem because we should have 50 observations corresponding to the states.   
+In this part of the analysis, the data goes from 2013 to 2021 and we will keep this time frame because it represents the total killings.
+
+   
+#### 2) Analyzing our variables
+    
+We want to focus only on black versus white killings. Our main variables will be :
+
+* State 
+* State abbreviation 
+* Total population 
+* Black population 
+* White population 
+* Black people killed 
+* White people killed 
+
+   
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(readr)
+Killingsbystate <- read_delim(file=here::here("Data/2013-2021_killings_by_state.csv"), delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+Killingsbystate <- Killingsbystate %>%
+subset(.,!`State Abbreviation`=="") %>%
+arrange(.,desc(`Total Population`))
+#Now we have 51 observations for 8 variables ordered from the most populated State to the least.
+```
+
+    
+Our goal is to compare the ratio between Black and White killings to their population in each State. So we created a new data frame subtracted from the original one. We added columns for the White population killed and its percentage. 
+
+     
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#A table of the population and percent of k
+
+kbs<- Killingsbystate %>%
+select(.,c(1:3,21,11,12)) 
+
+names(kbs)[6]<-"% Black victims"
+
+kbs$`% White`<-Killingsbystate$`White Population`/Killingsbystate$`Total Population`*100
+kbs$`% White victims` <- Killingsbystate$`# White people killed`/Killingsbystate$`# People Killed`*100
+
+kbs$`% African-American`<-str_replace(kbs$`% African-American`, ",", ".")
+kbs$`% Black victims`<-str_replace(kbs$`% Black victims`, ",", ".")
+
+kbs$`% African-American`<-as.numeric(as.character(kbs$`% African-American`))
+kbs$`% Black victims`<-as.numeric(as.character(kbs$`% Black victims`))
+
+kbs$`% African-American`<-kbs$`% African-American`*100
+kbs$`% Black victims`<-kbs$`% Black victims`*100
+
+kbs <- kbs %>% 
+  .[,c(1:3,5,7,4,6,8)] %>%
+  mutate_at(vars(`% African-American`,`% White`,`% Black victims`,`% White victims`), funs(round(., 2)))
+  
+names(kbs)[4]<-"% Black"
+
+kable(kbs) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(1, bold = T, italic = T, color = "white", background = "darksalmon") %>%
+  column_spec(4:5, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(7:8, bold = T, italic = T, background = "gainsboro") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  scroll_box(height = "400px", width = "100%")
+
+
+```
+  
+     
+We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3%of people killed are White. 
+
+    
+##### Summary of Black and White people killed
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+total <- data.frame(c("Total","Black","White"),c(sum(Killingsbystate$`Total Population`),sum(Killingsbystate$`Black Population`),sum(Killingsbystate$`White Population`)))
+names(total)<-c("race","count")
+total$proportion<-c(total$count/322903030*100)
+total$killed<-c(sum(killings_per_year$`total people killed`),sum(killings_per_year$`black people killed`),sum(killings_per_year$`white people killed`))
+total$proportion_k<-c((9727/322903030*100),(2415/39715917*100),(4224/197181177*100))
+names(total)<-c("Race","Total_pop","proportion_tp","pop_killed","proportion_k")
+
+total$proportion_tp <- round(total$proportion_tp,2)
+total$proportion_k <- round(total$proportion_k,3)
+
+kable(total) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  column_spec(3, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(5, bold = T, italic = T, background = "gainsboro")%>%
+  column_spec(1, bold = T, italic = T, color="white",background = "darksalmon")%>%
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
+
+```
+    
+       
+After some calculation, we fount out that from 2013 to 2020, black people were killed 3 times more than white people : 0.006% of black people are killed against 0.002% for white people. This clearly means that there is an existing discrimination against black people. However, it could be explained by other factors like the crime rate, and the circumstances of death, still there is a significant difference. 
+
+      
+#### 3) Graphic vizualisation 
+
+
+```{r, fig.width=12,echo = FALSE, message = FALSE, warning=FALSE}
+
+kbs2 <- select(kbs,c(2,4,7))
+
+names(kbs2) <- c("State abbrevation", "Black", "Black killed")
+
+kbs.melt <- melt(kbs2, id.vars = 'State abbrevation', variable.name = 'Population', 
+    value.name = 'Proportion')
+
+ggplot(kbs.melt, aes(x = reorder(`State abbrevation`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
+geom_point() +
+    labs(title = "Proportion of Black people killed and their total population per state",          
+          x = "State abbreviation")
+
+#a graph on the total killings of Black people in each state compared to their total Black population
+```
+  
+       
+This graph compares the percentage of black people killed with the percentage of black population in each state. The black points representing the percentage of Black people killed are clearly above the red points meaning that the proportion of Black people killed is higher than their population proportion in almost every State. For instance in DC (District of Columbia), Black people represent 46% of the population but 89% of the total police killings are Black people. 
+Drawing a conclusion on this graph we could say that there is clearly a tendency from the police to kill Black people more. 
+
+
