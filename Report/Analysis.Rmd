@@ -287,12 +287,24 @@ However, for the backward selection, it is less explicit. The best model seems t
 Obviously, Total.Population is the first variable to me removed
 from the backward selection process. This variable is the less significative in the base model with the 7 variables. 
 
+### Final model
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+lm.fit <- lm(Rate..All.People. ~ percent_democrat_2016 + violent_crime_2016 + percent_black + percent_white + percent_hispanic + percent_asian, data=vote_rel_new)
+tab_model(lm.fit)
+
+#knitr::kable(bptest(lm.fit)[4])
+```
 
 ### Conclusion
 To conclude, the best model is the one with all variables except Total.Population. Despite the adjusted R-squared being slightly higher with this variable, the other test proved the model is better without it.
 
+To the question  can we predict the number of people getting shot by the police with the democratic percentage? The answer is yes. We can explain 70% of the regression and most of our variable are significative. 
 
-## Can we explain the disparity between black and white shots with the democratic percentage of the state?
+Democratic state have less people shoot by the police. Is it because people in democratic state own less guns than republican? Is it because justice is more rehabilitative? In a further analysis, this variables could be added  and we could take special measure to diminish people killed every year in state. 
+
+
+
+## Can we explain the disparity between black and white shots with the demographic and democratic percentage of the state?
 
 ### Boxplot 
 
@@ -330,7 +342,7 @@ ggplot(vote_rel_new_no10, aes(x=violent_crime_2016, y=Black.White.Disparity)) +
 
 ```
 
-MOreover, violent crime rate is slightly negatively correlated to the black and white disparity.
+Moreover, violent crime rate is slightly negatively correlated to the black and white disparity.
 
 ### Plot 3
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -345,7 +357,9 @@ ggplot(vote_rel_new_no10, aes(x=percent_black, y=Black.White.Disparity)) +
 
 As before, the line is pretty flat but still slightly negatively correlated. 
 
-In this plot, if the percentage of black people in a state is lower, the disparity between them and white people will be lower as well.
+In this plot, if the percentage of black people in a state is lower, the disparity between them and white people will be lower.
+
+
 
 ### Multilinear regression
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -359,7 +373,7 @@ On top of that, none of the variable are significative despite some being close 
 
 Basically, this multilinear regression do not predict or explain the black and white disparity and there is no need to pick a "better" model among this one. 
 
-We can still show the total population do not have an effect on the regression again. 
+We can still show the total population do not have an effect on the regression again  as well percent democrat 2016 and violent crime 2016. At least, this **might** show us the disparity between black and white is not due to this variable at all. 
 
 ### Regression Diagnosis
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -377,4 +391,11 @@ par(mfrow=c(1,1))
 **Residual vs Leverage :** Observation 11 is out of the red ine and observation 2 is close to it. This regression suffer from variable 11 that have a huge influence on it. 
 
 The 4 plots indicate our multilinear regression is not a good fit at all. 
+
+
+### Conclusion
+
+Despite being the important question of our research, we are unable with these data to construct a good model. This teach us at least the disparity between black and white is way more complex to explain than with only few variables. 
+
+Maybe, quadratic model would work better but  there is a risk to overfit the data and it become harder to interpret the model specially with cubic model or higher.  
 
