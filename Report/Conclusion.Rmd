@@ -3,6 +3,8 @@ title: "Conclusion"
 output: html_document
 ---
 
+# 5. Discussion
+
 Our objective was to answer the questions : 
 
 - Is there a real disparity between black and white people getting shot every year ?
