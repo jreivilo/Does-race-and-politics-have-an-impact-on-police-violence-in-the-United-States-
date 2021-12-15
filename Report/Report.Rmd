@@ -1,5 +1,5 @@
 ---
-title: "Does race and politics have an impact on police violence in the United States ?"
+title: "Do race and politics have an impact on police violence in the United States ?"
 author: "Jérémy Olivier and Chloé Mousset"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
