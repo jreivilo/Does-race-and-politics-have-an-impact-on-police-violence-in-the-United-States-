@@ -202,7 +202,7 @@ Percent white and percent black are extremely significative (p<0.001).Percent as
 
 Weirdly, all demographic variable are negative.
 
-The variable we were interested primarily, percent democrat 2016, is also significative but with p<0.05. In this regression, police in less democratic state definitely shoot more people during arrest than more democratic state. 
+The variable we were interested primarily, percent democrat 2016, is also significative but with p<0.05. In this regression, police in republican state definitely shoot more people during arrest than democratic state. 
 
 As expected, the Total Population variable has no influence on Rate All People. Maybe we can remove this variable to get a better regression.
 
@@ -282,10 +282,10 @@ points(which.max(sum.model.f$adjr2), sum.model.f$adjr2[which.max(sum.model.f$adj
 #coef(model.f1,6)
 
 ```
+    
 However, for the backward selection, it is less explicit. The best model seems to be the one with 6 variables.
 
-Obviously, Total.Population is the first variable to me removed
-from the backward selection process. This variable is the less significative in the base model with the 7 variables. 
+Obviously, Total.Population is the first variable to be removed from the backward selection process. This variable is the less significative in the base model with the 7 variables. 
 
 ### Final model
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -298,13 +298,13 @@ tab_model(lm.fit)
 ### Conclusion
 To conclude, the best model is the one with all variables except Total.Population. Despite the adjusted R-squared being slightly higher with this variable, the other test proved the model is better without it.
 
-To the question  can we predict the number of people getting shot by the police with the democratic percentage? The answer is yes. We can explain 70% of the regression and most of our variable are significative. 
+To the question `Can we predict the number of people getting shot by the police with the democratic percentage?` The answer is yes. We can explain 70% of the regression and most of our variable are significative. 
 
-Democratic state have less people shoot by the police. Is it because people in democratic state own less guns than republican? Is it because justice is more rehabilitative? In a further analysis, this variables could be added  and we could take special measure to diminish people killed every year in state. 
+Democratic states have less people shot by the police. Is it because people in democratic state own less guns than republican? Is it because justice is more rehabilitative? In a further analysis, this variables could be added  and we could take special measure to diminish people killed every year in state. 
 
 
 
-## Can we explain the disparity between black and white shots with the demographic and democratic percentage of the state?
+## Can we explain the disparity between black and white people shot with the demographic and democratic percentage of the state?
 
 ### Boxplot 
 
@@ -312,7 +312,7 @@ Democratic state have less people shoot by the police. Is it because people in d
 boxplot(vote_rel_new$Black.White.Disparity, col="dodgerblue3", ylab="Black White Disparity", main="Boxplot Black White Disparity")
 ```
 
-First of all, I removed 1 outliers (Black White Disprity = 19) of the model but I kept the second outliers (Black White Disprity = 10)
+First of all, we removed 1 outlier (Black White Disprity = 19) of the model but we kept the second outlier (Black White Disprity = 10).
 
 
 ### Plot 1
@@ -325,11 +325,11 @@ ggplot(vote_rel_new_no10, aes(x=percent_democrat_2016, y=Black.White.Disparity))
   xlab("Percent of democrat in 2016") + ylab("Disparity in rate between black and white")
 
 ```
-On average, the number of black people shoot by police per 125'000 inhabitant is 3.7 time higher than for white people. 
+On average, the number of black people shot by police per 125'000 inhabitant is 3.7 time higher than for white people. 
 
-This black white disparity is positively correlated to the percent of democrat in 2016. 
+This black and white disparity is positively correlated to the percent of democrat in 2016. 
 
-Democrat state seems to killed more black than white per 125^000 inhabitant.
+Democrat states seem to killed more black people than white per 125'000 inhabitant.
 
 ### Plot 2
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
@@ -369,11 +369,11 @@ tab_model(lm.fit)
 
 An R-squared of 0.15 is very low and an adjusted R-squared close to be negative is really bad.
 
-On top of that, none of the variable are significative despite some being close to.
+On top of that, none of the variables are significative despite some being close to.
 
 Basically, this multilinear regression do not predict or explain the black and white disparity and there is no need to pick a "better" model among this one. 
 
-We can still show the total population do not have an effect on the regression again  as well percent democrat 2016 and violent crime 2016. At least, this **might** show us the disparity between black and white is not due to this variable at all. 
+We can still show the total population do not have an effect on the regression again as well percent democrat 2016 and violent crime 2016. At least, this **might** show us the disparity between black and white is not due to this variable at all. 
 
 ### Regression Diagnosis
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
