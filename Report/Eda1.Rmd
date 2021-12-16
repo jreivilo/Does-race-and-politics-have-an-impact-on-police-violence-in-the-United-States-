@@ -193,6 +193,7 @@ kable(white_victims) %>%
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
   row_spec(2, bold = T, italic = T, background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "darkseagreen") 
+  
 ```
 
 
@@ -205,8 +206,8 @@ We created two tables comparing circumstances in Black and White killings. We ke
 
 However we can see that from 2013 to 2021 :
 
-* 1% of White killings ended up charged and convicted with a crime, against 1.53% for Black killings, meaning that it seems like sentence over black killings are "harder".
-* 16.12% police officers were wearing a body camera when they killed a black person against 9.28% for white people. In our hypothesis it could mean that police officers are less scared about the sentence they could get when the crime concerns a black person, however as we saw above, it doesn't match reality. 
+* 1% of White killings ended up charged and convicted with a crime, against 1.53% for Black killings, meaning that it seems like sentence over black killings are "harder". An hypothesis could be that the case when an officer was convicted was because the "murder" wasn't legitimate. It would mean that there are more Black killings that tend to be unexplained.
+* 16.12% police officers were wearing a body camera when they killed a black person against 9.28% for white people. In our hypothesis it could mean that police officers are less scared about the sentence they could get when the crime concerns a black person, however as we saw above, it doesn't match reality.
 
 These entries don't mean a lot of things like that, because there are other factors. It would be interesting to correlate the circumstances in between them.
 
@@ -363,12 +364,45 @@ ggplot(police_killings) +
   labs(title="Gender killed by the police from 2013 to 2020")
 
 
+  
+
 ```
 
         
 We can see that between 2013 and 2020, White people were the most killed and Black people are the second most killed population.
 The proportion of women killed is very little compared to men. However we can observe that White, Black and Hispanic women are the most affected. Since women represent such a little proportion of the killings (5%) we won't be analyzing further on gender. 
 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+black_victims$`Illness, alcohol or drugs`<-as.numeric(black_victims$`Illness, alcohol or drugs`)
+black_victims$Fleing<-as.numeric(black_victims$Fleing)
+black_victims$Body_camera<-as.numeric(black_victims$Body_camera)
+black_victims$Armed<-as.numeric(black_victims$Armed)
+black_victims$`Charged or sentenced`<-as.numeric(black_victims$`Charged or sentenced`)
+black_victims<-subset(black_victims, Status=="TRUE")
+melt.black<-melt(black_victims)
+melt.black$Status<-c("Black")
+
+white_victims$`Illness, alcohol or drugs`<-as.numeric(white_victims$`Illness, alcohol or drugs`)
+white_victims$Fleing<-as.numeric(white_victims$Fleing)
+white_victims$Body_camera<-as.numeric(white_victims$Body_camera)
+white_victims$Armed<-as.numeric(white_victims$Armed)
+white_victims$`Charged or sentenced`<-as.numeric(white_victims$`Charged or sentenced`)
+white_victims<-subset(white_victims, Status=="TRUE")
+melt.white<- melt(white_victims)
+melt.white$Status<-c("White")
+
+
+bwv<-rbind(melt.white,melt.black)
+
+ggplot(bwv, aes(fill=Status, y=value, x=variable)) +
+    geom_bar(position="dodge", stat="identity") +
+    geom_label(aes(x= variable, label=value)) +
+                   labs(title = "Circumstances of death for Black and White people", x = "Circumstance",y= "Percentage")
+```
+
+Here is a representation of the circumstances of death comparing Black and White people when killed. 
     
 #### Killings per year 
    
@@ -484,7 +518,7 @@ kable(kbs) %>%
 ```
   
      
-We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3% of people killed are White. 
+We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3%of people killed are White. 
 
     
 ##### Summary of Black and White people killed
