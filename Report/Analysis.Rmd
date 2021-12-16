@@ -1,20 +1,20 @@
 # 4. Modelling
 
-First of all, we will build different model based on the population sample in every state of 2018, the election result of 2016, and the people shoot from 2013 to 2020. 
+First of all, we built different model based on the population sample in every state of 2018, the election result of 2016, and the people shot from 2013 to 2020. 
 
-The election result of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
+The election results of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
 
 ## Variables
 
 **Dependant variable**
 
-Rate..All.People. : Rate of peaople killed by 125'000 inhabitants (2013-2020)
+Rate..All.People. : Rate of people killed by 125'000 inhabitants (2013-2020)
 
 Black.White.Disparity : Disparity in rate between black and white (2013-2018)
 
 **Independent Variables**
 
-percent_democrat_2016 : percent of democrat  for 2016
+percent_democrat_2016 : percent of democrat for 2016
 
 percent_black : percent of black in 2018 
 
@@ -24,7 +24,7 @@ percent_white : percent of white in 2018
 
 percent_hispanic : percent of hispanic in 2018
 
-violent_crime_2016 : Violent crime rates per 100000 inhabitants in 2016
+violent_crime_2016 : Violent crime rate per 100000 inhabitants in 2016
 
 Total.Population : Total population in 2018
 
@@ -146,7 +146,7 @@ Rate all people is strongly correlated with violent crime 2016. This does make s
 
 Black white disparity is strongly negatively correlated with violent crime in 2016. On the other side, percent democrat 2016 is positevely correlated to black and white disparity. The other variable have a small influence on the black white disparity
 
-Percent of white is srtrongly negatively correlated to percent Democrat 2016 while percent black is positevely correlated. Black population vote more for a democrat president than the white population who prefer a republican president. 
+Percent of white is strongly negatively correlated to percent Democrat 2016 while percent black is positevely correlated. Black population vote more for a democrat president than the white population who prefer a republican president. 
 
 
 ## Can we predict the number of people getting shot by the police with the democratic percentage?
@@ -172,7 +172,7 @@ ggplot(vote_rel_new, aes(x=percent_democrat_2016, y=Rate..All.People.)) +
 
 ```
 
-First of all, there is a clear negative correlation between the percentage of democrat in a stat and the number of people killed by 125'000 people. Police in more democratic state seems to kill less people every year.
+First of all, there is a clear negative correlation between the percentage of democrat in a state and the number of people killed for 125'000 people. Police in  democratic state seems to kill less people every year.
 
 
 ### Plot 2
