@@ -65,7 +65,7 @@ Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
 
 
 On the opposite, the number of women in the police is really low.
-There has always been more women than men in the United States but still close to 50&%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
+There has always been more women than men in the United States but still close to 50%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
 
 
 
@@ -217,6 +217,7 @@ offender_sex_and_race   %>%
   xlab("Year") + ylab("Percentage")
 
 ```
+  
 On the opposite, the percentage  violent crime done by women is very low. Still, their proportion has increased by more than 1.5% since 2013.
 
 ### New tables : Massachusetts and Alabama
@@ -414,5 +415,5 @@ crdf   %>%
 ```
 
 The crime rate exploded from 2014 to 2016. Since then it's been decreasing each year, but is still higher than in 2014. 
-2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. 
+2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. We know that the access to fire weapons is one of the biggest factor of crime in the United States. According to articles we found : an increase in 1% of people having a fire weapon equals 0.9% increase in homicids. Apparently from 2014 to 2016, big cities such as Chicago represented 20% of the country's total amount of crime due to the increase  of gangs.
 Comparing this to the police killings rate, there's no correlation since we saw that the killings rose from 2016 to 2018. 
