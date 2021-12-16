@@ -354,7 +354,7 @@ grid.arrange(e1, e2, ncol=2)
 
 ```
 
-The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
+The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps : in 2016, 13 states voted in majority for democrat against 25 in 2020. 
   
 Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
 
