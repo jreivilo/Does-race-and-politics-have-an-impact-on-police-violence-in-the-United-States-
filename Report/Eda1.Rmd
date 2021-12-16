@@ -484,7 +484,7 @@ kable(kbs) %>%
 ```
   
      
-We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3%of people killed are White. 
+We can observe in this table that the percent of Black people killed compared to their population rate is higher than the White killings. It means that even though Black people represent less in each State, they're still more killed than White people. Let's take California for instance : Black people represent only 5.53% of the population but 15% of people killed are Black. Whereas White people represent 37.54% and only 27.3% of people killed are White. 
 
     
 ##### Summary of Black and White people killed
