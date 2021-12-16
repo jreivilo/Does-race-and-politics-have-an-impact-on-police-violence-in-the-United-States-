@@ -19,15 +19,17 @@ ie : If black people are more responsible of crime rate, does it mean they are k
 
 Here is what we found out : 
 
--	The United States represents 2 main population : White at 76% and Black at 13%.
--	Since 2013, an average number of 1096 people are killed each year. White people represent 44% of these killings and 25% are Black people, meaning that Black people were killed 3 times more than White people. Most of these people killed were male (95%). This first analysis answered our first question : yes, there is a disparity among Black and White people killed in the United States. 
+The United States represents 2 main population : White at 76% and Black at 13%.
+Since 2013, an average number of 1096 people are killed each year. White people represent 44% of these killings and 25% are Black people, meaning that Black people were killed 3 times more than White people. Most of these people killed were male (95%). This first analysis answered our first question : yes, there is a disparity among Black and White people killed in the United States. 
 
-So how could we explain this disparity in Black and White killings ? 
+- So how could we explain this disparity in Black and White killings ? 
 
--	United states is a country that has 2 main party : Democratic that claim to be liberal and progressive, and Republican, conservative and traditionnal. Since a long time most president have been democratic. Our hypotethis was that the states where there were more republican vote, there would be higher rate of black killings. After analyzing our variables with the help of graphic vizualisations we couldn't find a clear answer. For instance in Rhode Island since 2016 more than 50% of the votes were democrats. However 50% of people killed by the police were Black while representing only 5,6% of the population. Our modelling part revealed that there was no real correlation between the political party of a state and the black killings (A COMPLETER PAR JEREMY).
+United states is a country that has 2 main party : Democratic that claim to be liberal and progressive, and Republican, conservative and traditionnal. Since a long time most president have been democratic. Our hypotethis was that the states where there were more republican vote, there would be higher rate of black killings. After analyzing our variables with the help of graphic vizualisations we couldn't find a clear answer. For instance in Rhode Island since 2016 more than 50% of the votes were democrats. However 50% of people killed by the police were Black while representing only 5,6% of the population. (A COMPLETER PAR JEREMY) Our modelling part revealed that there was no real correlation between the political party of a state and the black killings (A COMPLETER PAR JEREMY).
 While some states fitted the hypothesis, others didn't, making the political party a minor factor of disparity in Black and White killings. 
 
--	Another question we had was, if the political party didn't explain the disparity than, did crime rate ?
+To put our table to good use, we analyzed the circumstances of death for black and white people. Our results were interesting and didn't match our beliefs : Black people are less likely to be armed but more likely to flee. However more white people are killed when showing an illness or being drugged. The most disturbing part was the fact that the percentage of officers charged of a crime for black people was higher than for white people. (Actually this result is not significant because it could be that either the black killings were less legitimate and that's why officers are more charged). Finally we observed that there are 168 people since 2013 who have been killed for no reason. 
+
+- Another question we had was, if the political party didn't explain the disparity than, did crime rate ?
 
 In our analysis we observed that men were responsible of more than 80% of crime, while women represented approximately 16%. However, 95% of killed people were men, meaning there is even a disparity between gender. This could be explained by factors such as : the fact that women were in general less tempted to flee or to be armed, but also the fact that, and without research, in our society male are more prone to violence. Moreover, it is "inculqué" in every children that "a boy shouldn't hit a woman", making the man the "strong" one and the woman the one to defend. In consequence, it means that no matter the circumstance, for a lot of people it would be harder to shoot or kill a woman. 
 
@@ -37,5 +39,5 @@ Our final thought is that these killings depend a lot on personal beliefs, behav
 
 In our first table we were able to compare the circumstances of killings (ou placer ca ?) We observed that 10% of the killings were not explained by the victim presenting a reason to be shot. 
 
--	To conclude, even thought our project didn't go the way we wanted, we can still confirm that if you’re a Black male in the united states you are in more likely to get killed than a White person male or female. 
+- To conclude, even thought our project didn't go the way we wanted, we can still confirm that if you’re a Black male in the united states you are in more likely to get killed than a White person male or female. ( A COMPLETER AVEC MODELLING)
 
