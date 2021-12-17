@@ -72,7 +72,17 @@ police_killings$mental_illness[police_killings$mental_illness %in% c(NA)]<-"Unkn
 #Simplifying the observations
 
 #criminal_charges
-police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Plead No Contest, Sentenced to 10 years probation","Charged, Plead Guilty to Manslaughter, Sentenced to 5 years in prison", "Charged, Convicted, Sentenced to life in prison","Charged, Convicted, Sentenced to 7 years in prison","Charged, Convicted, Sentenced to 6 years in prison","Charged, Convicted, Sentenced to 5 years in prison","Charged, Convicted, Sentenced to 40 years to Life in prison","Charged, Convicted, Sentenced to 40 years in prison","Charged, Convicted, Sentenced to 4.75 years in prison","Charged, Convicted, Sentenced to 30 years in prison","Charged, Convicted, Sentenced to 3.5 years in prison","Charged, Convicted, Sentenced to 25 years in prison","Charged, Convicted, Sentenced to 2 years suspension and 3 years probation","Charged, Convicted, Sentenced to 18 months","Charged, Convicted, Sentenced to 10 years in prison","Charged, Convicted, Sentenced to 1 year in prison","Charged, Convicted, Sentenced to 1 year in jail, 3 years suspended","Charged, Convicted","Charged with a crime")]<-"Charged or sentenced"
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Plead Guilty to Manslaughter, Sentenced to 5 years in prison","Charged, Convicted, Sentenced to 7 years in prison","Charged, Convicted, Sentenced to 6 years in prison","Charged, Convicted, Sentenced to 5 years in prison","Charged, Convicted, Sentenced to 4.75 years in prison","Charged, Convicted, Sentenced to 3.5 years in prison","Charged, Convicted, Sentenced to 18 months","Charged, Convicted, Sentenced to 1 year in prison","Charged, Convicted, Sentenced to 1 year in jail, 3 years suspended","Charged, Convicted of reckless homicide, sentenced to 1 year in prison","Charged, Convicted, Sentenced to 2.5 years in prison","Charged, Convicted, Sentenced to 3 months in jail","Charged, Convicted, Sentenced to 4 years","Charged, Convicted, Sentenced to 1 year in prison and 4 years probation","Charged, Convicted, Sentenced to 6 years","")]<-"Sentenced to 1 month to 9 years in prison"
+
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Convicted","Charged with a crime", "Charged, Convicted of assault","Charged, Plead Guilty to Voluntary Manslaughter")]<-"Charged and/or convicted"
+
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Convicted, Sentenced to 2 years suspension and 3 years probation", "Charged, Plead No Contest, Sentenced to 10 years probation","Charged, Convicted, Sentenced to 3 years probation","Charged, Convicted, Sentenced to 5 years probation.")]<-"Suspended or probation"
+
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Acquitted","Charged, Charges Dropped","Charged, Mistrial", "Charged, Mistrial, Plead Guilty to Civil Rights Charges","Charged, Mistrial, Plead Guilty to Manslaughter")] <- "Mistrial, acquitted or charges dropped"
+
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged, Convicted, Sentenced to 10 Years of Prison","Charged, Convicted, Sentenced to 14 years in prison","Charged, Convicted, Sentenced to life in prison","Charged, Convicted, Sentenced to 40 years to Life in prison","Charged, Convicted, Sentenced to 40 years in prison","Charged, Convicted, Sentenced to 30 years in prison","Charged, Convicted, Sentenced to 25 years in prison","Charged, Convicted, Sentenced to 10 years in prison","Charged, Convicted, Sentenced to 16 years in prison","Charged, Convicted, Sentenced to 12 years in prison and 8 years in probation","Charged, Convicted, Sentenced to life in prison without parole, plus 16 years","Charged, Convicted, Sentenced to 20 years in prison","Charged, Convicted, Sentenced to 50 years","Charged, Convicted, Sentenced to Life in Prison")]<-"Sentenced to 10 years or more in prison"  
+
+police_killings$criminal_charges[is.na(police_killings$criminal_charges)] <- "No known charges"
 
 
 ```
@@ -149,6 +159,8 @@ Here is the second table with the ranking of the States from the highest to the 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
+police_killings$criminal_charges[police_killings$criminal_charges %in% c("Charged and/or convicted","Sentenced to 1 to 9 years in prison","Sentenced to 10 years or more in prison")]<-"Charged or sentenced"
+
 black_victims <- subset(police_killings,race=="Black")
 black_victims <- data_frame(c("FALSE","TRUE"),
 prop.table(table(black_victims$mental_illness=="Yes")), prop.table(table(black_victims$fleing == "yes")),
@@ -206,7 +218,7 @@ We created two tables comparing circumstances in Black and White killings. We ke
 
 However we can see that from 2013 to 2021 :
 
-* 1% of White killings ended up charged and convicted with a crime, against 1.53% for Black killings, meaning that it seems like sentence over black killings are "harder". An hypothesis could be that the case when an officer was convicted was because the "murder" wasn't legitimate. It would mean that there are more Black killings that tend to be unexplained.
+* 0.71% of White killings ended up charged and convicted with a crime, against 2% for Black killings, meaning that it seems like sentence over black killings are "harder". An hypothesis could be that the case when an officer was convicted was because the "murder" wasn't legitimate. It would mean that there are more Black killings that tend to be unexplained.
 * 16.12% police officers were wearing a body camera when they killed a black person against 9.28% for white people. In our hypothesis it could mean that police officers are less scared about the sentence they could get when the crime concerns a black person, however as we saw above, it doesn't match reality.
 
 These entries don't mean a lot of things like that, because there are other factors. It would be interesting to correlate the circumstances in between them.
