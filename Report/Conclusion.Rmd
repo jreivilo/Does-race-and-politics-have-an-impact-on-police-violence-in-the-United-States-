@@ -7,7 +7,7 @@ output: html_document
 
 Our objective was to answer the questions : 
 
-- Is there a real disparity between black and white people getting shot every year ?
+- Is there a real disparity between Black and White people killed by the police every year ?
 
 - Is the rate of crime positively correlated with the police killings regarding a certain race ? 
 ie : If black people are more responsible of crime rate, does it mean they are killed more ?
