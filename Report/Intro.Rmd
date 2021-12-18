@@ -39,11 +39,9 @@ We were motivated on this project because we think police violence is a good des
 
 
 We want to observe, analyze and understand if the police is more willing to shoot a black person than a white person.
-We think that if a state is rather democratic or republican we can observe differences among the number of black and white people killed. We expect republican states to have more racial bias on police shooting compared to democrat ones.
+We think that if a state is rather democratic or republican we can observe differences among the number of black and white people killed. We expect republican states to have more racial bias on police shooting compared to democrat ones. We will explore other variables such as the police sex composition, race and the charges applied to the police officer if responsible of manslaughter.
 
-Obviously, the race is also correlated to the political party of a state; white male are more willing to vote for republicans than black male. 
+We would like to see as well if we can predict the number of people getting shot in a state based on its demographic and its politics. By exploring this variables, we can find solution to lower the police shooting rate on offender. We want to see also how black and white disparities have evolved through the years and which variables influence them. Also we think that all these factors are correlated together : race , crime, politics and police killings. 
 
-We want to see how black and white disparities have evolved through the years and which variables influence them. Also we think that all these factors are correlated together : race , crime, politics and police killings. Maybe we can explore other variables such as the police sex composition, race and the charges applied to the police officer if responsible of manslaughter.
-  
-Is being black a risk factor of getting shot by the police? Are republican states more willing to shoot offenders and show more racial bias? How police forces are judged regarding their position and race ? Our final objective would be to see if it is possible to predict the disparity between black and white people shot by the police according to the state demographic and politics. This would help states to put in place laws and awareness among police forces.
+To resume; Is being black a risk factor of getting shot by the police? Are republican states more willing to shoot offenders? Is it possible to predict the disparity between black and white people shot by the police according to the state demographic and politics. Our paper could  help states to put in place laws and awareness among police forces.
 
