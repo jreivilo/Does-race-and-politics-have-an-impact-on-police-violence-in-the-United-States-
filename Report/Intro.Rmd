@@ -13,7 +13,7 @@ options(rgl.useNULL=TRUE)
 knitr::include_graphics(here::here("Data/blm.png"))
 ```
 
-```
+
 # Table of content 
 
 1. **Introduction**
