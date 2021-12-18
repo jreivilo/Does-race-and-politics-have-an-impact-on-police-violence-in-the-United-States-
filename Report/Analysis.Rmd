@@ -154,7 +154,9 @@ Percent of white is strongly negatively correlated to percent Democrat 2016 whil
 ### Boxplot 
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE, results='hide'}
-boxplot(vote_rel_new$Rate..All.People., col="dodgerblue3", ylab="Rate All People", main="Boxplot Rate All People")
+ggplot(vote_rel_new, aes(x = "", y = Rate..All.People.)) + 
+  geom_boxplot(outlier.shape = NA, color="dodgerblue3") +
+  geom_jitter()
 ```
 
 Despite 2 outliers, we decided to keep both of them. 
@@ -186,6 +188,37 @@ ggplot(vote_rel_new, aes(x=violent_crime_2016, y=Rate..All.People.)) +
 ```
 
 Secondly, Violent Crime Rate is strongly correlated to the number of people killed. Obviously, more violent crimes in a state lead to more shooting by the police.
+
+### Plot 3
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+ggplot(vote_rel_new, aes(x=percent_black, y=violent_crime_2016)) + 
+  geom_point(shape=18, color="blue")+
+  geom_smooth(method=lm,  linetype="dashed",
+             color="darkred", fill="blue") +
+  ggtitle("Rate..All.People - percent_black") +
+  xlab("Percentage of black") + ylab("Violent Crime Rates per 100'000 habitants in 2016")
+```
+
+### 3D Plot
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+setupKnitr()
+
+mycolors <- c('royalblue1', 'red')
+vote_rel_new$color <- mycolors[ as.numeric(vote_rel_new$percent_democrat_2016<50) +1 ]
+
+plot3d( 
+  x=vote_rel_new$percent_black, y=vote_rel_new$violent_crime_2016, z=vote_rel_new$Rate..All.People., 
+  type = 'p', 
+  col = vote_rel_new$color,
+  radius = .10,
+    size = 8,
+  xlab="percent_black", ylab="violent_crime_2016", zlab="Rate..All.People")
+  legend3d("topright", legend = paste('', c('Democrat', 'Republican')), pch = 16, col = c('royalblue1', 'red'), cex=1, inset=c(0.02))
+
+rglwidget()
+
+```
 
 
 ### Multilinear regression
