@@ -4,13 +4,12 @@
 source(here::here("Setup/set.R"))
 ```
 
-```{r setup, include=FALSE, message = FALSE, warning=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-options(rgl.useNULL=TRUE) 
 ```
 
 ![](https://static.politico.com/dims4/default/8a5b708/2147483647/resize/1920x/quality/90/?url=https%3A%2F%2Fstatic.politico.com%2F39%2Fd2%2F783ae66a4ea78cbc44628c3566dd%2Fpolice-officers-whos-next.png)
-
+```
 # Table of content 
 
 1. **Introduction**
@@ -33,6 +32,7 @@ options(rgl.useNULL=TRUE)
 
 5. **Final analysis**
 
+
 # 1. Introduction
 
 ## Purpose
@@ -54,12 +54,12 @@ We were motivated on this project because we think police violence is a good des
 ## Objective 
 
 
-We want to observe, analyse and understand if the police is more willing to shoot a black person than a white person.
-We think that if a state is rather democratic or republican we can observe differences among the number of black and white people shot. We expect republican states to have more racial bias on police shooting compared to democrat ones.
+We want to observe, analyze and understand if the police is more willing to shoot a black person than a white person.
+We think that if a state is rather democratic or republican we can observe differences among the number of black and white people killed. We expect republican states to have more racial bias on police shooting compared to democrat ones.
 
 Obviously, the race is also correlated to the political party of a state; white male are more willing to vote for republicans than black male. 
 
-We want to see how black and white disparities have evolved through the years and which variables influence them. Also we think that all these factors are correlated together : race , politics and police killings. Maybe we can explore other variables such as the the crime rate of a state by race, the police sex, race or age and the charges applied to the police after killing.
+We want to see how black and white disparities have evolved through the years and which variables influence them. Also we think that all these factors are correlated together : race , crime, politics and police killings. Maybe we can explore other variables such as the police sex composition, race and the charges applied to the police officer if responsible of manslaughter.
   
-Is being black is a risk factor of getting shot by the police? Are republican states more willing to shoot offenders and show more racial bias? How police forces are judged regarding their position and race ? Our final objective would be to see if it is possible to predict the disparity between black and white people shot by the police according to the state demographic and politics. This will help states to put in place laws and awareness among police forces.
+Is being black a risk factor of getting shot by the police? Are republican states more willing to shoot offenders and show more racial bias? How police forces are judged regarding their position and race ? Our final objective would be to see if it is possible to predict the disparity between black and white people shot by the police according to the state demographic and politics. This would help states to put in place laws and awareness among police forces.
 

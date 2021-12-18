@@ -1,23 +1,17 @@
 # 2. Data
 
 
-## Sources 
-For this research, we are using a variety of data sets gathered from both official and non-official sources. 
-...
-
-We decided to focus our analysis on a time window that goes from 2013 to 2020.
-
 ## Description
 
-For our project, we selected 4 data sets with 9 different tables from different sources : Police killings, Police officers, Presidential elections and All crime offenders.
+For our project, we selected 4 data sets with 9 different tables from different sources : Police killings, Police officers, Presidential elections and All crime offenders.  
 Our goal from the beginning was to split our data into states, maybe county, to really distinguish the different political party and killings rates, that’s why we were looking for complete data with the states as variables. Of course we also needed numbers for the whole territory to compare our analysis. We still think that our most significant analysis will focus at the states level because of the information we gathered, our hypothesis being that republicans states will have higher killings rate than democrats. This would be explained by the values of the political party : republicans are conservatory so we assumed they tend to have more racist or sexist tendencies. 
-Our biggest dataset contains about 9000 values going from 2013 to 2021, however, since we decided to link this dataset to political party data we will take a time window from 2013 to 2020.
+Our biggest data set contains about 9000 values going from 2013 to 2021, however, since we decided to link this data set to political party data we will take a general time window from 2013 to 2020.
 
 ### **Mapping Police Violence data**
 
-Source : [Mapping Police Violence](https://mappingpoliceviolence.org/)  
+**Source** : [Mapping Police Violence](https://mappingpoliceviolence.org/)  
 
-It is an unofficial website created by people to track police killings all over the United States. Their data come from different sources such as official police use of data collection programs in different states combined with nationwide data from the Fatal Encounters database. Other researches were made to complete a maximum of information : social media, obituaries, criminal records database, police reports and other. 
+It is an unofficial website created by a young business analyst and activist, to track police killings all over the United States. The data comes from different sources such as official police use of data collection programs in different states combined with nationwide data from the Fatal Encounters database. Other researches were made to complete a maximum of information : social media, obituaries, criminal records database, police reports and other. 
 
 #### **Table 1**  
 
@@ -25,7 +19,7 @@ This database has 9678 entries of 53 variables going from 2013 to the day we upl
 
 It contains every information on every person who was killed by the police like the date of death, their name, age, race, but also the circumstances of the murder : If the person was armed or not, if they had an illness etc. We also have information on the officer, if they were criminally charged, if they were on duty and other details.
    
-This data set is the most interesting for our analysis because it’s the most complete. Our main goal for our project was to see if the political party of a state was correlated with the rate of police killings, meaning whereas a political party could have an impact on racism. The variables we will be using are most importantly the race, sex and state of the victim and the circumstances around their death. To do so we had to create a smaller table and clean a lot of data. From this data set we also created another table with the killings per states : killings rates and population rates. 
+This data set is the most interesting for our analysis because it’s the most complete. Our main goal for our project was to see if the political party of a state was correlated with the rate of police killings, meaning whereas a political party could have an impact on racism or not. The variables we will be using are most importantly the race, sex and state of the victim and the circumstances around their death. To do so we had to create a smaller table and clean a lot of data. From this data set we also created another table with the killings per states : killings rates and population rates. 
 
 So the initial data set was entirely cleaned and used to create additional tables. Firstly, we removed the variables that were irrelevant for us, going from 49 variables to 13. We renamed each variable in order to make them easier to use in our code. Then, we did basic modifications such as filtering the variables with NAs, changing some observations to make the understanding clearer, for instance, the variable “Fleing” had more than 10 different observation such as : car, foot, Car, other, Fleing, not fleing, etc. So in order to use these we changed the variables to yes, no and other. We applied that pattern to every other variables. This first table will help us analyze the circumstances of death and see the tendencies in order to make conclusions.  
 After that we subtracted a table with the numbers of killings per year for each state and population in order to have an evolution of the population and the killings. 
@@ -42,7 +36,7 @@ For our project, we focused only on Black and White disparity since it's our mai
 
 ### **Police officers data** 
 
-Source : [datausa.io](https://datausa.io/profile/soc/police-officers#demographics)
+**Source** : [datausa.io](https://datausa.io/profile/soc/police-officers#demographics)
   
 Datausa.io is a website of public US Government data. It was created and made by Deloitte, Datawheel and Cesar Hidalgo (MIT Media Lab professor and director of Collective Learning) in 2014. This website is a research engine for anyone to have information on cities and places regarding education like statistics and visualization on universities or best skills for a specific job. 
 Data comes from official sources. 
@@ -64,7 +58,7 @@ Once more, does the race have an impact on the killings, meaning is the police r
 
 ### **Presidential election data** 
 
-Source : [worldpopultationreview.com](https://worldpopulationreview.com/state-rankings/2016-election-results-by-state)  
+**Source** : [worldpopultationreview.com](https://worldpopulationreview.com/state-rankings/2016-election-results-by-state)  
 
 #### **Table 1 : 2016 presidential elections**  
 
@@ -86,26 +80,24 @@ To accomplish our goal we had to clean the tables first. We created new datafram
   
 ### **All offenders crime data**   
   
-Source : [crime-data-explorer.fr.cloud.gov](https://crime-data-explorer.fr.cloud.gov/pages/explorer/crime/crime-trend )
+**Source** : [crime-data-explorer.fr.cloud.gov](https://crime-data-explorer.fr.cloud.gov/pages/explorer/crime/crime-trend )
   
 crime-data-explorer.fr.cloud.gov is an American website from the FBI’s Uniform Crime Reporting Program’s solution to have a better vision on the constant change in crime. It gathers national and state data on all crimes across the country. It is presented as a research engine in terms of States and year and can display graphs. The website allows us to view trends, download data and access Crime Data API.   
 We downloaded data on the offenders sex and race, giving a table of 8 observations of 6 variables. (We removed the years prior to 2013, matching our project time frame). The table display the total count on : all offenders, black and white offenders, male and female offenders.
   
 We added this data set for our research for another hypothesis we had. In case we couldn’t find a correlation between politics and police killings, we thought crime rate could be a factor of police killings : We thought that police officers might be in more stress when they have a lot of work or face more crimes, this stress could lead to impulsive decisions or bias thinking and results in murder.Our hypothesis is, the higher is the crime rate from a certain population, the higher is the police killings towards this population. For instance : If Black people are more responsible for violent crimes it could explain why they have a higher killing rate. 
   
-For this table we wanted to extract the rate of killings per year for each state and how it evolved. If possible identify whether Black or White people were more responsible of these crimes aswell compared to their population proportion.
+For this table we wanted to extract the rate of killings per year for each state and how it evolved. If possible identify whether Black or White people were more responsible of these crimes compared to their population proportion.
     
 
 ### **Crime Rate**   
 
-Source : [ucr.fbi.gov/Crime in the U.S.](https://ucr.fbi.gov/crime-in-the-u.s)
+**Source** : [ucr.fbi.gov/Crime in the U.S.](https://ucr.fbi.gov/crime-in-the-u.s)
 
 The Uniform Crime Reporting (UCR) Program delivers accurate data for law enforcement. Students of criminal justice, scholars, the media, and the general public can all benefit from it. Since its inception in 1930, the program has provided crime data.
 
-More than 18,000 city, university, and college law enforcement agencies, as well as county, state, tribal, and federal authorities, provide data to the UCR Program. Agencies voluntarily join and submit crime data to the FBI's UCR Program or through a state UCR program.
+More than 18,000 cities, universities, and college law enforcement agencies, as well as counties, states, tribal, and federal authorities, provide data to the UCR Program. Agencies voluntarily join and submit crime data to the FBI's UCR Program or through a state UCR program.
 
 We gathered data between 2010 and 2019 about the crime rate in every state in the United States. We think Crime rate is essential to explain the shooting rate in a state and create a better model.
 
 The data set contains 52 observations for 11 variables. 
-
-For further analysis discuss later, We merge only crime rate during 2016 of this table on the other one. 

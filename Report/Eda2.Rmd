@@ -65,7 +65,7 @@ Gender_Composition[Gender_Composition$Gender == "Female", ]   %>%
 
 
 On the opposite, the number of women in the police is really low.
-There has always been more women than men in the United States but still close to 50%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
+There has always been more women than men in the United States but still close to 50&%. Indeed, women represent about 51% against 49% of men. On the graph above we clearly see that women are only 15% of the total police workforce, still in 2020.
 
 
 
@@ -148,7 +148,12 @@ osr$offender_female <- round(osr$offender_female/osr$offender_total*100,2)
 
 kable(osr) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown")
+
+kable(summary(osr)) %>% 
+  kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>%
+  row_spec(4,bold = T, italic = T, color = "black", background = "gainsboro")
 
 ```
 
@@ -217,7 +222,6 @@ offender_sex_and_race   %>%
   xlab("Year") + ylab("Percentage")
 
 ```
-  
 On the opposite, the percentage  violent crime done by women is very low. Still, their proportion has increased by more than 1.5% since 2013.
 
 ### New tables : Massachusetts and Alabama
@@ -340,21 +344,21 @@ setkey(totaldt, region, order)
 
 options(scipen=999) #turn off scientific notation
 
-ggplot(data = totaldt, 
+e1 <- ggplot(data = totaldt, 
        aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
   geom_polygon() + coord_map() +
   scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
 
-ggplot(data = totaldt, 
+e2 <- ggplot(data = totaldt, 
        aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
   geom_polygon() + coord_map() +
   scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
-#grid.arrange(e1, e2, ncol=2)
+grid.arrange(e1, e2, ncol=2)
 
 
 ```
 
-The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps : in 2016, 13 states voted in majority for democrat against 25 in 2020. 
+The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
   
 Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
 
@@ -415,5 +419,5 @@ crdf   %>%
 ```
 
 The crime rate exploded from 2014 to 2016. Since then it's been decreasing each year, but is still higher than in 2014. 
-2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. We know that the access to fire weapons is one of the biggest factor of crime in the United States. According to articles we found : an increase in 1% of people having a fire weapon equals 0.9% increase in homicids. Apparently from 2014 to 2016, big cities such as Chicago represented 20% of the country's total amount of crime due to the increase  of gangs.
+2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. 
 Comparing this to the police killings rate, there's no correlation since we saw that the killings rose from 2016 to 2018. 

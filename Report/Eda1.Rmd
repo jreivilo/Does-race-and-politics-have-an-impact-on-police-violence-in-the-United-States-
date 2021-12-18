@@ -123,7 +123,7 @@ kable(black_state_killings) %>%
 ```
   
     
-In this table we rank the States from the one with the highest count of Black killings from 2013 to 2020. We excluded 2021 since the year wasn't over and the analysis would be incomplete. We can see that the 3 states with the highest count are : California, Florida and Texas. And the 3 states with the lowest count are : Idaho, Maine and Montana.   
+In this table we ranked the States from the one with the highest count of Black killings from 2013 to 2020. We excluded 2021 since the year wasn't over and the analysis would be incomplete. We can see that the 3 states with the highest count are : California, Florida and Texas. And the 3 states with the lowest count are : Idaho, Maine and Montana.   
 
 
   
@@ -318,7 +318,7 @@ kable(killings_per_year) %>%
 
 kable(summary(killings_per_year)) %>% 
   kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(4, bold = T, italic = T, background = "gainsboro") %>%
+  row_spec(4, bold = T, italic = T, color = "black",background = "gainsboro") %>%
   row_spec(0, bold = T, italic = T, color = "white", background = "brown") 
 
 ```
@@ -338,6 +338,14 @@ ggplot(black_state_killings,
      labs(title = "Average Black killings from 2013 to 2020",          
           x = "Black people killed",
           y= "States")
+
+
+TESTING <- gvisBarChart(black_state_killings, 
+                       options=list(
+                         title="Interactive Bar chart",
+                         legend="right",
+                         pointSize=10))
+print(TESTING,'chart')
 
 
 ```
@@ -437,38 +445,19 @@ The graph shows globally that the killings dropped a little since 2018, a decrea
     
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
-#black_state_killings %>% 
-  #pivot_longer(c(`2013`, `2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`),
-                                      #names_to = "year",
-                                      #values_to = "count") %>%
-#filter(State%in% c("CA", "FL","TX")) %>%
-    #ggplot(aes(x = year, y = count, group = `State`, colour = `State`)) +
-    #geom_line() +
-    #geom_point()+
-  #labs(title = "Evolution of Black killings",          
-          #x = "Year",
-          #y= "Number of Black people killed")
-
-
-a <-black_state_killings %>% 
+black_state_killings %>% 
   pivot_longer(c(`2013`, `2014`,`2015`,`2016`,`2017`,`2018`,`2019`,`2020`),
                                       names_to = "year",
-                                      values_to = "count")
-myPlot <- a %>%
+                                      values_to = "count") %>%
 filter(State%in% c("CA", "FL","TX")) %>%
-  ggplot(aes(x = year, y = count, group = `State`, colour = `State`)) +
+    ggplot(aes(x = year, y = count, group = `State`, colour = `State`)) +
     geom_line() +
-    geom_point() +
-  theme_ipsum() +
-    scale_color_viridis(discrete = TRUE) +
-    labs(title = "Evolution of Black killings",          
+    geom_point()+
+  labs(title = "Evolution of Black killings",          
           x = "Year",
-          y= "Number of Black people killed") +
-    transition_reveal(as.numeric(year)) 
+          y= "Number of Black people killed")
+  
 
-
-animate(myPlot, duration = 8, fps = 20, width = 600, height = 600, renderer = gifski_renderer())
-#anim_save("output.gif")
 ```
 
      
@@ -592,10 +581,11 @@ names(kbs2) <- c("State abbrevation", "Black", "Black killed")
 kbs.melt <- melt(kbs2, id.vars = 'State abbrevation', variable.name = 'Population', 
     value.name = 'Proportion')
 
-ggplot(kbs.melt, aes(x = reorder(`State abbrevation`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
+A<-ggplot(kbs.melt, aes(x = reorder(`State abbrevation`,-`Proportion`), y = Proportion, shape = Population, color = Population)) +
 geom_point() +
     labs(title = "Proportion of Black people killed and their total population per state",          
           x = "State abbreviation")
+ggplotly(A)
 
 #a graph on the total killings of Black people in each state compared to their total Black population
 ```
