@@ -14,27 +14,7 @@ knitr::include_graphics(here::here("Data/blm.png"))
 ```
 
 
-# Table of content 
 
-1. **Introduction**
-    + Purpose
-    + Objective
-
-2. **Data**
-    + Description
-
-3. **Exploratory Data Analysis**
-    + Mapping Police Violence 
-    + Police composition
-    + All violent crime offenders
-    + USA Election
-
-4. **Multivariate analysis** 
-    + All the variables 
-    + One-to-one analysis 
-    + Modeling 
-
-5. **Final analysis**
 
 
 # 1. Introduction
