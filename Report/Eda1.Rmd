@@ -340,12 +340,12 @@ ggplot(black_state_killings,
           y= "States")
 
 
-TESTING <- gvisBarChart(black_state_killings, 
-                       options=list(
-                         title="Interactive Bar chart",
-                         legend="right",
-                         pointSize=10))
-print(TESTING,'chart')
+#TESTING <- gvisBarChart(black_state_killings, 
+                       #options=list(
+                         #title="Interactive Bar chart",
+                         #legend="right",
+                         #pointSize=10))
+#print(TESTING,'chart')
 
 
 ```
