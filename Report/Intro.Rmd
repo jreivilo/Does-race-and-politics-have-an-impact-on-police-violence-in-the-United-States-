@@ -4,8 +4,9 @@
 source(here::here("Setup/set.R"))
 ```
 
-```{r setup, include=FALSE}
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+options(rgl.useNULL=TRUE) 
 ```
 
 ![](https://static.politico.com/dims4/default/8a5b708/2147483647/resize/1920x/quality/90/?url=https%3A%2F%2Fstatic.politico.com%2F39%2Fd2%2F783ae66a4ea78cbc44628c3566dd%2Fpolice-officers-whos-next.png)
