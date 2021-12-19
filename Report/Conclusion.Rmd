@@ -20,9 +20,8 @@ United States is a country that has 2 main party: Democratic that claim to be li
 
 However, when we construct a model to explain Black and White disparity, the model performs poorly. Neither the demographic, the crime rate or the political view of a state have been able to explain the disparity. This also means some of these variables do not have a significant impact at all on the Black and White disparity like the crime rate or the democrat percentage. While some states fitted the hypothesis, others didn’t, making the political party a minor factor of disparity in Black and White killings. Maybe economic variables or more specific crime rate variable could explain the disparities. 
 
-# Conclusion 
+# 5. Conclusion 
 Even though we have not been able to explain the disparity between Black and White, we can still confirm that if you’re a Black male in the United States you are more likely to get killed than a White person male or female. However, it is important to note that Black people do way more violent crime than white people. This could explain the disparity and, if we suppose all the police shooting happened during violent crime, prove us White have more chance to get shot than Black. Nevertheless, some bias exists and the police is more willing to shoot Black people who are fleeing or unarmed. In the end, democratic state definitely killed less people every year and might be a source of inspiration to lowered the killing rate.
 
-![](https://user-images.githubusercontent.com/93477170/146680853-3bee1139-4c71-469f-ad12-50fa83dc1845.png)
 
 
