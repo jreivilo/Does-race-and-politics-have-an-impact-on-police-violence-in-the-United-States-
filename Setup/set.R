@@ -49,4 +49,4 @@ library(gganimate)
 library(babynames)
 library(hrbrthemes)
 library(googleVis)
-library(gifski)
+
