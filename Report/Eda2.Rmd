@@ -134,10 +134,114 @@ grid.arrange(bp1, bp2, ncol=2)
 
 For the past 20 years, the percentage of black population is rising in the united state and this trend is even stronger in the force police. However, the share in the police is approximately 1.5 point down compared to the share in the united state. Though, We can still agree that the black population is correctly represent in the police.
 
+### Conclusion
+
+Supposing that White people are more racist towards Black people than other population, the police composition could partially explain why Black people are more killed than White people since they represent more than 80% of police workforce. It would have been really interesting to have the race of the people responsible of each killings but this is a variable we couldn't find. Because of this, we won't use this data set in our modelling part.
+
+
+## USA Elections
+
+#### 1) Cleaning and creating a new table
+  
+We create a new table that regroup all the result of the election of 2016 and 2020 by merging the previous one on the state code. This step done, we rename the columns to focus on the percentage of democrats in each state in the USA. 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+
+#CREATE NEW DF 
+election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
+election <- election %>% 
+  rename(
+    percent_democrat_2016 = percD,
+    percent_democrat_2020 = percent_democrat
+  )
+election$percent_democrat_2016 <- election$percent_democrat_2016 * 100
+election <- election %>% mutate(across(starts_with("percent_democrat"), round, 1))
+```
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+election_percent <- election %>% 
+  select(state, percent_democrat_2016, percent_democrat_2020)
+
+kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
+  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
+  column_spec(1, color = "white", background = "darksalmon") %>% 
+  scroll_box(height = "350px", width = "57%")
+
+```
+
+
+Almost every state got more democrat vote in 2020 than in 2016. This led to the election of a democrat president in 2020.
+
+#### 2) Election map 
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#USA MAP ELECTION
+all_states <- map_data("state")
+election$region <- tolower(election$usa_state)
+totaldf <- merge(all_states, election, by = "region")
+# switched to data.table to fix the cut up map issue
+# getting sort by region then order 
+totaldt <- as.data.table(totaldf)
+setkey(totaldt, region, order)
+
+options(scipen=999) #turn off scientific notation
+
+e1 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
+
+e2 <- ggplot(data = totaldt, 
+       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
+  geom_polygon() + coord_map() +
+  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
+grid.arrange(e1, e2, ncol=2)
+
+
+```
+
+The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
+  
+Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
+
+#### 3) Graphic visualization
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+#USA BARPLOT ELECTION
+plot1 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2016), x=percent_democrat_2016)) + 
+  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
+  geom_text(aes(label = percent_democrat_2016), hjust = -0.5, size = 3) + 
+  labs(title = "Democrat percentage by state",
+       subtitle = "2016 ",
+       x = "Percent",
+       y= "State code") +
+  geom_vline(xintercept = 50, 
+             color = "red", size=0.7) +
+  expand_limits(x = c(0, 75))
+
+plot2 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2020), x=percent_democrat_2020)) + 
+  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
+  geom_text(aes(label = percent_democrat_2020), hjust = -0.5, size = 3) + 
+  labs(title = "Democrat percentage by state",
+       subtitle = "2020 ",
+       x = "Percent",
+       y= "State code") +
+  geom_vline(xintercept = 50, 
+             color = "red", size=0.7) +
+  expand_limits(x = c(0, 75))
+
+grid.arrange(plot1, plot2, ncol=2)
+```
+
+
+In the election of 2020, there is more state above the 50 percent line than 4 years ago. With this graph, the difference between 2016 and 2020 is easy to spot and more state are democrats in 2020. 
+
 
 ## All violent crime offenders 
 
 #### 1) Cleaning and creating a new table
+
+Our objective for this table was to compare the proportion between black and white offenders and their crime rate in each state.
 
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 osr <- offender_sex_and_race
@@ -247,7 +351,6 @@ kable(MAprop) %>% kable_styling(fixed_thead = T, full_width = F, position = "lef
 ```
 
 
-
 ##### Alabama offenders race proportion
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -297,105 +400,15 @@ In order to compare the states we merged variables from the Killings by State an
 We can observe that both in Alabama and Massachusetts the rate of Black offenders is way above the population rate. The pattern is quite similar but surprisingly, the difference between crime rate and Black victims in Massachusetts is higher than in Alabama, when the first one is majorly democrat and the second one republican. 
 
 
-## USA Elections
+### Conclusion
 
-#### 1) Cleaning and creating a new table
-  
-We create a new table that regroup all the result of the election of 2016 and 2020 by merging the previous one on the state code. This step done, we rename the columns to focus on the percentage of democrats in each state in the USA. 
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-
-#CREATE NEW DF 
-election <- merge(democratic_vs_republican_votes_by_usa_state_2020, democratic_vs_republican_votes_usa_2016, by = "state")
-election <- election %>% 
-  rename(
-    percent_democrat_2016 = percD,
-    percent_democrat_2020 = percent_democrat
-  )
-election$percent_democrat_2016 <- election$percent_democrat_2016 * 100
-election <- election %>% mutate(across(starts_with("percent_democrat"), round, 1))
-```
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-election_percent <- election %>% 
-  select(state, percent_democrat_2016, percent_democrat_2020)
-
-kable(election_percent) %>% kable_styling(fixed_thead = T, full_width = F, position = "left") %>% 
-  row_spec(0, bold = T, italic = T, color = "white", background = "brown") %>% 
-  column_spec(1, color = "white", background = "darksalmon") %>% 
-  scroll_box(height = "350px", width = "57%")
-
-```
-
-
-Almost every state got more democrat vote in 2020 than in 2016. This led to the election of a democrat president in 2020.
-
-#### 2) Election map 
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-#USA MAP ELECTION
-all_states <- map_data("state")
-election$region <- tolower(election$usa_state)
-totaldf <- merge(all_states, election, by = "region")
-# switched to data.table to fix the cut up map issue
-# getting sort by region then order 
-totaldt <- as.data.table(totaldf)
-setkey(totaldt, region, order)
-
-options(scipen=999) #turn off scientific notation
-
-e1 <- ggplot(data = totaldt, 
-       aes(x = long, y = lat, group = group, fill = percent_democrat_2016)) +
-  geom_polygon() + coord_map() +
-  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2016 \n (percent of democrat vote)") 
-
-e2 <- ggplot(data = totaldt, 
-       aes(x = long, y = lat, group = group, fill = percent_democrat_2020)) +
-  geom_polygon() + coord_map() +
-  scale_fill_gradientn("", colours=brewer.pal(9, "RdYlBu")) + ggtitle("USA election  2020 \n (percent of democrat vote)") 
-grid.arrange(e1, e2, ncol=2)
-
-
-```
-
-The states that are colored in blue had 50% or more for the democratic party. We can see that overall the country presents more states that are republican (Democratic party <50%) but, tends to be more democrat in 2020. We can observe this small difference on the 2 maps. 
-  
-Another detail we can add is that states that are democratic are bigger and correspond to places where there are more metropolis, business and so, more foreigners : California or New York for instance.
-
-#### 3) Graphic visualization
-
-```{r, echo = FALSE, message = FALSE, warning=FALSE}
-#USA BARPLOT ELECTION
-plot1 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2016), x=percent_democrat_2016)) + 
-  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
-  geom_text(aes(label = percent_democrat_2016), hjust = -0.5, size = 3) + 
-  labs(title = "Democrat percentage by state",
-       subtitle = "2016 ",
-       x = "Percent",
-       y= "State code") +
-  geom_vline(xintercept = 50, 
-             color = "red", size=0.7) +
-  expand_limits(x = c(0, 75))
-
-plot2 <- ggplot(election, aes(y= reorder(usa_state_code, percent_democrat_2020), x=percent_democrat_2020)) + 
-  geom_bar(stat="identity", width=.5, fill="darkslategray") + 
-  geom_text(aes(label = percent_democrat_2020), hjust = -0.5, size = 3) + 
-  labs(title = "Democrat percentage by state",
-       subtitle = "2020 ",
-       x = "Percent",
-       y= "State code") +
-  geom_vline(xintercept = 50, 
-             color = "red", size=0.7) +
-  expand_limits(x = c(0, 75))
-
-grid.arrange(plot1, plot2, ncol=2)
-```
-
-
-In the election of 2020, there is more state above the 50 percent line than 4 years ago. With this graph, the difference between 2016 and 2020 is easy to spot and more state are democrats in 2020. 
+At first glance, knowing that almost 45% of crime offenders were black, it could mean that crime can be explained by the killing rate. However the graph on Massachussets and Alabama showed different results, leaving us sceptical. 
 
 
 ## Crime Rate 
+
+To complete our analysis on crime in general, we decided to add a table on crime rate from 2013 to 2020 in order to compare it to the evolution of killings. 
+
 ```{r, echo = FALSE, message = FALSE, warning=FALSE}
 
 cr <- read.csv(file = here::here("Data/crime_rate.csv"), sep = ";")
@@ -420,4 +433,4 @@ crdf   %>%
 
 The crime rate exploded from 2014 to 2016. Since then it's been decreasing each year, but is still higher than in 2014. 
 2016 corresponds to an election year : historically speaking, Trump was elected after Obama, maybe this could be a factor in the crime rate. 
-Comparing this to the police killings rate, there's no correlation since we saw that the killings rose from 2016 to 2018. 
+Comparing this to the police killings rate (in our first data set on police violence), there's no correlation since we saw that the killings rose from 2016 to 2018. 
