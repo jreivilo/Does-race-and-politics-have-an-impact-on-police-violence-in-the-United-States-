@@ -2,7 +2,7 @@
 
 First of all, we built different model based on the population sample in every state of 2018, the election result of 2016, and the people shot from 2013 to 2020. 
 
-The election results of 2016 is right in the middle of the period took for people shoot and we assume the population do not vary a lot between 2016 and 2018.
+The election results of 2016 is right in the middle of the period we focused on for people killed and we assumed the population did not vary a lot between 2016 and 2018.
 
 ## Variables
 
@@ -144,9 +144,9 @@ vote_rel_new_no10 <- vote_rel_new[vote_rel_new$Black.White.Disparity < 10, ]
 
 Rate all people is strongly correlated with violent crime 2016. This does make sense, more violent states lead to more police shooting. It is also negatively correlated with percent democrat 2016 while percent_democrat_2016 is slightly negatively correlated with violent_crime_2016. 
 
-Black white disparity is strongly negatively correlated with violent crime in 2016. On the other side, percent democrat 2016 is positevely correlated to black and white disparity. The other variable have a small influence on the black white disparity
+Black white disparity is strongly negatively correlated with violent crime in 2016. On the other side, percent democrat 2016 is positively correlated to black and white disparity. The other variable have a small influence on the black white disparity
 
-Percent of white is strongly negatively correlated to percent Democrat 2016 while percent black is positevely correlated. Black population vote more for a democrat president than the white population who prefer a republican president. 
+Percent of white is strongly negatively correlated to percent Democrat 2016 while percent black is positively correlated. Black population vote more for a democrat president than the white population who prefer a republican president. 
 
 
 ## Can we predict the number of people getting shot by the police with the democratic percentage?
@@ -430,5 +430,5 @@ The 4 plots indicate our multilinear regression is not a good fit at all.
 
 Despite being the important question of our research, we are unable with these data to construct a good model. This teach us at least the disparity between black and white is way more complex to explain than with only few variables. 
 
-Maybe, quadratic model would work better but  there is a risk to overfit the data and it become harder to interpret the model specially with cubic model or higher.  
+Maybe, quadratic model would work better but there is a risk to overfit the data and it become harder to interpret the model specially with cubic model or higher.  
 
