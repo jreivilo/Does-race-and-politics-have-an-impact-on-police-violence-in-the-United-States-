@@ -340,14 +340,6 @@ ggplot(black_state_killings,
           y= "States")
 
 
-#TESTING <- gvisBarChart(black_state_killings, 
-                       #options=list(
-                         #title="Interactive Bar chart",
-                         #legend="right",
-                         #pointSize=10))
-#print(TESTING,'chart')
-
-
 ```
   
      
@@ -614,3 +606,6 @@ This graph compares the percentage of black people killed with the percentage of
 Drawing a conclusion on this graph we could say that there is clearly a tendency from the police to kill Black people more. 
 
 
+### Conclusion
+
+Our objective in this first data set was to look for whereas there was a disparity in Black and White killings. Whith our graphs we showed that yes, Black and White people do not face the same judgement in front of death and their rate of killing is way higher than their population proportion. Our next step in our analysis is to analyze further on what explain this disparity. 
